@@ -21,7 +21,7 @@ import {
   RangeSliderThumb,
   RangeSlider,
   RangeSliderTrack,
-  RangeSliderFilledTrack
+  RangeSliderFilledTrack, InputGroup, InputRightAddon
 } from '@chakra-ui/react'
 import {useDisclosure} from '@chakra-ui/react'
 import {SlMagnifier} from "react-icons/sl";
@@ -48,10 +48,10 @@ export default function Home() {
             colorScheme="green"
             variant="solid"
             mt={5}
-            borderRadius="xl"
-            px={8} py={6}
-            w="fit-content"
-            rightIcon={<SlMagnifier />}
+            borderRadius="full"
+            px={9} py={7}
+            w="fit-content" fontSize="lg"
+            rightIcon={<SlMagnifier size={20}/>}
           >
             Začít
           </Button>
@@ -64,8 +64,13 @@ export default function Home() {
               <ModalHeader>Vyhledat práci</ModalHeader>
               <ModalCloseButton/>
               <ModalBody gap={10}>
-                <Input size="lg"
+                <InputGroup size='lg'>
+                   <Input size="lg" colorScheme="green"
                        placeholder='Zadejte jméno autora, název práce nebo klíčové slovo...'/>
+                  <InputRightAddon>
+                    <SlMagnifier />
+                  </InputRightAddon>
+                </InputGroup>
                 <Box position='relative' py={5}>
                   <Divider/>
                   <AbsoluteCenter bg='white' px='4'>
@@ -75,15 +80,15 @@ export default function Home() {
                 <Box display="flex" w="full" justifyItems="between" gap={20}>
                   <Box display="flex" flexDir="column" w="full" borderRadius="md"
                        p={3} border="1px" borderColor='gray.200'>
-                    <Text fontSize="lg">Obor</Text>
-                    <Checkbox>Strojinerství</Checkbox>
-                    <Checkbox defaultChecked>Informační technologie</Checkbox>
-                    <Checkbox>Elektrotechnika</Checkbox>
+                    <Text fontSize="xl">Obor</Text>
+                    <Checkbox size="lg" colorScheme="green">Strojínerství</Checkbox>
+                    <Checkbox size="lg" colorScheme="green" defaultChecked>Informační technologie</Checkbox>
+                    <Checkbox size="lg" colorScheme="green">Elektrotechnika</Checkbox>
                   </Box>
                   <Box w="full" borderRadius="md"
                        p={3} border="1px" borderColor='gray.200'>
                     <Text fontSize="lg">Rozmezí let</Text>
-                    <RangeSlider colorScheme="green" aria-label={['min', 'max']} defaultValue={[0, 50]}>
+                    <RangeSlider colorScheme="green" aria-label={['min', 'max']} defaultValue={[30, 70]}>
                       <RangeSliderTrack>
                         <RangeSliderFilledTrack/>
                       </RangeSliderTrack>
