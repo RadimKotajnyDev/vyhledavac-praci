@@ -1,95 +1,114 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client'
+import {
+  Box,
+  Button,
+  Heading,
+  Text,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Input,
+  Divider,
+  AbsoluteCenter,
+  Center,
+  GridItem,
+  Grid,
+  Checkbox,
+  RangeSliderThumb,
+  RangeSlider,
+  RangeSliderTrack,
+  RangeSliderFilledTrack
+} from '@chakra-ui/react'
+import {useDisclosure} from '@chakra-ui/react'
+import {SlMagnifier} from "react-icons/sl";
 
 export default function Home() {
+
+  const {isOpen, onOpen, onClose} = useDisclosure()
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <>
+      <Box color="white" w="full"
+           minH="80vh" justifyContent="space-around" justifyItems="center" placeItems="center" display="flex">
+        <Box display="flex" flexDir="column" textAlign="left" gap={2}>
+          <Heading fontSize="7xl"
+          >ThesisSpotlight</Heading>
+          <Text fontSize="3xl">
+            Potřebujete se inspirovat?
+            <br/> Hledáte zajímavé nápady studentů?
+            <br/> Nebo vás jen zajímá co už někdo vytvořil?
+            <br/> Pomůžeme vám najít ročníkové práce.
+          </Text>
+          <Button
+            onClick={onOpen}
+            colorScheme="green"
+            variant="solid"
+            mt={5}
+            borderRadius="xl"
+            px={8} py={6}
+            w="fit-content"
+            rightIcon={<SlMagnifier />}
           >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+            Začít
+          </Button>
+          <Modal
+            //isCentered={true}
+            size="3xl"
+            isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay/>
+            <ModalContent>
+              <ModalHeader>Vyhledat práci</ModalHeader>
+              <ModalCloseButton/>
+              <ModalBody gap={10}>
+                <Input size="lg"
+                       placeholder='Zadejte jméno autora, název práce nebo klíčové slovo...'/>
+                <Box position='relative' py={5}>
+                  <Divider/>
+                  <AbsoluteCenter bg='white' px='4'>
+                    nebo
+                  </AbsoluteCenter>
+                </Box>
+                <Box display="flex" w="full" justifyItems="between" gap={20}>
+                  <Box display="flex" flexDir="column" w="full" borderRadius="md"
+                       p={3} border="1px" borderColor='gray.200'>
+                    <Text fontSize="lg">Obor</Text>
+                    <Checkbox>Strojinerství</Checkbox>
+                    <Checkbox defaultChecked>Informační technologie</Checkbox>
+                    <Checkbox>Elektrotechnika</Checkbox>
+                  </Box>
+                  <Box w="full" borderRadius="md"
+                       p={3} border="1px" borderColor='gray.200'>
+                    <Text fontSize="lg">Rozmezí let</Text>
+                    <RangeSlider colorScheme="green" aria-label={['min', 'max']} defaultValue={[0, 50]}>
+                      <RangeSliderTrack>
+                        <RangeSliderFilledTrack/>
+                      </RangeSliderTrack>
+                      <RangeSliderThumb index={0}/>
+                      <RangeSliderThumb index={1}/>
+                    </RangeSlider>
+                  </Box>
+                </Box>
+              </ModalBody>
+              <ModalFooter>
+                <Center w="100%">
+                  <Button colorScheme='green'>
+                    Použít
+                  </Button>
+                </Center>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+        </Box>
+        <Box w="500px" h="700px">
+          <script type="module" src="https://unpkg.com/@splinetool/viewer@1.0.48/build/spline-viewer.js"></script>
+          {/* @ts-ignore */}
+          <spline-viewer url="https://prod.spline.design/bbH-SUXSTkvFd2Gq/scene.splinecode"></spline-viewer>
+        </Box>
+      </Box>
+    </>
   );
 }
