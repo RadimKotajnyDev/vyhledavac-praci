@@ -1,29 +1,29 @@
 'use client'
 import {
+  AbsoluteCenter,
   Box,
   Button,
+  Center,
+  Checkbox,
+  Divider,
   Heading,
-  Text,
+  Input,
+  InputGroup,
+  InputRightAddon,
   Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Input,
-  Divider,
-  AbsoluteCenter,
-  Center,
-  GridItem,
-  Grid,
-  Checkbox,
-  RangeSliderThumb,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   RangeSlider,
+  RangeSliderFilledTrack,
+  RangeSliderThumb,
   RangeSliderTrack,
-  RangeSliderFilledTrack, InputGroup, InputRightAddon
+  Text,
+  useDisclosure
 } from '@chakra-ui/react'
-import {useDisclosure} from '@chakra-ui/react'
 import {SlMagnifier} from "react-icons/sl";
 
 export default function Home() {
@@ -65,10 +65,10 @@ export default function Home() {
               <ModalCloseButton/>
               <ModalBody gap={10}>
                 <InputGroup size='lg'>
-                   <Input size="lg" colorScheme="green"
-                       placeholder='Zadejte jméno autora, název práce nebo klíčové slovo...'/>
+                  <Input size="lg" colorScheme="green"
+                         placeholder='Zadejte jméno autora, název práce nebo klíčové slovo...'/>
                   <InputRightAddon>
-                    <SlMagnifier />
+                    <SlMagnifier/>
                   </InputRightAddon>
                 </InputGroup>
                 <Box position='relative' py={5}>
@@ -87,7 +87,7 @@ export default function Home() {
                   </Box>
                   <Box w="full" borderRadius="md"
                        p={3} border="1px" borderColor='gray.200'>
-                    <Text fontSize="lg">Rozmezí let</Text>
+                    <Text fontSize="xl">Rozmezí let</Text>
                     <RangeSlider colorScheme="green" aria-label={['min', 'max']} defaultValue={[30, 70]}>
                       <RangeSliderTrack>
                         <RangeSliderFilledTrack/>

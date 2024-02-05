@@ -4,6 +4,7 @@
 import {Box, ChakraProvider} from '@chakra-ui/react'
 import {theme} from "@/app/theme";
 import {Navbar} from "@/app/components/Navbar";
+import {Footer} from "@/app/components/Footer";
 
 export function Providers({children}: { children: React.ReactNode }) {
   return (
@@ -16,6 +17,7 @@ export function Providers({children}: { children: React.ReactNode }) {
         <Box as="main">
           {children}
         </Box>
+        <Footer />
       </Box>
     </ChakraProvider>
   )

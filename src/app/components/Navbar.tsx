@@ -1,34 +1,63 @@
 import {
   AbsoluteCenter,
   Box,
-  Center,
+  Center, Divider,
   Flex,
   Spacer,
   Stack,
   StackItem,
   Text
 } from "@chakra-ui/react";
-import {SlMagnifier} from "react-icons/sl";
+import {SlMagnifier, SlQuestion, SlUser} from "react-icons/sl";
 
 export const Navbar = () => {
   return (
-    <Box as="nav" mx={5} pt={2} color="white">
+    <Box as="nav" mx={5} pt={5} color="white">
       <Flex //bg="lightgray"
         //opacity={90}
         bg='blackAlpha.300'
         backdropFilter='blur(10px)'
         borderRadius="full"
         dropShadow="2xl"
-        alignItems="center" px={10}
-        py={5}
+        alignItems="center"
       >
-        <Box display="flex" justifyItems="center" alignItems="center" gap={2}>
-          <SlMagnifier />
+        <Box display="flex" justifyItems="center" alignItems="center" gap={2}
+             bg='blackAlpha.300'
+             backdropFilter='blur(10px)'
+             borderRadius="full"
+             dropShadow="2xl"
+             px={10}
+             py={5}
+        >
+          <SlMagnifier/>
           <Text>ThesisSpotlight</Text>
         </Box>
         <Spacer/>
         <Box w="100%">
-          <AbsoluteCenter>
+
+        </Box>
+        <Spacer/>
+        <Box display="flex" justifyItems="center" alignItems="center"
+             bg='blackAlpha.300'
+             backdropFilter='blur(10px)'
+             borderRadius="full"
+             dropShadow="2xl"
+             px={10} gap={5}
+             py={5}>
+          <SlQuestion size={25} />
+          <Box h="20px">
+            <Divider orientation='vertical' />
+          </Box>
+          <SlUser size={25} />
+        </Box>
+      </Flex>
+    </Box>
+  )
+}
+
+/*
+
+ <AbsoluteCenter>
             <Box //bg="darkgray"
               bg='blackAlpha.300'
               backdropFilter='blur(10px)'
@@ -56,12 +85,5 @@ export const Navbar = () => {
               </Stack>
             </Box>
           </AbsoluteCenter>
-        </Box>
-        <Spacer/>
-        <Box>
-          
-        </Box>
-      </Flex>
-    </Box>
-  )
-}
+
+ */
