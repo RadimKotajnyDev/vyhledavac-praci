@@ -78,11 +78,7 @@ export const SearchModal = () => {
                 <Checkbox size="lg" colorScheme="green" defaultChecked>Informační technologie</Checkbox>
                 <Checkbox size="lg" colorScheme="green">Elektrotechnika</Checkbox>
               </Box>
-              <Box w="full" borderRadius="md"
-                   p={3} border="1px" borderColor='gray.600'>
-                <Text fontSize="xl">Rozmezí let</Text>
-                <YearRange />
-              </Box>
+              <YearRange />
             </Box>
             <Box display="flex" w="full" justifyItems="between" gap={20} pt={5}>
               <Box w="full" borderRadius="md"
