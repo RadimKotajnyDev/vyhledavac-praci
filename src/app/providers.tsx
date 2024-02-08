@@ -17,7 +17,9 @@ export function Providers({children}: { children: React.ReactNode }) {
         <Box as="main">
           {children}
         </Box>
-        <Footer />
+        {/*
+          <Footer />
+         */}
       </Box>
     </ChakraProvider>
   )

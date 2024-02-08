@@ -1,13 +1,4 @@
-import {
-  AbsoluteCenter,
-  Box,
-  Center, Divider,
-  Flex,
-  Spacer,
-  Stack,
-  StackItem,
-  Text
-} from "@chakra-ui/react";
+import {Box, Divider, Flex, Spacer, Text} from "@chakra-ui/react";
 import {SlMagnifier, SlQuestion, SlUser} from "react-icons/sl";
 
 export const Navbar = () => {
@@ -30,7 +21,8 @@ export const Navbar = () => {
              py={5}
         >
           <SlMagnifier/>
-          <Text>ThesisSpotlight</Text>
+          <Text>ThesisSpotlight
+          </Text>
         </Box>
         <Spacer/>
         <Box w="100%">
@@ -44,11 +36,11 @@ export const Navbar = () => {
              dropShadow="2xl"
              px={10} gap={5}
              py={5}>
-          <SlQuestion size={25} />
+          <SlQuestion size={25}/>
           <Box h="20px">
-            <Divider orientation='vertical' />
+            <Divider orientation='vertical'/>
           </Box>
-          <SlUser size={25} />
+          <SlUser size={25}/>
         </Box>
       </Flex>
     </Box>
