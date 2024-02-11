@@ -8,6 +8,8 @@ export default function DarkModeButton() {
       variant="none"
       onClick={toggleColorMode}
       h="fit-content"
+      w="fit-content"
+      px={0}
     >
       {colorMode === "dark" ? <MdOutlineDarkMode fill="white" size={25}/> : <MdOutlineWbSunny fill="white" size={25}/>}
     </Button>
