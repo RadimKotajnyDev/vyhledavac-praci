@@ -43,7 +43,7 @@ const Tagy = () => {
                   size="md"
                   borderRadius="full"
                   variant="subtle"
-                  colorScheme="blue"
+                  colorScheme="teal"
                 >
                   <TagLabel>{tag}</TagLabel>
                   <TagCloseButton onClick={() => removeTag(index)}/>

@@ -10,8 +10,8 @@ import {
 } from "@chakra-ui/react";
 
 const RozmeziLet = () => {
-  const todayDate = new Date().getFullYear()
-  const [value, setValue] = useState([2000, todayDate]);
+  const todayYear = new Date().getFullYear()
+  const [value, setValue] = useState([2000, todayYear]);
 
   const handleChange = (newValue: number[]) => {
     setValue(newValue);
@@ -33,11 +33,11 @@ const RozmeziLet = () => {
           <Input value={value[1]}
                  type="number"
                  onChange={(e) => setValue([value[0], Number(e.target.value)])}
-                 placeholder={`max ${todayDate}`}/>
+                 placeholder={`max ${todayYear}`}/>
         </Flex>
         <RangeSlider colorScheme="green" mt={4}
-                     aria-label={['min', 'max']} defaultValue={[2000, todayDate]}
-                     min={2000} max={todayDate}
+                     aria-label={['min', 'max']} defaultValue={[2000, todayYear]}
+                     min={2000} max={todayYear}
                      onChange={handleChange} value={value}>
           <RangeSliderTrack>
             <RangeSliderFilledTrack/>
