@@ -1,16 +1,15 @@
-import {Box, Flex, Input, Select, Tag, TagCloseButton, TagLabel, Text, Wrap, WrapItem} from "@chakra-ui/react";
-import {useState} from "react";
+import { Box, Flex, Input, Tag, TagCloseButton, TagLabel, Text, Wrap, WrapItem } from "@chakra-ui/react";
+import { useState, ChangeEvent, KeyboardEvent } from "react";
 
 const Tagy = () => {
+  const [tags, setTags] = useState<string[]>([]);
+  const [inputValue, setInputValue] = useState<string>('');
 
-  const [tags, setTags] = useState([]);
-  const [inputValue, setInputValue] = useState('');
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
-  const handleInputKeyDown = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && inputValue.trim() !== '') {
       setTags([...tags, inputValue.trim()]);
       setInputValue('');
@@ -26,8 +25,8 @@ const Tagy = () => {
   return (
     <>
       <Box w="full" borderRadius="md"
-           p={5} border="1px" _dark={{borderColor: "gray.600"}}
-                              _light={{borderColor: "gray.200"}}>
+        p={5} border="1px" _dark={{ borderColor: "gray.600" }}
+        _light={{ borderColor: "gray.200" }}>
         <Text fontSize="xl" mb={3}>Tagy</Text>
         <Flex flexDirection="column" w="300px">
           <Input
@@ -46,7 +45,7 @@ const Tagy = () => {
                   colorScheme="teal"
                 >
                   <TagLabel>{tag}</TagLabel>
-                  <TagCloseButton onClick={() => removeTag(index)}/>
+                  <TagCloseButton onClick={() => removeTag(index)} />
                 </Tag>
               </WrapItem>
             ))}
@@ -57,4 +56,4 @@ const Tagy = () => {
   )
 }
 
-export default Tagy
+export default Tagy;
