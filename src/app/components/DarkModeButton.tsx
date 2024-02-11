@@ -3,6 +3,9 @@ import {MdOutlineDarkMode, MdOutlineWbSunny} from "react-icons/md";
 
 export default function DarkModeButton() {
   const {colorMode, toggleColorMode} = useColorMode();
+
+  //TODO: fix size of button
+
   return (
     <Button
       variant="none"
@@ -11,7 +14,7 @@ export default function DarkModeButton() {
       w="fit-content"
       p={0}
     >
-      {colorMode === "dark" ? <MdOutlineDarkMode fill="white" size={30}/> : <MdOutlineWbSunny fill="white" size={30}/>}
+      {colorMode === "dark" ? <MdOutlineDarkMode fill="white" size={25}/> : <MdOutlineWbSunny fill="white" size={25}/>}
     </Button>
   );
 }

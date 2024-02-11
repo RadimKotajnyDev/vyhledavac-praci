@@ -51,8 +51,8 @@ const SearchModal = () => {
             <SearchInModal/>
             <ModalDivider/>
             <Grid
-              templateRows="repeat(2, 1fr)"
-              templateColumns="repeat(2, 1fr)"
+              templateColumns={{base: "1fr", md: "repeat(2, 1fr)"}}
+              templateRows={{base: "repeat(2, 1fr)", md: "1fr"}}
               gap="5"
               w="full"
               justifyContent="space-between"

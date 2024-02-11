@@ -11,7 +11,7 @@ import {
 
 const RozmeziLet = () => {
   const todayDate = new Date().getFullYear()
-  const [value, setValue] = useState([1921, todayDate]);
+  const [value, setValue] = useState([2000, todayDate]);
 
   const handleChange = (newValue: number[]) => {
     setValue(newValue);
@@ -22,22 +22,22 @@ const RozmeziLet = () => {
   return (
     <>
       <Box w="full" borderRadius="md"
-           p={3} border="1px" _dark={{borderColor: "gray.600"}}
+           p={5} border="1px" _dark={{borderColor: "gray.600"}}
                               _light={{borderColor: "gray.200"}}>
         <Text fontSize="xl" mb={2}>Rozmezí let</Text>
         <Flex gap={5}>
           <Input value={value[0]}
                  type="number"
                  onChange={(e) => setValue([Number(e.target.value), value[1]])}
-                 placeholder='min 1921'/>
+                 placeholder='min 2000'/>
           <Input value={value[1]}
                  type="number"
                  onChange={(e) => setValue([value[0], Number(e.target.value)])}
                  placeholder={`max ${todayDate}`}/>
         </Flex>
         <RangeSlider colorScheme="green" mt={4}
-                     aria-label={['min', 'max']} defaultValue={[1921, todayDate]}
-                     min={1921} max={todayDate}
+                     aria-label={['min', 'max']} defaultValue={[2000, todayDate]}
+                     min={2000} max={todayDate}
                      onChange={handleChange} value={value}>
           <RangeSliderTrack>
             <RangeSliderFilledTrack/>

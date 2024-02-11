@@ -38,11 +38,11 @@ export const Navbar = () => {
              px={10} gap={5}
              py={5}>
           <SlQuestion size={25}/>
-          <Box h="20px">
+          <Box h="25px">
             <Divider bg="white" color="white" orientation='vertical'/>
           </Box>
           <SlUser size={25}/>
-          <Box h="20px">
+          <Box h="25px">
             <Divider bg="white" color="white" orientation='vertical'/>
           </Box>
           <DarkModeButton />

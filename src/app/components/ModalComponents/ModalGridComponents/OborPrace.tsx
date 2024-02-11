@@ -4,7 +4,7 @@ const OborPrace = () => {
   return (
     <>
       <Box display="flex" flexDir="column" w="full" borderRadius="md"
-           p={3} border="1px"  _dark={{borderColor: "gray.600"}}
+           p={5} border="1px"  _dark={{borderColor: "gray.600"}}
                               _light={{borderColor: "gray.200"}}
            borderColor='gray.600'>
         <Text fontSize="xl">Obor</Text>
