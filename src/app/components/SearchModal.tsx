@@ -1,14 +1,9 @@
 'use client'
 import {
-  AbsoluteCenter,
-  Box,
   Button,
   Center,
-  Checkbox,
-  Divider,
-  Input,
-  InputGroup,
-  InputRightAddon,
+  Grid,
+  GridItem,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -16,19 +11,17 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  RangeSlider,
-  RangeSliderFilledTrack,
-  RangeSliderThumb,
-  RangeSliderTrack,
-  Select,
-  Text,
   useDisclosure
 } from "@chakra-ui/react";
 import {SlMagnifier} from "react-icons/sl";
-import {SearchTags} from "@/app/components/SearchTags";
-import {YearRange} from "@/app/components/YearRange";
+import VedouciPrace from "@/app/components/ModalComponents/ModalGridComponents/VedouciPrace";
+import OborPrace from "@/app/components/ModalComponents/ModalGridComponents/OborPrace";
+import SearchInModal from "@/app/components/ModalComponents/SearchInModal";
+import ModalDivider from "@/app/components/ModalComponents/ModalDivider";
+import RozmeziLet from "@/app/components/ModalComponents/ModalGridComponents/RozmeziLet";
+import Tagy from "@/app/components/ModalComponents/ModalGridComponents/Tagy";
 
-export const SearchModal = () => {
+const SearchModal = () => {
 
   const {isOpen, onOpen, onClose} = useDisclosure()
 
@@ -55,43 +48,21 @@ export const SearchModal = () => {
           <ModalHeader>Vyhledat práci</ModalHeader>
           <ModalCloseButton/>
           <ModalBody gap={10}>
-            <InputGroup size='lg'>
-              <Input size="lg" colorScheme="green"
-                     placeholder='Zadejte jméno autora, název práce nebo klíčové slovo...'/>
-              <InputRightAddon>
-                <SlMagnifier/>
-              </InputRightAddon>
-            </InputGroup>
-            <Box position='relative' py={5}>
-              <Divider/>
-              <AbsoluteCenter _dark={{background: "gray.700"}}
-                              _light={{background: "white"}}
-                              px='4'>
-                nebo
-              </AbsoluteCenter>
-            </Box>
-            <Box display="flex" w="full" justifyItems="between" gap={20}>
-              <Box display="flex" flexDir="column" w="full" borderRadius="md"
-                   p={3} border="1px" borderColor='gray.600'>
-                <Text fontSize="xl">Obor</Text>
-                <Checkbox size="lg" colorScheme="green">Strojínerství</Checkbox>
-                <Checkbox size="lg" colorScheme="green" defaultChecked>Informační technologie</Checkbox>
-                <Checkbox size="lg" colorScheme="green">Elektrotechnika</Checkbox>
-              </Box>
-              <YearRange />
-            </Box>
-            <Box display="flex" w="full" justifyItems="between" gap={20} pt={5}>
-              <Box w="full" borderRadius="md"
-                   p={3} border="1px" borderColor='gray.600'>
-                <Text fontSize="xl">Vedoucí práce</Text>
-                <Select placeholder='Vyberte možnost'>
-                  <option value='option1'>Option 1</option>
-                  <option value='option2'>Option 2</option>
-                  <option value='option3'>Option 3</option>
-                </Select>
-              </Box>
-              <SearchTags />
-            </Box>
+            <SearchInModal/>
+            <ModalDivider/>
+            <Grid
+              templateRows="repeat(2, 1fr)"
+              templateColumns="repeat(2, 1fr)"
+              gap="5"
+              w="full"
+              justifyContent="space-between"
+              alignItems="space-between"
+            >
+              <OborPrace/>
+              <RozmeziLet/>
+              <VedouciPrace/>
+              <Tagy/>
+            </Grid>
           </ModalBody>
           <ModalFooter>
             <Center w="100%">
@@ -105,3 +76,5 @@ export const SearchModal = () => {
     </>
   )
 }
+
+export default SearchModal

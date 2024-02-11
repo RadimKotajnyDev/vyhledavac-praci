@@ -1,5 +1,6 @@
 import {Box, Divider, Flex, Spacer, Text} from "@chakra-ui/react";
 import {SlMagnifier, SlQuestion, SlUser} from "react-icons/sl";
+import DarkModeButton from "@/app/components/DarkModeButton";
 
 export const Navbar = () => {
   return (
@@ -38,9 +39,13 @@ export const Navbar = () => {
              py={5}>
           <SlQuestion size={25}/>
           <Box h="20px">
-            <Divider orientation='vertical'/>
+            <Divider bg="white" color="white" orientation='vertical'/>
           </Box>
           <SlUser size={25}/>
+          <Box h="20px">
+            <Divider bg="white" color="white" orientation='vertical'/>
+          </Box>
+          <DarkModeButton />
         </Box>
       </Flex>
     </Box>

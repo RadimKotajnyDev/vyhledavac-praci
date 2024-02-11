@@ -9,7 +9,7 @@ import {
   Input, Flex
 } from "@chakra-ui/react";
 
-export const YearRange = () => {
+const RozmeziLet = () => {
   const todayDate = new Date().getFullYear()
   const [value, setValue] = useState([1921, todayDate]);
 
@@ -22,9 +22,10 @@ export const YearRange = () => {
   return (
     <>
       <Box w="full" borderRadius="md"
-           p={3} border="1px" borderColor='gray.600'>
-        <Text fontSize="xl">Rozmezí let</Text>
-        <Flex gap={2}>
+           p={3} border="1px" _dark={{borderColor: "gray.600"}}
+                              _light={{borderColor: "gray.200"}}>
+        <Text fontSize="xl" mb={2}>Rozmezí let</Text>
+        <Flex gap={5}>
           <Input value={value[0]}
                  type="number"
                  onChange={(e) => setValue([Number(e.target.value), value[1]])}
@@ -34,7 +35,7 @@ export const YearRange = () => {
                  onChange={(e) => setValue([value[0], Number(e.target.value)])}
                  placeholder={`max ${todayDate}`}/>
         </Flex>
-        <RangeSlider colorScheme="green"
+        <RangeSlider colorScheme="green" mt={4}
                      aria-label={['min', 'max']} defaultValue={[1921, todayDate]}
                      min={1921} max={todayDate}
                      onChange={handleChange} value={value}>
@@ -60,3 +61,5 @@ export const YearRange = () => {
     </>
   );
 }
+
+export default RozmeziLet

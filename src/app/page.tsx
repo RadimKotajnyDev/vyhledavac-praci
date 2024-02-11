@@ -1,7 +1,7 @@
 'use client'
 import {Box} from '@chakra-ui/react'
 import {ThreeDobject} from "@/app/components/ThreeDobject";
-import {SearchModal} from "@/app/components/SearchModal";
+import SearchModal from "@/app/components/SearchModal";
 import PageText from "@/app/components/PageText";
 
 export default function Home() {

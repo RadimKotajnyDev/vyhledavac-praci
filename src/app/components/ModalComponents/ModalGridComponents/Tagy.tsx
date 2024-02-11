@@ -1,7 +1,7 @@
 import {Box, Flex, Input, Select, Tag, TagCloseButton, TagLabel, Text, Wrap, WrapItem} from "@chakra-ui/react";
 import {useState} from "react";
 
-export const SearchTags = () => {
+const Tagy = () => {
 
   const [tags, setTags] = useState([]);
   const [inputValue, setInputValue] = useState('');
@@ -26,7 +26,8 @@ export const SearchTags = () => {
   return (
     <>
       <Box w="full" borderRadius="md"
-           p={3} border="1px" borderColor='gray.600'>
+           p={3} border="1px" _dark={{borderColor: "gray.600"}}
+                              _light={{borderColor: "gray.200"}}>
         <Text fontSize="xl">Tagy</Text>
         <Flex flexDirection="column" w="300px">
           <Input
@@ -55,3 +56,5 @@ export const SearchTags = () => {
     </>
   )
 }
+
+export default Tagy
