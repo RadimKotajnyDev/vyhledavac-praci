@@ -3,16 +3,16 @@ import {
   Button,
   Center,
   Grid,
-  GridItem,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalOverlay,
   useDisclosure
 } from "@chakra-ui/react";
+import {Form, Formik} from "formik";
+
 import {SlMagnifier} from "react-icons/sl";
 import VedouciPrace from "@/app/components/ModalComponents/ModalGridComponents/VedouciPrace";
 import OborPrace from "@/app/components/ModalComponents/ModalGridComponents/OborPrace";
@@ -50,27 +50,43 @@ const SearchModal = () => {
           <ModalBody gap={10}>
             <SearchInModal/>
             <ModalDivider/>
-            <Grid
-              templateColumns={{base: "1fr", md: "repeat(2, 1fr)"}}
-              templateRows={{base: "repeat(2, 1fr)", md: "1fr"}}
-              gap="5"
-              w="full"
-              justifyContent="space-between"
-              alignItems="space-between"
+            <Formik
+              initialValues={
+                {
+                  obor_stroj: false,
+                  obor_it: false,
+                  obor_elektro: false,
+                  rozmezi_let: [2000, 2024],
+                  vedouci_prace: "",
+                  tagy: [""]
+                }
+              }
+              onSubmit={(values) => console.log(values)}
             >
-              <OborPrace/>
-              <RozmeziLet/>
-              <VedouciPrace/>
-              <Tagy/>
-            </Grid>
+              {({errors, values, setFieldValue}) => (
+                <Form>
+                  <Grid
+                    templateColumns={{base: "1fr", md: "repeat(2, 1fr)"}}
+                    templateRows={{base: "repeat(2, 1fr)", md: "1fr"}}
+                    gap="5"
+                    w="full"
+                    justifyContent="space-between"
+                    alignItems="space-between"
+                  >
+                    <OborPrace/>
+                    <RozmeziLet {...{setFieldValue, values}}/>
+                    <VedouciPrace/>
+                    <Tagy/>
+                  </Grid>
+                  <Center w="100%" my={5}>
+                    <Button type="submit" colorScheme='green'>
+                      Použít
+                    </Button>
+                  </Center>
+                </Form>
+              )}
+            </Formik>
           </ModalBody>
-          <ModalFooter>
-            <Center w="100%">
-              <Button colorScheme='green'>
-                Použít
-              </Button>
-            </Center>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </>

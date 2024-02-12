@@ -1,4 +1,5 @@
 import {Box, Checkbox, Text} from "@chakra-ui/react";
+import {Field} from "formik";
 
 const OborPrace = () => {
   return (
@@ -8,9 +9,9 @@ const OborPrace = () => {
                               _light={{borderColor: "gray.200"}}
            borderColor='gray.600'>
         <Text fontSize="xl">Obor</Text>
-        <Checkbox size="lg" colorScheme="green">Strojínerství</Checkbox>
-        <Checkbox size="lg" colorScheme="green" defaultChecked>Informační technologie</Checkbox>
-        <Checkbox size="lg" colorScheme="green">Elektrotechnika</Checkbox>
+        <Field name="obor_stroj" as={Checkbox} size="lg" colorScheme="green">Strojínerství</Field>
+        <Field name="obor_it" as={Checkbox} size="lg" colorScheme="green">Informační technologie</Field>
+        <Field name="obor_elektro" as={Checkbox} size="lg" colorScheme="green">Elektrotechnika</Field>
       </Box>
     </>
   )
