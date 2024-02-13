@@ -45,7 +45,7 @@ const RozmeziLet = (props: RozmeziLetInterface) => {
           //value={value}
           //FIXME: setting field value
                      onChange={(val) =>
-                       setFieldValue([values?.rozmezi_let[0], values?.rozmezi_let[1]], val)
+                       setFieldValue("rozmezi_let", val)
                      }
                      value={[values?.rozmezi_let[0], values?.rozmezi_let[1]]}
         >
