@@ -1,8 +1,14 @@
 import { Box, Flex, Input, Tag, TagCloseButton, TagLabel, Text, Wrap, WrapItem } from "@chakra-ui/react";
 import { useState, ChangeEvent, KeyboardEvent } from "react";
 
-const Tagy = () => {
-  const [tags, setTags] = useState<string[]>([]);
+const Tagy = (props: any) => {
+
+  const {
+    setFieldValue,
+    values
+  } = props
+
+  //const [tags, setTags] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -11,15 +17,17 @@ const Tagy = () => {
 
   const handleInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && inputValue.trim() !== '') {
-      setTags([...tags, inputValue.trim()]);
+      //setTags([...tags, inputValue.trim()]);
+      setFieldValue("tagy", [...values.tagy, inputValue.trim()])
       setInputValue('');
     }
   };
 
   const removeTag = (index: number) => {
-    const newTags = [...tags];
+    const newTags = [...values.tagy];
     newTags.splice(index, 1);
-    setTags(newTags);
+    //setTags(newTags);
+    setFieldValue("tagy", newTags)
   };
 
   return (
@@ -36,7 +44,7 @@ const Tagy = () => {
             placeholder="Sem napište tagy (klíčové slova)"
           />
           <Wrap mt={2}>
-            {tags.map((tag, index) => (
+            {values.tagy.map((tag, index) => (
               <WrapItem key={index}>
                 <Tag
                   size="md"

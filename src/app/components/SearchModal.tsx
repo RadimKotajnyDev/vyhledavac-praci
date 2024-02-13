@@ -25,6 +25,26 @@ const SearchModal = () => {
 
   const {isOpen, onOpen, onClose} = useDisclosure()
 
+
+  function handlePostValues(values: any) {
+
+    const obor_array = []
+    values.obor_stroj ? obor_array.push("strojinerstvi") : null
+    values.obor_it ? obor_array.push("it") : null
+    values.obor_elektro ? obor_array.push("elektro") : null
+
+    return {
+      obor: obor_array,
+      pocatecni_rok: Number(values.rozmezi_let[0]),
+      koncovy_rok: Number(values.rozmezi_let[1]),
+      predmet: [
+        "string" //TODO:
+      ],
+      vedouci: values.vedouci,
+      tagy: values.tagy
+    }
+  }
+
   return (
     <>
       <Button
@@ -57,11 +77,11 @@ const SearchModal = () => {
                   obor_it: false,
                   obor_elektro: false,
                   rozmezi_let: [2000, 2024],
-                  vedouci_prace: "",
-                  tagy: [""]
+                  vedouci: "",
+                  tagy: []
                 }
               }
-              onSubmit={(values) => console.log(values)}
+              onSubmit={(values) => console.log(handlePostValues(values))}
             >
               {({errors, values, setFieldValue}) => (
                 <Form>
@@ -76,7 +96,7 @@ const SearchModal = () => {
                     <OborPrace/>
                     <RozmeziLet {...{setFieldValue, values}}/>
                     <VedouciPrace/>
-                    <Tagy/>
+                    <Tagy {...{setFieldValue, values}}/>
                   </Grid>
                   <Center w="100%" my={5}>
                     <Button type="submit" colorScheme='green'>
