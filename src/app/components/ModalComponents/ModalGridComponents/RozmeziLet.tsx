@@ -43,7 +43,6 @@ const RozmeziLet = (props: RozmeziLetInterface) => {
                      min={2000} max={todayYear}
           //onChange={handleChange}
           //value={value}
-          //FIXME: setting field value
                      onChange={(val) =>
                        setFieldValue("rozmezi_let", val)
                      }
