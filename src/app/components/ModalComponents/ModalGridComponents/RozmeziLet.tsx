@@ -38,7 +38,8 @@ const RozmeziLet = (props: RozmeziLetInterface) => {
                  type="number"
                  placeholder={`max ${todayYear}`}/>
         </Flex>
-        <RangeSlider colorScheme="green" mt={4}
+        <Box px={3} mt={4}>
+          <RangeSlider colorScheme="green"
                      aria-label={['min', 'max']} defaultValue={[values?.rozmezi_let[0], values?.rozmezi_let[1]]}
                      min={2000} max={todayYear}
           //onChange={handleChange}
@@ -66,6 +67,7 @@ const RozmeziLet = (props: RozmeziLetInterface) => {
             </Box>
           </RangeSliderThumb>
         </RangeSlider>
+        </Box>
       </Box>
     </>
   );

@@ -20,16 +20,23 @@ import SearchInModal from "@/app/components/ModalComponents/SearchInModal";
 import ModalDivider from "@/app/components/ModalComponents/ModalDivider";
 import RozmeziLet from "@/app/components/ModalComponents/ModalGridComponents/RozmeziLet";
 import Tagy from "@/app/components/ModalComponents/ModalGridComponents/Tagy";
+import axios from "axios";
+
+function onKeyDown(keyEvent) {
+  if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
+    keyEvent.preventDefault();
+  }
+}
 
 const SearchModal = () => {
 
   const {isOpen, onOpen, onClose} = useDisclosure()
-
+  const server_address = "http://127.0.0.1:8000"
 
   function handlePostValues(values: any) {
 
     const obor_array = []
-    values.obor_stroj ? obor_array.push("strojinerstvi") : null
+    values.obor_stroj ? obor_array.push("stroj") : null
     values.obor_it ? obor_array.push("it") : null
     values.obor_elektro ? obor_array.push("elektro") : null
 
@@ -40,8 +47,9 @@ const SearchModal = () => {
       predmet: [
         "string" //TODO:
       ],
-      vedouci: values.vedouci,
-      tagy: values.tagy
+      vedouci: "string"
+      //vedouci: values.vedouci,
+      //tagy: values.tagy
     }
   }
 
@@ -81,10 +89,16 @@ const SearchModal = () => {
                   tagy: []
                 }
               }
-              onSubmit={(values) => console.log(handlePostValues(values))}
+              onSubmit={(values) =>
+              {
+                axios.post(`${server_address}/filtr`, handlePostValues(values))
+                  .then(r => console.log(r))
+                  .catch(error => alert(error))
+                console.log(handlePostValues(values))
+              }}
             >
               {({errors, values, setFieldValue}) => (
-                <Form>
+                <Form onKeyDown={onKeyDown}>
                   <Grid
                     templateColumns={{base: "1fr", md: "repeat(2, 1fr)"}}
                     templateRows={{base: "repeat(2, 1fr)", md: "1fr"}}
