@@ -21,8 +21,9 @@ import ModalDivider from "@/app/components/ModalComponents/ModalDivider";
 import RozmeziLet from "@/app/components/ModalComponents/ModalGridComponents/RozmeziLet";
 import Tagy from "@/app/components/ModalComponents/ModalGridComponents/Tagy";
 import axios from "axios";
+import {useAPIData} from "@/app/providers/APIdataProvider";
 
-function onKeyDown(keyEvent) {
+function onKeyDown(keyEvent: any) { //TODO: specify a type
   if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
     keyEvent.preventDefault();
   }
@@ -30,6 +31,7 @@ function onKeyDown(keyEvent) {
 
 const SearchModal = () => {
 
+  const {apiData, setAPIData} = useAPIData()
   const {isOpen, onOpen, onClose} = useDisclosure()
   const server_address = "http://127.0.0.1:8000"
 
@@ -76,7 +78,16 @@ const SearchModal = () => {
           <ModalHeader>Vyhledat práci</ModalHeader>
           <ModalCloseButton/>
           <ModalBody gap={10}>
-            <SearchInModal/>
+            <Formik
+              onSubmit={(values) => {
+                axios.post(`${server_address}/search`, values.searchString)
+                  .then(r => console.log(r))
+              }}
+              initialValues={{searchString: ""}}>
+              <Form>
+                <SearchInModal/>
+              </Form>
+            </Formik>
             <ModalDivider/>
             <Formik
               initialValues={
@@ -89,10 +100,12 @@ const SearchModal = () => {
                   tagy: []
                 }
               }
-              onSubmit={(values) =>
-              {
-                axios.post(`${server_address}/filtr`, handlePostValues(values))
-                  .then(r => console.log(r))
+              onSubmit={(values) => {
+                axios.post(`${server_address}/search-by-filter`, handlePostValues(values))
+                  .then(r => {
+                    console.log(r)
+                    setAPIData(r.data)
+                  })
                   .catch(error => alert(error))
                 console.log(handlePostValues(values))
               }}
