@@ -1,4 +1,4 @@
-import {Button, IconButton, Input, InputGroup, InputRightAddon} from "@chakra-ui/react";
+import {IconButton, Input, InputGroup} from "@chakra-ui/react";
 import {SlMagnifier} from "react-icons/sl";
 import {Field} from "formik";
 
