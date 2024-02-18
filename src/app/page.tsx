@@ -1,24 +1,13 @@
 'use client'
-import {
-  Box, Flex, Table, Text,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
-  TableContainer,
-} from '@chakra-ui/react'
+import {Box, Flex, Table, TableCaption, TableContainer, Tbody, Td, Text, Th, Thead, Tr,} from '@chakra-ui/react'
 import SearchModal from "@/app/components/SearchModal";
 import PageText from "@/app/components/PageText";
 import {useAPIData} from "@/app/providers/APIdataProvider";
-import {ThreeDobject} from "@/app/components/ThreeDobject";
 
 export default function Home() {
 
 
-  const {apiData, setAPIData} = useAPIData();
+  const {apiData} = useAPIData();
 
   if (Array.isArray(apiData)) {
     return (
