@@ -1,6 +1,6 @@
 'use client'
 import {
-  Box, Flex, Table,
+  Box, Flex, Table, Text,
   Thead,
   Tbody,
   Tfoot,
@@ -58,6 +58,13 @@ export default function Home() {
             </Tbody>
           </Table>
         </TableContainer>
+      </Box>
+    )
+  } else if(apiData.Message) {
+    return (
+      <Box color="white" w="full"
+           minH="80vh" justifyContent="space-around" justifyItems="center" placeItems="center" display="flex">
+        <Text fontSize="3xl">{apiData.Message}</Text>
       </Box>
     )
   } else return (

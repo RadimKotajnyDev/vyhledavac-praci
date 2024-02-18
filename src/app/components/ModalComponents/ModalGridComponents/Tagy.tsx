@@ -44,7 +44,7 @@ const Tagy = (props: any) => {
             placeholder="Sem napište tagy (klíčové slova)"
           />
           <Wrap mt={2}>
-            {values.tagy.map((tag, index) => (
+            {values.tagy.map((tag: string, index: number) => (
               <WrapItem key={index}>
                 <Tag
                   size="md"

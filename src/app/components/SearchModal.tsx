@@ -46,12 +46,9 @@ const SearchModal = () => {
       obor: obor_array,
       pocatecni_rok: Number(values.rozmezi_let[0]),
       koncovy_rok: Number(values.rozmezi_let[1]),
-      predmet: [
-        "string" //TODO:
-      ],
-      vedouci: "string"
-      //vedouci: values.vedouci,
-      //tagy: values.tagy
+      predmet: [], //TODO:
+      vedouci: values.vedouci,
+      tagy: values.tagy
     }
   }
 
@@ -80,8 +77,11 @@ const SearchModal = () => {
           <ModalBody gap={10}>
             <Formik
               onSubmit={(values) => {
-                axios.post(`${server_address}/search`, values.searchString)
-                  .then(r => console.log(r))
+                axios.post(`${server_address}/search`, null, {params: {vyraz: values.searchString}})
+                  .then(r => {
+                    console.log(r)
+                    setAPIData(r.data)
+                  })
               }}
               initialValues={{searchString: ""}}>
               <Form>
