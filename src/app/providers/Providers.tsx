@@ -19,9 +19,7 @@ export function Providers({children}: { children: React.ReactNode }) {
           <Box as="main">
             {children}
           </Box>
-          {/*
           <Footer />
-         */}
         </Box>
       </APIDataProvider>
     </ChakraProvider>

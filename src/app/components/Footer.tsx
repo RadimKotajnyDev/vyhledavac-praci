@@ -1,17 +1,32 @@
 import {Box, Text} from "@chakra-ui/react";
 
 export const Footer = () => {
+
+  function getTodayYear() {
+    const todayYear = new Date().getFullYear()
+    if(todayYear === 2024) {
+      return todayYear
+    }
+    else return `2024 - ${todayYear}`
+  }
+
   return (
     <Box as="footer"
-         bg='blackAlpha.300'
-         backdropFilter='blur(10px)'
-         borderTopRadius="xl"
+         display="flex"
+         bottom={0}
+         position="absolute"
+         //bg='blackAlpha.300'
+         //backdropFilter='blur(10px)'
+         //borderTopRadius="xl"
          dropShadow="2xl"
          color="white"
-         h="fit-content"
+         w="full"
+         justifyContent="center"
+         alignItems="center"
+         h={10}
          //p={1}
     >
-      <Text>&copy; {new Date().getFullYear()} Radim Kotajny & Filip Kroupa</Text>
+      <Text opacity="50%" fontSize="xs">&copy; {getTodayYear()} Radim Kotajny & Filip Kroupa</Text>
     </Box>
   )
 }

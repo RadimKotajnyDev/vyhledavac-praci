@@ -11,6 +11,7 @@ export const theme = extendTheme({
       html: {
         height: '100%',
       },
+      th: "color: white",
       body: {
         height: '100%',
         margin: 0,

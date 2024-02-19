@@ -1,8 +1,9 @@
 'use client'
 import {
+  Box,
   Button,
-  Center,
-  Grid,
+  Center, Flex,
+  Grid, GridItem,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -22,6 +23,7 @@ import RozmeziLet from "@/app/components/ModalComponents/ModalGridComponents/Roz
 import Tagy from "@/app/components/ModalComponents/ModalGridComponents/Tagy";
 import axios from "axios";
 import {useAPIData} from "@/app/providers/APIdataProvider";
+import Predmety from "@/app/components/ModalComponents/ModalGridComponents/Predmet";
 
 function onKeyDown(keyEvent: any) { //TODO: specify a type
   if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
@@ -46,43 +48,70 @@ const SearchModal = () => {
       obor: obor_array,
       pocatecni_rok: Number(values.rozmezi_let[0]),
       koncovy_rok: Number(values.rozmezi_let[1]),
-      predmet: [], //TODO:
+      predmet: values.predmet,
       vedouci: values.vedouci,
       tagy: values.tagy
     }
   }
 
+  function sendSearch(value: string) {
+    axios.post(`${server_address}/search`, null, {params: {vyraz: value}})
+      .then(r => {
+        console.log(r)
+        setAPIData(r.data)
+      })
+      .catch(e => alert(e))
+  }
+
+  function sendFilter(values: any) {
+    axios.post(`${server_address}/search-by-filter`, handlePostValues(values))
+      .then(r => {
+        console.log(r)
+        setAPIData(r.data)
+      })
+      .catch(error => alert(error))
+    console.log(handlePostValues(values))
+  }
+
   return (
     <>
-      <Button
+      <Flex flexDir={{base: "column", md: "row"}} alignItems="center" gap={5}>
+        <Button
         onClick={onOpen}
         colorScheme="green"
         variant="solid"
         mt={5}
         borderRadius="full"
         px={9} py={7}
-        w="fit-content" fontSize="lg"
+        w="fit-content" fontSize={{base: "sm", md: "lg"}}
         rightIcon={<SlMagnifier size={20}/>}
       >
-        Začít
+        Hledat
       </Button>
+      <Button
+        colorScheme="green"
+        mt={5}
+        borderRadius="full"
+        px={9} py={7}
+        w="fit-content" fontSize={{base: "sm", md: "lg"}}
+        onClick={() => sendSearch("")} variant="ghost">
+        Zobrazit všechny práce
+      </Button>
+      </Flex>
       <Modal
         //isCentered={true}
         size="3xl"
         isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay/>
+        <ModalOverlay
+          bg='none'
+          backdropFilter='auto'
+          backdropBlur='5px'/>
         <ModalContent>
           <ModalHeader>Vyhledat práci</ModalHeader>
           <ModalCloseButton/>
           <ModalBody gap={10}>
             <Formik
-              onSubmit={(values) => {
-                axios.post(`${server_address}/search`, null, {params: {vyraz: values.searchString}})
-                  .then(r => {
-                    console.log(r)
-                    setAPIData(r.data)
-                  })
-              }}
+              onSubmit={(values) => sendSearch(values.searchString)}
               initialValues={{searchString: ""}}>
               <Form>
                 <SearchInModal/>
@@ -97,17 +126,12 @@ const SearchModal = () => {
                   obor_elektro: false,
                   rozmezi_let: [2000, 2024],
                   vedouci: "",
+                  predmet: "",
                   tagy: []
                 }
               }
               onSubmit={(values) => {
-                axios.post(`${server_address}/search-by-filter`, handlePostValues(values))
-                  .then(r => {
-                    console.log(r)
-                    setAPIData(r.data)
-                  })
-                  .catch(error => alert(error))
-                console.log(handlePostValues(values))
+                sendFilter(values)
               }}
             >
               {({errors, values, setFieldValue}) => (
@@ -124,10 +148,17 @@ const SearchModal = () => {
                     <RozmeziLet {...{setFieldValue, values}}/>
                     <VedouciPrace/>
                     <Tagy {...{setFieldValue, values}}/>
+                    <GridItem colStart={{base: 0, md: 1}}
+                              colSpan={{base: 1, md: 2}}
+                              w={{base: "full", md: 350}}
+                              justifySelf={{base: "start", md: "center"}}
+                    >
+                      <Predmety/>
+                    </GridItem>
                   </Grid>
                   <Center w="100%" my={5}>
                     <Button type="submit" colorScheme='green'>
-                      Použít
+                      Filtrovat
                     </Button>
                   </Center>
                 </Form>
