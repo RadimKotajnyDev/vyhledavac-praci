@@ -23,7 +23,7 @@ import RozmeziLet from "@/app/components/ModalComponents/ModalGridComponents/Roz
 import Tagy from "@/app/components/ModalComponents/ModalGridComponents/Tagy";
 import axios from "axios";
 import {useAPIData} from "@/app/providers/APIdataProvider";
-import Predmety from "@/app/components/ModalComponents/ModalGridComponents/Predmet";
+import Predmet from "@/app/components/ModalComponents/ModalGridComponents/Predmet";
 
 function onKeyDown(keyEvent: any) { //TODO: specify a type
   if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
@@ -153,7 +153,7 @@ const SearchModal = () => {
                               w={{base: "full", md: 350}}
                               justifySelf={{base: "start", md: "center"}}
                     >
-                      <Predmety/>
+                      <Predmet/>
                     </GridItem>
                   </Grid>
                   <Center w="100%" my={5}>
