@@ -1,16 +1,17 @@
 'use client'
 import {
-  Box,
   Button,
-  Center, Flex,
-  Grid, GridItem,
+  Center,
+  Flex,
+  Grid,
+  GridItem,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
   ModalHeader,
   ModalOverlay,
-  useDisclosure
+  useDisclosure, useToast
 } from "@chakra-ui/react";
 import {Form, Formik} from "formik";
 
@@ -22,8 +23,10 @@ import ModalDivider from "@/app/components/ModalComponents/ModalDivider";
 import RozmeziLet from "@/app/components/ModalComponents/ModalGridComponents/RozmeziLet";
 import Tagy from "@/app/components/ModalComponents/ModalGridComponents/Tagy";
 import axios from "axios";
-import {useAPIData} from "@/app/providers/APIdataProvider";
 import Predmet from "@/app/components/ModalComponents/ModalGridComponents/Predmet";
+
+import {useRouter} from 'next/navigation'
+
 
 function onKeyDown(keyEvent: any) { //TODO: specify a type
   if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
@@ -32,8 +35,9 @@ function onKeyDown(keyEvent: any) { //TODO: specify a type
 }
 
 const SearchModal = () => {
+  const router = useRouter()
+  const toast = useToast()
 
-  const {apiData, setAPIData} = useAPIData()
   const {isOpen, onOpen, onClose} = useDisclosure()
   const server_address = "http://127.0.0.1:8000"
 
@@ -57,46 +61,56 @@ const SearchModal = () => {
   function sendSearch(value: string) {
     axios.post(`${server_address}/search`, null, {params: {vyraz: value}})
       .then(r => {
-        console.log(r)
-        setAPIData(r.data)
+        //console.log(r)
+        //setAPIData(r.data)
+        sessionStorage.setItem('apiData', JSON.stringify(r.data));
       })
-      .catch(e => alert(e))
+      .catch(e => toast({
+                title: e,
+                status: "error",
+                isClosable: true,
+              })).then(() => router.push("/vyhledane-prace"))
   }
 
   function sendFilter(values: any) {
     axios.post(`${server_address}/search-by-filter`, handlePostValues(values))
       .then(r => {
-        console.log(r)
-        setAPIData(r.data)
+        //console.log(r)
+        //setAPIData(r.data)
+        sessionStorage.setItem('apiData', JSON.stringify(r.data));
       })
-      .catch(error => alert(error))
-    console.log(handlePostValues(values))
+      .catch((e) => toast({
+                title: e,
+                status: "error",
+                isClosable: true,
+              })).then(() => router.push("/vyhledane-prace"))
+    //console.log(handlePostValues(values))
   }
 
   return (
     <>
       <Flex flexDir={{base: "column", md: "row"}} alignItems="center" gap={5}>
         <Button
-        onClick={onOpen}
-        colorScheme="green"
-        variant="solid"
-        mt={5}
-        borderRadius="full"
-        px={9} py={7}
-        w="fit-content" fontSize={{base: "sm", md: "lg"}}
-        rightIcon={<SlMagnifier size={20}/>}
-      >
-        Hledat
-      </Button>
-      <Button
-        colorScheme="green"
-        mt={5}
-        borderRadius="full"
-        px={9} py={7}
-        w="fit-content" fontSize={{base: "sm", md: "lg"}}
-        onClick={() => sendSearch("")} variant="ghost">
-        Zobrazit všechny práce
-      </Button>
+          onClick={onOpen}
+          colorScheme="green"
+          variant="solid"
+          mt={5}
+          borderRadius="full"
+          px={9} py={7}
+          w="fit-content" fontSize={{base: "sm", md: "lg"}}
+          rightIcon={<SlMagnifier size={20}/>}
+        >
+          Hledat
+        </Button>
+        <Button
+          colorScheme="green"
+          mt={5}
+          borderRadius="full"
+          px={9} py={7}
+          w="fit-content" fontSize={{base: "sm", md: "lg"}}
+          onClick={() => sendSearch("")} variant="ghost">
+          Zobrazit všechny práce
+        </Button>
       </Flex>
       <Modal
         //isCentered={true}

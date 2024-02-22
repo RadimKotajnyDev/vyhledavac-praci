@@ -2,6 +2,20 @@
 import {extendTheme} from "@chakra-ui/react";
 
 export const theme = extendTheme({
+   colors: {
+    grayAlpha: {
+      50: "rgba(37, 37, 37, 0.05)",
+      100: "rgba(37, 37, 37, 0.1)",
+      200: "rgba(37, 37, 37, 0.2)",
+      300: "rgba(37, 37, 37, 0.3)",
+      400: "rgba(37, 37, 37, 0.4)",
+      500: "rgba(37, 37, 37, 0.5)",
+      600: "rgba(37, 37, 37, 0.6)",
+      700: "rgba(37, 37, 37, 0.7)",
+      800: "rgba(37, 37, 37, 0.8)",
+      900: "rgba(37, 37, 37, 0.9)",
+    },
+  },
   config: {
     initialColorMode: "dark",
     useSystemColorMode: false,
