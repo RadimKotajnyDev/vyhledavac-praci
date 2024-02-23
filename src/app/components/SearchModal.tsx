@@ -66,10 +66,11 @@ const SearchModal = () => {
         sessionStorage.setItem('apiData', JSON.stringify(r.data));
       })
       .catch(e => toast({
-                title: e,
-                status: "error",
-                isClosable: true,
-              })).then(() => router.push("/vyhledane-prace"))
+        title: e,
+        status: "error",
+        isClosable: true,
+      }))
+      .then(() => router.push("/vyhledane-prace"))
   }
 
   function sendFilter(values: any) {
@@ -80,10 +81,10 @@ const SearchModal = () => {
         sessionStorage.setItem('apiData', JSON.stringify(r.data));
       })
       .catch((e) => toast({
-                title: e,
-                status: "error",
-                isClosable: true,
-              })).then(() => router.push("/vyhledane-prace"))
+        title: e,
+        status: "error",
+        isClosable: true,
+      })).then(() => router.push("/vyhledane-prace"))
     //console.log(handlePostValues(values))
   }
 

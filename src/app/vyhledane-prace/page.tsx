@@ -2,7 +2,7 @@
 import {
   Box,
   Button,
-  DarkMode,
+  DarkMode, Flex, Icon,
   Spinner,
   Table,
   TableCaption,
@@ -16,6 +16,7 @@ import {
 } from "@chakra-ui/react"
 import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
+import {IoMdArrowDropdown} from "react-icons/io";
 
 type APIData = {
   id?: number,
@@ -28,8 +29,17 @@ type APIData = {
   Message?: string;
 };
 
+const TableHeads: string[] = [
+  "Školní rok",
+  "Název práce (téma)",
+  "Obor",
+  "Předmět",
+  "Autor",
+  "Vedoucí"
+]
+
 function createSlug(str: string | undefined) {
-  if(typeof str === 'undefined') {
+  if (typeof str === 'undefined') {
     return ""
   }
   return str
@@ -79,17 +89,24 @@ const VyhledanePrace = () => {
                 <TableCaption>Seznam maturitních prací</TableCaption>
                 <Thead>
                   <Tr>
-                    <Th>Školní rok</Th>
-                    <Th>Název práce (téma)</Th>
-                    <Th>Obor</Th>
-                    <Th>Předmět</Th>
-                    <Th>Autor</Th>
-                    <Th>Vedoucí</Th>
+                    {
+                      TableHeads.map((item, index) => (
+                        <Th key={index}>
+                          <Flex>
+                            <Text>{item}</Text>
+                            <Icon as={IoMdArrowDropdown} boxSize={5}></Icon>
+                          </Flex>
+                        </Th>
+                      ))
+                    }
                   </Tr>
                 </Thead>
                 <Tbody>
                   {apiData && apiData.map((data: APIData, index: number) => (
-                    <Tr key={index} cursor="pointer" onClick={() => router.push(`/vyhledane-prace/${data.id}/${createSlug(data.tema)}`)}>
+                    <Tr key={index} cursor="pointer" _hover={{
+                      backgroundColor: "rgba(255, 255, 255, 0.1)"
+                    }}
+                        onClick={() => router.push(`/vyhledane-prace/${data.id}/${createSlug(data.tema)}`)}>
                       <Td>{data.skolni_rok}</Td>
                       <Td>{data.tema}</Td>
                       <Td style={{textTransform: "uppercase"}}>{data.obor}</Td>
