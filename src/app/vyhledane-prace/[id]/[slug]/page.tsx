@@ -1,7 +1,8 @@
 'use client'
-import {Box, Button, Heading, Spinner} from "@chakra-ui/react";
+import {Box, Button, Divider, Grid, Heading, Spinner} from "@chakra-ui/react";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
+import {Image} from "@chakra-ui/next-js";
 
 type APIData = {
   id: number,
@@ -41,14 +42,14 @@ export default function Page({params}: { params: { id: number, slug: string } })
         <Button onClick={() => router.push("/")}>Zkusit znovu</Button>
       </Box>
     )
-  } else if(typeof data == "undefined" || data === null) {
+  } else if (typeof data == "undefined" || data === null) {
     return (
       <Box color="white" w="full"
-         minH="80vh" justifyContent="space-around"
-         justifyItems="center" placeItems="center"
-         display="flex">
+           minH="80vh" justifyContent="space-around"
+           justifyItems="center" placeItems="center"
+           display="flex">
         <Heading>Zadaná práce neexistuje</Heading>
-    </Box>
+      </Box>
     )
   } else return (
     <Box color="white" w="full"
@@ -61,7 +62,16 @@ export default function Page({params}: { params: { id: number, slug: string } })
            borderRadius="xl"
            p={8}
            m={4}>
-        <Heading>{data.tema ?? "Chybí název"}</Heading>
+        <Grid gridTemplateColumns="repeat(2, 1fr)">
+          <Box boxSize='sm'>
+            <Image src='' alt='Dan Abramov' fill/>
+          </Box>
+          <Box>
+            <Heading>{data.tema ?? "Chybí název"}</Heading>
+            <Divider/></Box>
+          <Box></Box>
+        </Grid>
+
       </Box>
     </Box>
   );

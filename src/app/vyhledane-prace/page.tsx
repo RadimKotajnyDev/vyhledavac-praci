@@ -38,16 +38,31 @@ const TableHeads: string[] = [
   "Vedoucí"
 ]
 
-function createSlug(str: string | undefined) {
-  if (typeof str === 'undefined') {
+function slugify(str: string | undefined): string {
+
+  if(typeof str === "undefined") {
     return ""
   }
-  return str
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, '') // Remove special characters
-    .trim()
-    .replace(/\s+/g, '-') // Replace spaces with hyphens
-    .replace(/--+/g, '-'); // Replace multiple hyphens with single hyphen
+
+  str = str.replace(/^\s+|\s+$/g, ''); // trim
+  str = str.toLowerCase();
+
+  // Czech characters mapping
+  const charMap: { [key: string]: string } = {
+    'á': 'a', 'č': 'c', 'ď': 'd', 'é': 'e', 'ě': 'e', 'í': 'i', 'ň': 'n', 'ó': 'o',
+    'ř': 'r', 'š': 's', 'ť': 't', 'ú': 'u', 'ů': 'u', 'ý': 'y', 'ž': 'z'
+  };
+
+  // Replace Czech characters
+  str = str.replace(/[^\u0000-\u007E]/g, function(a) {
+    return charMap[a] || a;
+  });
+
+  str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+           .replace(/\s+/g, '-') // collapse whitespace and replace by -
+           .replace(/-+/g, '-'); // collapse dashes
+
+  return str;
 }
 
 
@@ -106,7 +121,7 @@ const VyhledanePrace = () => {
                     <Tr key={index} cursor="pointer" _hover={{
                       backgroundColor: "rgba(255, 255, 255, 0.1)"
                     }}
-                        onClick={() => router.push(`/vyhledane-prace/${data.id}/${createSlug(data.tema)}`)}>
+                        onClick={() => router.push(`/vyhledane-prace/${data.id}/${slugify(data.tema)}`)}>
                       <Td>{data.skolni_rok}</Td>
                       <Td>{data.tema}</Td>
                       <Td style={{textTransform: "uppercase"}}>{data.obor}</Td>
