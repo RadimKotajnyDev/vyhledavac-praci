@@ -11,82 +11,32 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
-  useDisclosure, useToast
+  useDisclosure
 } from "@chakra-ui/react";
 import {Form, Formik} from "formik";
 
 import {SlMagnifier} from "react-icons/sl";
-import VedouciPrace from "@/app/components/ModalComponents/ModalGridComponents/VedouciPrace";
-import OborPrace from "@/app/components/ModalComponents/ModalGridComponents/OborPrace";
-import SearchInModal from "@/app/components/ModalComponents/SearchInModal";
-import ModalDivider from "@/app/components/ModalComponents/ModalDivider";
-import RozmeziLet from "@/app/components/ModalComponents/ModalGridComponents/RozmeziLet";
-import Tagy from "@/app/components/ModalComponents/ModalGridComponents/Tagy";
-import axios from "axios";
-import Predmet from "@/app/components/ModalComponents/ModalGridComponents/Predmet";
+import VedouciPrace from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/VedouciPrace";
+import OborPrace from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/OborPrace";
+import SearchInModal from "@/app/components/SearchModal/ModalComponents/SearchInModal";
+import ModalDivider from "@/app/components/SearchModal/ModalComponents/ModalDivider";
+import RozmeziLet from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/RozmeziLet";
+import Tagy from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/Tagy";
+import Predmet from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/Predmet";
+import {useSearchModal} from "@/app/components/SearchModal/useSearchModal";
 
-import {useRouter} from 'next/navigation'
-
-
-function onKeyDown(keyEvent: any) { //TODO: specify a type
-  if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
-    keyEvent.preventDefault();
-  }
-}
 
 const SearchModal = () => {
-  const router = useRouter()
-  const toast = useToast()
 
   const {isOpen, onOpen, onClose} = useDisclosure()
-  const server_address = "http://127.0.0.1:8000"
 
-  function handlePostValues(values: any) {
+  const {
+    onKeyDown,
+    sendSearch,
+    sendFilter,
+    initialFormValues
+  } = useSearchModal()
 
-    const obor_array = []
-    values.obor_stroj ? obor_array.push("stroj") : null
-    values.obor_it ? obor_array.push("it") : null
-    values.obor_elektro ? obor_array.push("elektro") : null
-
-    return {
-      obor: obor_array,
-      pocatecni_rok: Number(values.rozmezi_let[0]),
-      koncovy_rok: Number(values.rozmezi_let[1]),
-      predmet: values.predmet,
-      vedouci: values.vedouci,
-      tagy: values.tagy
-    }
-  }
-
-  function sendSearch(value: string) {
-    axios.post(`${server_address}/search`, null, {params: {vyraz: value}})
-      .then(r => {
-        //console.log(r)
-        //setAPIData(r.data)
-        sessionStorage.setItem('apiData', JSON.stringify(r.data));
-      })
-      .catch(e => toast({
-        title: e,
-        status: "error",
-        isClosable: true,
-      }))
-      .then(() => router.push("/vyhledane-prace"))
-  }
-
-  function sendFilter(values: any) {
-    axios.post(`${server_address}/search-by-filter`, handlePostValues(values))
-      .then(r => {
-        //console.log(r)
-        //setAPIData(r.data)
-        sessionStorage.setItem('apiData', JSON.stringify(r.data));
-      })
-      .catch((e) => toast({
-        title: e,
-        status: "error",
-        isClosable: true,
-      })).then(() => router.push("/vyhledane-prace"))
-    //console.log(handlePostValues(values))
-  }
 
   return (
     <>
@@ -134,17 +84,7 @@ const SearchModal = () => {
             </Formik>
             <ModalDivider/>
             <Formik
-              initialValues={
-                {
-                  obor_stroj: false,
-                  obor_it: false,
-                  obor_elektro: false,
-                  rozmezi_let: [2000, 2024],
-                  vedouci: "",
-                  predmet: "",
-                  tagy: []
-                }
-              }
+              initialValues={initialFormValues}
               onSubmit={(values) => {
                 sendFilter(values)
               }}

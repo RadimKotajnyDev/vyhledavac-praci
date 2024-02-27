@@ -1,8 +1,8 @@
 'use client'
 import {Box, Button, Divider, Flex, Spacer} from "@chakra-ui/react";
-import {SlMagnifier, SlQuestion, SlUser} from "react-icons/sl";
 import DarkModeButton from "@/app/components/DarkModeButton";
 import {useRouter} from "next/navigation";
+import {SlMagnifier, SlQuestion, SlUser} from "react-icons/sl";
 
 export const Navbar = () => {
 
@@ -19,7 +19,7 @@ export const Navbar = () => {
         alignItems="center"
       >
         <Button onClick={() => router.push("/")}
-          display="flex" justifyItems="center" alignItems="center" gap={2}
+                display="flex" justifyItems="center" alignItems="center" gap={2}
                 bg='blackAlpha.300'
                 backdropFilter='blur(10px)'
                 borderRadius="full"
@@ -56,36 +56,3 @@ export const Navbar = () => {
     </Box>
   )
 }
-
-/*
-
- <AbsoluteCenter>
-            <Box //bg="darkgray"
-              bg='blackAlpha.300'
-              backdropFilter='blur(10px)'
-              borderRadius="full"
-              dropShadow="2xl"
-            >
-              <Stack display="flex" flexDir="row" gap={10}>
-                <StackItem px={10} py={5}
-                           _hover={{
-                             dropShadow: "xl",
-                             background: "white",
-                             color: "black",
-                             cursor: "pointer"
-                           }} borderRadius="full">Button1</StackItem>
-                <StackItem px={10} py={5} _hover={{
-                  background: "white",
-                  color: "black",
-                  cursor: "pointer"
-                }} borderRadius="full">Button2</StackItem>
-                <StackItem px={10} py={5} _hover={{
-                  background: "white",
-                  color: "black",
-                  cursor: "pointer"
-                }} borderRadius="full">Button3</StackItem>
-              </Stack>
-            </Box>
-          </AbsoluteCenter>
-
- */

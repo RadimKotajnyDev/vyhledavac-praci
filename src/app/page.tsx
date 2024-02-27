@@ -1,6 +1,6 @@
 'use client'
 import {Box, Flex,} from '@chakra-ui/react'
-import SearchModal from "@/app/components/SearchModal";
+import SearchModal from "@/app/components/SearchModal/SearchModal";
 import PageText from "@/app/components/PageText";
 import {ThreeDobject} from "@/app/components/ThreeDobject";
 
