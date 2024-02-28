@@ -2,7 +2,7 @@
 import {Box, Button, Divider, Flex, Spacer} from "@chakra-ui/react";
 import DarkModeButton from "@/app/components/DarkModeButton";
 import {useRouter} from "next/navigation";
-import {SlMagnifier, SlQuestion, SlUser} from "react-icons/sl";
+import {SlMagnifier, SlUser} from "react-icons/sl";
 
 export const Navbar = () => {
 
@@ -21,6 +21,8 @@ export const Navbar = () => {
         <Button onClick={() => router.push("/")}
                 display="flex" justifyItems="center" alignItems="center" gap={2}
                 bg='blackAlpha.300'
+                color="white"
+                _hover={{color: "black", backgroundColor: "white"}}
                 backdropFilter='blur(10px)'
                 borderRadius="full"
                 dropShadow="2xl"
@@ -42,15 +44,11 @@ export const Navbar = () => {
              dropShadow="2xl"
              px={10} gap={5}
              py={5}>
-          <SlQuestion size={25}/>
+          <DarkModeButton/>
           <Box h="25px">
             <Divider bg="white" color="white" orientation='vertical'/>
           </Box>
           <SlUser size={25}/>
-          <Box h="25px">
-            <Divider bg="white" color="white" orientation='vertical'/>
-          </Box>
-          <DarkModeButton/>
         </Box>
       </Flex>
     </Box>

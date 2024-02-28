@@ -34,7 +34,8 @@ const SearchModal = () => {
     onKeyDown,
     sendSearch,
     sendFilter,
-    initialFormValues
+    initialFormValues,
+    validationSchema
   } = useSearchModal()
 
 
@@ -88,6 +89,7 @@ const SearchModal = () => {
               onSubmit={(values) => {
                 sendFilter(values)
               }}
+              validationSchema={validationSchema}
             >
               {({errors, values, setFieldValue}) => (
                 <Form onKeyDown={onKeyDown}>
@@ -100,7 +102,7 @@ const SearchModal = () => {
                     alignItems="space-between"
                   >
                     <OborPrace/>
-                    <RozmeziLet {...{setFieldValue, values}}/>
+                    <RozmeziLet {...{setFieldValue, values, errors}}/>
                     <VedouciPrace/>
                     <Tagy {...{setFieldValue, values}}/>
                     <GridItem colStart={{base: 0, md: 1}}

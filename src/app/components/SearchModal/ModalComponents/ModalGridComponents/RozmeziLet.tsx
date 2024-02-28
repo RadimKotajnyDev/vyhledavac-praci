@@ -1,27 +1,27 @@
-import React, {useState} from "react";
+import React from "react";
 import {
+  Box,
+  Flex,
+  Input,
   RangeSlider,
-  RangeSliderTrack,
   RangeSliderFilledTrack,
   RangeSliderThumb,
-  Box,
-  Text,
-  Input, Flex
+  RangeSliderTrack,
+  Text
 } from "@chakra-ui/react";
-import {Field, FormikFormProps, FormikHandlers, FormikValues} from "formik";
+import {Field, FormikErrors, FormikValues} from "formik";
 
 interface RozmeziLetInterface {
   values: FormikValues,
   setFieldValue: any //fix
+  errors: FormikErrors<any>
 }
 
 const RozmeziLet = (props: RozmeziLetInterface) => {
 
-  const {values, setFieldValue} = props
+  const {values, setFieldValue, errors} = props
 
   const todayYear = new Date().getFullYear()
-
-  // TODO: value[0] cannot be higher than value[1]
 
 
   return (
@@ -31,10 +31,10 @@ const RozmeziLet = (props: RozmeziLetInterface) => {
            _light={{borderColor: "gray.200"}}>
         <Text fontSize="xl" mb={2}>Rozmezí let</Text>
         <Flex gap={5}>
-          <Field name="rozmezi_let[0]" as={Input}
+          <Field name="rozmezi_let[0]" as={Input} borderColor={errors.rozmezi_let ? "red.500" : undefined}
                  type="number"
                  placeholder='min 2000'/>
-          <Field name="rozmezi_let[1]" as={Input}
+          <Field name="rozmezi_let[1]" as={Input} borderColor={errors.rozmezi_let ? "red.500" : undefined}
                  type="number"
                  placeholder={`max ${todayYear}`}/>
         </Flex>

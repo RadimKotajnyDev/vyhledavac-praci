@@ -1,6 +1,7 @@
 import {useRouter} from "next/navigation";
 import {useToast} from "@chakra-ui/react";
 import axios from "axios";
+import * as Yup from "yup"
 
 export const useSearchModal = () => {
   const router = useRouter()
@@ -16,9 +17,19 @@ export const useSearchModal = () => {
     tagy: []
   }
 
+  const validationSchema = Yup.object().shape({
+  rozmezi_let: Yup.array().of(
+    Yup.number().required('This field is required')
+  ).test(
+    'is-lesser',
+    'First value must be lower than the second one',
+    values => values[0] < values[1]
+  )
+});
+
   const server_address = "http://127.0.0.1:8000"
 
-  function onKeyDown(keyEvent: KeyboardEvent) {
+  function onKeyDown(keyEvent: any) {
     if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
         keyEvent.preventDefault();
     }
@@ -91,6 +102,7 @@ export const useSearchModal = () => {
 
   return {
     initialFormValues,
+    validationSchema,
     onKeyDown,
     sendSearch,
     sendFilter,
