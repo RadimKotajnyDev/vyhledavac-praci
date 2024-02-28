@@ -2,7 +2,10 @@
 import {
   Box,
   Button,
-  DarkMode, Flex, Icon,
+  Center,
+  DarkMode,
+  Flex,
+  Icon,
   Spinner,
   Table,
   TableCaption,
@@ -17,6 +20,7 @@ import {
 import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 import {IoMdArrowDropdown} from "react-icons/io";
+import {useSearchModal} from "@/app/components/SearchModal/useSearchModal";
 
 type APIData = {
   id?: number,
@@ -40,27 +44,25 @@ const TableHeads: string[] = [
 
 function slugify(str: string | undefined): string {
 
-  if(typeof str === "undefined") {
+  if (typeof str === "undefined") {
     return ""
   }
 
   str = str.replace(/^\s+|\s+$/g, ''); // trim
   str = str.toLowerCase();
 
-  // Czech characters mapping
   const charMap: { [key: string]: string } = {
     'á': 'a', 'č': 'c', 'ď': 'd', 'é': 'e', 'ě': 'e', 'í': 'i', 'ň': 'n', 'ó': 'o',
     'ř': 'r', 'š': 's', 'ť': 't', 'ú': 'u', 'ů': 'u', 'ý': 'y', 'ž': 'z'
   };
 
-  // Replace Czech characters
-  str = str.replace(/[^\u0000-\u007E]/g, function(a) {
+  str = str.replace(/[^\u0000-\u007E]/g, function (a) {
     return charMap[a] || a;
   });
 
   str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
-           .replace(/\s+/g, '-') // collapse whitespace and replace by -
-           .replace(/-+/g, '-'); // collapse dashes
+    .replace(/\s+/g, '-') // collapse whitespace and replace by -
+    .replace(/-+/g, '-'); // collapse dashes
 
   return str;
 }
@@ -70,6 +72,28 @@ const VyhledanePrace = () => {
   const router = useRouter()
   const [apiData, setAPIData] = useState<APIData>()
   const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [pageNumber, setPageNumber] = useState<number>(1)
+
+  const {getPraceFromPage} = useSearchModal()
+
+  useEffect(() => {
+    async function fetchData() {
+        try {
+          const newData = await getPraceFromPage(pageNumber);
+          setAPIData(prevData => prevData.concat(newData));
+        } catch (error) {
+          console.error('Chyba při načítání dat:', error);
+        }
+      }
+    if (pageNumber > 1) {
+      fetchData()
+    }
+  }, [pageNumber]);
+
+  function loadMoreData() {
+    setPageNumber(prevPageNumber => prevPageNumber + 1);
+  }
+
 
   useEffect(() => {
     const storedData = sessionStorage.getItem('apiData'); // Change to sessionStorage
@@ -91,10 +115,11 @@ const VyhledanePrace = () => {
   } else {
     if (Array.isArray(apiData) && apiData.length > 0) {
       return (
-        <Box color="white" w="full"
-             minH="80vh" justifyContent="space-around" justifyItems="center" placeItems="center" display="flex">
+        <Box color="white" w="full" minH="80vh" justifyContent="space-around" justifyItems="center" placeItems="center"
+             display="flex">
           <DarkMode>
             <TableContainer bg="rgba(255, 255, 255, 0.1)"
+                            maxH="70vh" overflowY="auto"
                             boxShadow="0 8px 32px 0 rgba( 31, 38, 135, 0.37 )"
                             backdropFilter="blur( 4px )"
                             borderRadius="xl"
@@ -104,16 +129,14 @@ const VyhledanePrace = () => {
                 <TableCaption>Seznam maturitních prací</TableCaption>
                 <Thead>
                   <Tr>
-                    {
-                      TableHeads.map((item, index) => (
-                        <Th key={index}>
-                          <Flex>
-                            <Text>{item}</Text>
-                            <Icon as={IoMdArrowDropdown} boxSize={5}></Icon>
-                          </Flex>
-                        </Th>
-                      ))
-                    }
+                    {TableHeads.map((item, index) => (
+                      <Th key={index}>
+                        <Flex>
+                          <Text>{item}</Text>
+                          <Icon as={IoMdArrowDropdown} boxSize={5}></Icon>
+                        </Flex>
+                      </Th>
+                    ))}
                   </Tr>
                 </Thead>
                 <Tbody>
@@ -132,6 +155,11 @@ const VyhledanePrace = () => {
                   ))}
                 </Tbody>
               </Table>
+              <Center>
+                <Button onClick={() => {
+                  loadMoreData
+                }}>načíst další</Button>
+              </Center>
             </TableContainer>
           </DarkMode>
         </Box>

@@ -35,7 +35,8 @@ const SearchModal = () => {
     sendSearch,
     sendFilter,
     initialFormValues,
-    validationSchema
+    validationSchema,
+    getAllPrace
   } = useSearchModal()
 
 
@@ -60,7 +61,7 @@ const SearchModal = () => {
           borderRadius="full"
           px={9} py={7}
           w="fit-content" fontSize={{base: "sm", md: "lg"}}
-          onClick={() => sendSearch("")} variant="ghost">
+          onClick={() => getAllPrace()} variant="ghost">
           Zobrazit všechny práce
         </Button>
       </Flex>

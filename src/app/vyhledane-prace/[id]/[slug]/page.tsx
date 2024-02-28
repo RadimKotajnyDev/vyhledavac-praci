@@ -1,5 +1,5 @@
 'use client'
-import {Box, Button, Divider, Flex, Grid, GridItem, Heading, Spinner, Text} from "@chakra-ui/react";
+import {Box, Button, Divider, Flex, Grid, GridItem, Heading, Spinner, Text, useToast} from "@chakra-ui/react";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 import {Image} from "@chakra-ui/react";
@@ -21,6 +21,7 @@ type APIData = {
 
 export default function Page({params}: { params: { id: number, slug: string } }) {
 
+  const toast = useToast()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [data, setData] = useState<APIData | null>();
@@ -36,12 +37,17 @@ export default function Page({params}: { params: { id: number, slug: string } })
       }
     }
     else {
-      axios.get(`${server_address}/search_task_by_id/${params.id}`)
-        .catch(e => alert(e))
+      axios.get<APIData>(`${server_address}/search_task_by_id/${params.id}`)
         .then(r => {
-          setData(r?.data)
+          setData(r.data) //FIXME: NESER MĚ
           setIsLoading(false)
         })
+        .catch((e) => toast({
+        title: e,
+        status: "error",
+        isClosable: true,
+      }))
+
     }
   }, [params.id])
 

@@ -19,19 +19,19 @@ export const useSearchModal = () => {
   }
 
   const validationSchema = Yup.object().shape({
-  rozmezi_let: Yup.array().of(
-    Yup.number().required('This field is required')
-  ).test(
-    'is-lesser',
-    'First value must be lower than the second one',
-    values => {
-      if (values && Array.isArray(values) && values.length >= 2) {
-        return values[0] < values[1];
+    rozmezi_let: Yup.array().of(
+      Yup.number().required('This field is required')
+    ).test(
+      'is-lesser',
+      'First value must be lower than the second one',
+      values => {
+        if (values && Array.isArray(values) && values.length >= 2) {
+          return values[0] < values[1];
+        }
+        return true; // If values are undefined or don't meet criteria, validation passes
       }
-      return true; // If values are undefined or don't meet criteria, validation passes
-    }
-  )
-});
+    )
+  });
 
   function onKeyDown(keyEvent: any) {
     if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
@@ -54,6 +54,65 @@ export const useSearchModal = () => {
       predmet: values.predmet,
       vedouci: values.vedouci,
       tagy: values.tagy
+    }
+  }
+
+  function getAllPrace() {
+    axios.get(`${server_address}/load-page/1`)
+      .then(r => {
+        sessionStorage.setItem('apiData', JSON.stringify(r.data));
+      })
+      .catch(e => toast({
+        title: e,
+        status: "error",
+        isClosable: true,
+      }))
+      .then(() => {
+        toast({
+          title: "Vyhledání proběhlo úspěšně.",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        })
+        router.push("/vyhledane-prace")
+      })
+  }
+
+  /*
+  function getPraceFromPage(input: number) {
+    axios.get(`${server_address}/load-page/${input}`)
+      .then(r => {
+        const oldData = sessionStorage.getItem('apiData');
+        if (oldData) {
+          const parsedOldData = JSON.parse(oldData)
+          const newData = r.data
+          const updatedData = parsedOldData.concat(newData)
+          sessionStorage.setItem('apiData', JSON.stringify(updatedData));
+        }
+      })
+      .catch(e => toast({
+        title: e,
+        status: "error",
+        isClosable: true,
+      }))
+      .then(() => {
+        toast({
+          title: "Vyhledání proběhlo úspěšně.",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        })
+        router.push("/vyhledane-prace")
+      })
+  }
+   */
+
+  async function getPraceFromPage(input: number) {
+    try {
+      const response = await axios.get(`${server_address}/load-page/${input}`);
+      return response.data;
+    } catch (error) {
+      throw new Error(`Chyba při načítání dat ze stránky ${input}: ${error.message}`);
     }
   }
 
@@ -109,5 +168,7 @@ export const useSearchModal = () => {
     onKeyDown,
     sendSearch,
     sendFilter,
+    getAllPrace,
+    getPraceFromPage
   }
 }
