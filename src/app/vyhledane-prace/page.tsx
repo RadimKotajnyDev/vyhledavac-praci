@@ -89,7 +89,7 @@ const VyhledanePrace = () => {
       </Box>
     )
   } else {
-    if (Array.isArray(apiData)) {
+    if (Array.isArray(apiData) && apiData.length > 0) {
       return (
         <Box color="white" w="full"
              minH="80vh" justifyContent="space-around" justifyItems="center" placeItems="center" display="flex">

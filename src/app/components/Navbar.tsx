@@ -1,5 +1,5 @@
 'use client'
-import {Box, Button, Divider, Flex, Spacer} from "@chakra-ui/react";
+import {Box, Button, Divider, Flex, IconButton, Spacer} from "@chakra-ui/react";
 import DarkModeButton from "@/app/components/DarkModeButton";
 import {useRouter} from "next/navigation";
 import {SlMagnifier, SlUser} from "react-icons/sl";
@@ -48,7 +48,8 @@ export const Navbar = () => {
           <Box h="25px">
             <Divider bg="white" color="white" orientation='vertical'/>
           </Box>
-          <SlUser size={25}/>
+          <IconButton onClick={() => alert("čau vale")}
+            aria-label="admin-page-button" size="0" variant="link" icon={<SlUser size={25} />} />
         </Box>
       </Flex>
     </Box>

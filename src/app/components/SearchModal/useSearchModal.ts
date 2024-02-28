@@ -2,6 +2,7 @@ import {useRouter} from "next/navigation";
 import {useToast} from "@chakra-ui/react";
 import axios from "axios";
 import * as Yup from "yup"
+import {server_address} from "@/app/configs/apiConfig";
 
 export const useSearchModal = () => {
   const router = useRouter()
@@ -23,18 +24,20 @@ export const useSearchModal = () => {
   ).test(
     'is-lesser',
     'First value must be lower than the second one',
-    values => values[0] < values[1]
+    values => {
+      if (values && Array.isArray(values) && values.length >= 2) {
+        return values[0] < values[1];
+      }
+      return true; // If values are undefined or don't meet criteria, validation passes
+    }
   )
 });
 
-  const server_address = "http://127.0.0.1:8000"
-
   function onKeyDown(keyEvent: any) {
     if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
-        keyEvent.preventDefault();
+      keyEvent.preventDefault();
     }
-}
-
+  }
 
 
   function handlePostValues(values: any) {

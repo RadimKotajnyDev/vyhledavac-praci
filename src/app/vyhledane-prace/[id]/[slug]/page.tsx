@@ -3,6 +3,8 @@ import {Box, Button, Divider, Flex, Grid, GridItem, Heading, Spinner, Text} from
 import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 import {Image} from "@chakra-ui/react";
+import axios from "axios";
+import {server_address} from "@/app/configs/apiConfig";
 
 type APIData = {
   id: number,
@@ -33,11 +35,21 @@ export default function Page({params}: { params: { id: number, slug: string } })
         setData(currentData);
       }
     }
-  }, [params.id]);
+    else {
+      axios.get(`${server_address}/search_task_by_id/${params.id}`)
+        .catch(e => alert(e))
+        .then(r => {
+          setData(r?.data)
+          setIsLoading(false)
+        })
+    }
+  }, [params.id])
 
+  /*
   useEffect(() => {
     console.log(data)
   }, [data]);
+   */
 
 
   if (isLoading) {
