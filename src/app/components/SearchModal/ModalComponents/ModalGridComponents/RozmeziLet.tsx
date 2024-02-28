@@ -12,9 +12,9 @@ import {
 import {Field, FormikErrors, FormikValues} from "formik";
 
 interface RozmeziLetInterface {
-  values: FormikValues,
-  setFieldValue: any //fix
-  errors: FormikErrors<any>
+  values: FormikValues;
+  setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
+  errors: FormikErrors<any>;
 }
 
 const RozmeziLet = (props: RozmeziLetInterface) => {
