@@ -27,19 +27,10 @@ export default function Page({params}: { params: { id: number, slug: string } })
   const [data, setData] = useState<APIData | null>();
 
   useEffect(() => {
-    const storedData = sessionStorage.getItem('apiData');
-    if (storedData) {
-      const storedDataParse = JSON.parse(storedData) as APIData[];
-      const currentData = storedDataParse.find(item => item.id === Number(params.id));
-      setIsLoading(false)
-      if (currentData) {
-        setData(currentData);
-      }
-    }
-    else {
+    function getDataById() {
       axios.get<APIData>(`${server_address}/search_task_by_id/${params.id}`)
         .then(r => {
-          setData(r.data) //FIXME: NESER MĚ
+          setData(r.data)
           setIsLoading(false)
         })
         .catch((e) => toast({
@@ -47,7 +38,21 @@ export default function Page({params}: { params: { id: number, slug: string } })
         status: "error",
         isClosable: true,
       }))
-
+    }
+    const storedData = sessionStorage.getItem('apiData');
+    if (storedData) {
+      const storedDataParse = JSON.parse(storedData) as APIData[];
+      const currentData = storedDataParse.find(item => item.id === Number(params.id));
+      if (currentData) {
+        setData(currentData);
+        setIsLoading(false)
+      }
+      else {
+        getDataById()
+      }
+    }
+    else {
+      getDataById()
     }
   }, [params.id])
 

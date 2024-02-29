@@ -8,14 +8,14 @@ import {
   Icon,
   Spinner,
   Table,
-  TableCaption,
   TableContainer,
   Tbody,
   Td,
   Text,
   Th,
   Thead,
-  Tr
+  Tr,
+  useToast
 } from "@chakra-ui/react"
 import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
@@ -48,7 +48,7 @@ function slugify(str: string | undefined): string {
     return ""
   }
 
-  str = str.replace(/^\s+|\s+$/g, ''); // trim
+  str = str.replace(/^\s+|\s+$/g, '');
   str = str.toLowerCase();
 
   const charMap: { [key: string]: string } = {
@@ -60,33 +60,46 @@ function slugify(str: string | undefined): string {
     return charMap[a] || a;
   });
 
-  str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
-    .replace(/\s+/g, '-') // collapse whitespace and replace by -
-    .replace(/-+/g, '-'); // collapse dashes
-
+  str = str.replace(/[^a-z0-9 -]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
   return str;
 }
 
 
 const VyhledanePrace = () => {
   const router = useRouter()
+  const toast = useToast()
   const [apiData, setAPIData] = useState<APIData>()
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [pageNumber, setPageNumber] = useState<number>(1)
+  const [isButtonHidden, hideButton] = useState<boolean>(false)
 
   const {getPraceFromPage} = useSearchModal()
 
   useEffect(() => {
-    async function fetchData() {
-        try {
-          const newData = await getPraceFromPage(pageNumber);
-          setAPIData(prevData => prevData.concat(newData));
-        } catch (error) {
-          console.error('Chyba při načítání dat:', error);
+    async function fetchNextPage() {
+      try {
+        //console.log(pageNumber)
+        const newData = await getPraceFromPage(pageNumber);
+        if (newData.length === 0) {
+          hideButton(true)
+          toast({
+            title: "Načteno maximálně prací",
+            status: "info",
+            isClosable: true,
+            duration: 1500
+          })
         }
+        setAPIData(prevData => prevData?.concat(newData));
+        sessionStorage.setItem('apiData', JSON.stringify(apiData));
+      } catch (error) {
+        console.error('Chyba při načítání dat:', error);
       }
+    }
+
     if (pageNumber > 1) {
-      fetchData()
+      fetchNextPage()
     }
   }, [pageNumber]);
 
@@ -96,11 +109,13 @@ const VyhledanePrace = () => {
 
 
   useEffect(() => {
-    const storedData = sessionStorage.getItem('apiData'); // Change to sessionStorage
-    if (storedData) {
-      setAPIData(JSON.parse(storedData));
-      setIsLoading(false)
-      //console.log(storedData)
+    if (pageNumber === 1) {
+      const storedData = sessionStorage.getItem('apiData');
+      if (storedData) {
+        setAPIData(JSON.parse(storedData));
+        setIsLoading(false)
+        //console.log(storedData)
+      }
     }
   }, []);
 
@@ -126,7 +141,6 @@ const VyhledanePrace = () => {
                             p={8}
                             m={4}>
               <Table variant='simple'>
-                <TableCaption>Seznam maturitních prací</TableCaption>
                 <Thead>
                   <Tr>
                     {TableHeads.map((item, index) => (
@@ -156,9 +170,10 @@ const VyhledanePrace = () => {
                 </Tbody>
               </Table>
               <Center>
-                <Button onClick={() => {
-                  loadMoreData
-                }}>načíst další</Button>
+                <Button mt={5} display={isButtonHidden ? "none" : "block"}
+                        onClick={() => {
+                          loadMoreData()
+                        }}>načíst další</Button>
               </Center>
             </TableContainer>
           </DarkMode>
