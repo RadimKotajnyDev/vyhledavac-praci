@@ -22,7 +22,7 @@ import ModalDivider from "@/app/components/SearchModal/ModalComponents/ModalDivi
 import RozmeziLet from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/RozmeziLet";
 import Tagy from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/Tagy";
 import Predmet from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/Predmet";
-import {useSearchModal} from "@/app/components/SearchModal/useSearchModal";
+import {useSearchFunctions} from "@/app/configs/useSearchFunctions";
 import Autor from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/Autor";
 
 
@@ -37,7 +37,7 @@ const SearchModal = () => {
     initialFormValues,
     validationSchema,
     getAllPrace
-  } = useSearchModal()
+  } = useSearchFunctions()
 
 
   return (

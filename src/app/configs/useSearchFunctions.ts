@@ -4,7 +4,7 @@ import axios from "axios";
 import * as Yup from "yup"
 import {server_address} from "@/app/configs/apiConfig";
 
-export const useSearchModal = () => {
+export const useSearchFunctions = () => {
   const router = useRouter()
   const toast = useToast()
 

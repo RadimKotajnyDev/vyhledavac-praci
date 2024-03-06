@@ -20,7 +20,7 @@ import {
 import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 import {IoMdArrowDropdown} from "react-icons/io";
-import {useSearchModal} from "@/app/components/SearchModal/useSearchModal";
+import {useSearchFunctions} from "@/app/configs/useSearchFunctions";
 
 type APIData = {
   id?: number,
@@ -75,7 +75,7 @@ const VyhledanePrace = () => {
   const [pageNumber, setPageNumber] = useState<number>(1)
   const [isButtonHidden, hideButton] = useState<boolean>(false)
 
-  const {getPraceFromPage} = useSearchModal()
+  const {getPraceFromPage} = useSearchFunctions()
 
   useEffect(() => {
     async function fetchNextPage() {

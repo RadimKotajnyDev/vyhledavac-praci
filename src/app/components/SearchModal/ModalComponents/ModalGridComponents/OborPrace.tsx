@@ -9,7 +9,7 @@ const OborPrace = () => {
                               _light={{borderColor: "gray.200"}}
            borderColor='gray.600'>
         <Text fontSize="xl">Obor</Text>
-        <Field name="obor_stroj" as={Checkbox} size="lg" colorScheme="green">Strojínerství</Field>
+        <Field name="obor_stroj" as={Checkbox} size="lg" colorScheme="green">Strojírenství</Field>
         <Field name="obor_it" as={Checkbox} size="lg" colorScheme="green">Informační technologie</Field>
         <Field name="obor_elektro" as={Checkbox} size="lg" colorScheme="green">Elektrotechnika</Field>
       </Box>
