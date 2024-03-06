@@ -134,7 +134,7 @@ const VyhledanePrace = () => {
              display="flex">
           <DarkMode>
             <TableContainer bg="rgba(255, 255, 255, 0.1)"
-                            maxH="70vh" overflowY="auto"
+                            maxH="80vh" overflowY="auto"
                             boxShadow="0 8px 32px 0 rgba( 31, 38, 135, 0.37 )"
                             backdropFilter="blur( 4px )"
                             borderRadius="xl"
@@ -160,7 +160,7 @@ const VyhledanePrace = () => {
                     }}
                         onClick={() => router.push(`/vyhledane-prace/${data.id}/${slugify(data.tema)}`)}>
                       <Td>{data.skolni_rok}</Td>
-                      <Td>{data.tema}</Td>
+                      <Td style={{ whiteSpace: 'normal' }}>{data.tema}</Td>
                       <Td style={{textTransform: "uppercase"}}>{data.obor}</Td>
                       <Td style={{textTransform: "uppercase"}}>{data.predmet}</Td>
                       <Td>{data.jmeno_prijmeni}</Td>

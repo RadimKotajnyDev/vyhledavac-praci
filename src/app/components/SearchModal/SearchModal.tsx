@@ -4,7 +4,6 @@ import {
   Center,
   Flex,
   Grid,
-  GridItem,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -24,6 +23,7 @@ import RozmeziLet from "@/app/components/SearchModal/ModalComponents/ModalGridCo
 import Tagy from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/Tagy";
 import Predmet from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/Predmet";
 import {useSearchModal} from "@/app/components/SearchModal/useSearchModal";
+import Autor from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/Autor";
 
 
 const SearchModal = () => {
@@ -104,15 +104,10 @@ const SearchModal = () => {
                   >
                     <OborPrace/>
                     <RozmeziLet {...{setFieldValue, values, errors}}/>
+                    <Autor/>
                     <VedouciPrace/>
+                    <Predmet/>
                     <Tagy {...{setFieldValue, values}}/>
-                    <GridItem colStart={{base: 0, md: 1}}
-                              colSpan={{base: 1, md: 2}}
-                              w={{base: "full", md: 350}}
-                              justifySelf={{base: "start", md: "center"}}
-                    >
-                      <Predmet/>
-                    </GridItem>
                   </Grid>
                   <Center w="100%" my={5}>
                     <Button type="submit" colorScheme='green'>
