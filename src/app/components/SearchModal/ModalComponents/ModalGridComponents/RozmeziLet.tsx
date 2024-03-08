@@ -1,4 +1,5 @@
-import React from "react";
+'use client'
+import React, {useEffect, useState} from "react";
 import {
   Box,
   Flex,
@@ -10,6 +11,8 @@ import {
   Text
 } from "@chakra-ui/react";
 import {Field, FormikErrors, FormikValues} from "formik";
+import {server_address} from "@/app/configs/apiConfig";
+import axios from "axios";
 
 interface RozmeziLetInterface {
   values: FormikValues;
@@ -18,6 +21,18 @@ interface RozmeziLetInterface {
 }
 
 const RozmeziLet = (props: RozmeziLetInterface) => {
+
+  const [oldestYear, setOldestYear] = useState<number>(2000)
+
+  useEffect(() => {
+    async function getOldestYear() {
+      axios.get(`${server_address}/get-oldest-year`)
+        .then(r => setOldestYear(Number(r.data)))
+        .catch(e => alert(e))
+    }
+    getOldestYear()
+  }, []);
+
 
   const {values, setFieldValue, errors} = props
 
@@ -33,7 +48,7 @@ const RozmeziLet = (props: RozmeziLetInterface) => {
         <Flex gap={5}>
           <Field name="rozmezi_let[0]" as={Input} borderColor={errors.rozmezi_let ? "red.500" : undefined}
                  type="number"
-                 placeholder='min 2000'/>
+                 placeholder={`min ${oldestYear}`}/>
           <Field name="rozmezi_let[1]" as={Input} borderColor={errors.rozmezi_let ? "red.500" : undefined}
                  type="number"
                  placeholder={`max ${todayYear}`}/>
@@ -41,7 +56,7 @@ const RozmeziLet = (props: RozmeziLetInterface) => {
         <Box px={3} mt={4}>
           <RangeSlider colorScheme="green"
                      aria-label={['min', 'max']} defaultValue={[values?.rozmezi_let[0], values?.rozmezi_let[1]]}
-                     min={2000} max={todayYear}
+                     min={oldestYear} max={todayYear}
           //onChange={handleChange}
           //value={value}
                      onChange={(val) =>

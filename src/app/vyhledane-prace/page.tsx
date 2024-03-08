@@ -31,6 +31,7 @@ type APIData = {
   jmeno_prijmeni?: string,
   vedouci?: string,
   Message?: string;
+  concat?(newData: any): APIData | undefined;
 };
 
 const TableHeads: string[] = [

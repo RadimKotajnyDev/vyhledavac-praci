@@ -85,7 +85,7 @@ const SearchModal = () => {
               </Form>
             </Formik>
             <ModalDivider/>
-            <Formik
+              <Formik
               initialValues={initialFormValues}
               onSubmit={(values) => {
                 sendFilter(values)

@@ -3,16 +3,33 @@ import {useToast} from "@chakra-ui/react";
 import axios from "axios";
 import * as Yup from "yup"
 import {server_address} from "@/app/configs/apiConfig";
+import {useEffect, useState} from "react";
 
 export const useSearchFunctions = () => {
   const router = useRouter()
   const toast = useToast()
 
+  const [oldestYear, setOldestYear] = useState<number>(2000)
+
+  useEffect(() => {
+    async function getOldestYear() {
+      axios.get(`${server_address}/get-oldest-year`)
+        .then(r => setOldestYear(Number(r.data)))
+        .catch(e => alert(e))
+    }
+    getOldestYear()
+  }, []);
+
+  const todayYear = new Date().getFullYear()
+
+  //TODO: fix stutter on oldestYear
+
   const initialFormValues = {
     obor_stroj: false,
     obor_it: false,
     obor_elektro: false,
-    rozmezi_let: [2000, 2024],
+    rozmezi_let: [oldestYear, todayYear],
+    autor: "",
     vedouci: "",
     predmet: "",
     tagy: []
@@ -51,6 +68,7 @@ export const useSearchFunctions = () => {
       obor: obor_array,
       pocatecni_rok: Number(values.rozmezi_let[0]),
       koncovy_rok: Number(values.rozmezi_let[1]),
+      autor: values.autor,
       predmet: values.predmet,
       vedouci: values.vedouci,
       tagy: values.tagy
