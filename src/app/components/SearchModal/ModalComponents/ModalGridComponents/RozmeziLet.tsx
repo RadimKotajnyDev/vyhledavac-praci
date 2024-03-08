@@ -7,7 +7,7 @@ import {
   RangeSlider,
   RangeSliderFilledTrack,
   RangeSliderThumb,
-  RangeSliderTrack,
+  RangeSliderTrack, Skeleton,
   Text
 } from "@chakra-ui/react";
 import {Field, FormikErrors, FormikValues} from "formik";
@@ -23,13 +23,18 @@ interface RozmeziLetInterface {
 const RozmeziLet = (props: RozmeziLetInterface) => {
 
   const [oldestYear, setOldestYear] = useState<number>(2000)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
     async function getOldestYear() {
       axios.get(`${server_address}/get-oldest-year`)
-        .then(r => setOldestYear(Number(r.data)))
+        .then(r => {
+          setOldestYear(Number(r.data))
+          setIsLoading(false)
+        })
         .catch(e => alert(e))
     }
+
     getOldestYear()
   }, []);
 
@@ -54,34 +59,36 @@ const RozmeziLet = (props: RozmeziLetInterface) => {
                  placeholder={`max ${todayYear}`}/>
         </Flex>
         <Box px={3} mt={4}>
-          <RangeSlider colorScheme="green"
-                     aria-label={['min', 'max']} defaultValue={[values?.rozmezi_let[0], values?.rozmezi_let[1]]}
-                     min={oldestYear} max={todayYear}
-          //onChange={handleChange}
-          //value={value}
-                     onChange={(val) =>
-                       setFieldValue("rozmezi_let", val)
-                     }
-                     value={[values?.rozmezi_let[0], values?.rozmezi_let[1]]}
-        >
-          <RangeSliderTrack>
-            <RangeSliderFilledTrack/>
-          </RangeSliderTrack>
-          <RangeSliderThumb index={0}>
-            <Box position="relative">
-              <Text position="absolute" mt={1} left="50%" transform="translateX(-50%)">
-                {values.rozmezi_let[0]}
-              </Text>
-            </Box>
-          </RangeSliderThumb>
-          <RangeSliderThumb index={1}>
-            <Box position="relative">
-              <Text position="absolute" mt={1} left="50%" transform="translateX(-50%)">
-                {values.rozmezi_let[1]}
-              </Text>
-            </Box>
-          </RangeSliderThumb>
-        </RangeSlider>
+          <Skeleton isLoaded={!isLoading}>
+            <RangeSlider colorScheme="green"
+                         aria-label={['min', 'max']} defaultValue={[values?.rozmezi_let[0], values?.rozmezi_let[1]]}
+                         min={oldestYear} max={todayYear}
+              //onChange={handleChange}
+              //value={value}
+                         onChange={(val) =>
+                           setFieldValue("rozmezi_let", val)
+                         }
+                         value={[values?.rozmezi_let[0], values?.rozmezi_let[1]]}
+            >
+              <RangeSliderTrack>
+                <RangeSliderFilledTrack/>
+              </RangeSliderTrack>
+              <RangeSliderThumb index={0}>
+                <Box position="relative">
+                  <Text position="absolute" mt={1} left="50%" transform="translateX(-50%)">
+                    {values.rozmezi_let[0]}
+                  </Text>
+                </Box>
+              </RangeSliderThumb>
+              <RangeSliderThumb index={1}>
+                <Box position="relative">
+                  <Text position="absolute" mt={1} left="50%" transform="translateX(-50%)">
+                    {values.rozmezi_let[1]}
+                  </Text>
+                </Box>
+              </RangeSliderThumb>
+            </RangeSlider>
+          </Skeleton>
         </Box>
       </Box>
     </>
