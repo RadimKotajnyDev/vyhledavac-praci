@@ -1,6 +1,6 @@
 'use client'
 import {Box, Flex,} from '@chakra-ui/react'
-import SearchModal from "@/app/components/SearchModal/SearchModal";
+import HomePageButtons from "@/app/components/SearchModal/HomePageButtons";
 import PageText from "@/app/components/PageText";
 import {ThreeDobject} from "@/app/components/ThreeDobject";
 
@@ -11,7 +11,7 @@ export default function Home() {
            minH="80vh" justifyContent="space-around" justifyItems="center" placeItems="center" display="flex">
         <Flex flexDir="column" textAlign="left" gap={2}>
           <PageText/>
-          <SearchModal/>
+          <HomePageButtons/>
         </Flex>
         <ThreeDobject/>
       </Box>

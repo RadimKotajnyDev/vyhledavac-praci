@@ -2,19 +2,15 @@
 import {
   Button,
   Center,
-  Flex,
   Grid,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
   ModalHeader,
-  ModalOverlay,
-  useDisclosure
+  ModalOverlay
 } from "@chakra-ui/react";
 import {Form, Formik} from "formik";
-
-import {SlMagnifier} from "react-icons/sl";
 import VedouciPrace from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/VedouciPrace";
 import OborPrace from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/OborPrace";
 import SearchInModal from "@/app/components/SearchModal/ModalComponents/SearchInModal";
@@ -22,50 +18,23 @@ import ModalDivider from "@/app/components/SearchModal/ModalComponents/ModalDivi
 import RozmeziLet from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/RozmeziLet";
 import Tagy from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/Tagy";
 import Predmet from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/Predmet";
-import {useSearchFunctions} from "@/app/configs/useSearchFunctions";
 import Autor from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/Autor";
+import {useSearchFunctions} from "@/app/configs/useSearchFunctions";
 
+const SearchModal = (props: any) => {
 
-const SearchModal = () => {
-
-  const {isOpen, onOpen, onClose} = useDisclosure()
+  const {
+    isOpen, onOpen, onClose
+  } = props
 
   const {
     onKeyDown,
-    sendSearch,
-    sendFilter,
+    router,
     initialFormValues,
     validationSchema,
-    getAllPrace
   } = useSearchFunctions()
-
-
   return (
-    <>
-      <Flex flexDir={{base: "column", md: "row"}} alignItems="center" gap={5}>
-        <Button
-          onClick={onOpen}
-          colorScheme="green"
-          variant="solid"
-          mt={5}
-          borderRadius="full"
-          px={9} py={7}
-          w="fit-content" fontSize={{base: "sm", md: "lg"}}
-          rightIcon={<SlMagnifier size={20}/>}
-        >
-          Hledat
-        </Button>
-        <Button
-          colorScheme="green"
-          mt={5}
-          borderRadius="full"
-          px={9} py={7}
-          w="fit-content" fontSize={{base: "sm", md: "lg"}}
-          onClick={() => getAllPrace()} variant="ghost">
-          Zobrazit všechny práce
-        </Button>
-      </Flex>
-      <Modal
+    <Modal
         //isCentered={true}
         size="3xl"
         isOpen={isOpen} onClose={onClose}>
@@ -78,17 +47,39 @@ const SearchModal = () => {
           <ModalCloseButton/>
           <ModalBody gap={10}>
             <Formik
-              onSubmit={(values) => sendSearch(values.searchString)}
+              onSubmit={(values) => {
+                //sendSearch(values.searchString)
+                sessionStorage.clear()
+                sessionStorage.setItem('search_string', JSON.stringify(values))
+                router.push("/vyhledane-prace")
+              }}
               initialValues={{searchString: ""}}>
               <Form>
                 <SearchInModal/>
               </Form>
             </Formik>
             <ModalDivider/>
-              <Formik
+            <Formik
               initialValues={initialFormValues}
               onSubmit={(values) => {
-                sendFilter(values)
+                //sendFilter(values)
+                const obor_array = []
+                values.obor_stroj ? obor_array.push("stroj") : null
+                values.obor_it ? obor_array.push("it") : null
+                values.obor_elektro ? obor_array.push("elektro") : null
+                const reformatedValues = {
+                  obor: obor_array,
+                  pocatecni_rok: Number(values.rozmezi_let[0]),
+                  koncovy_rok: Number(values.rozmezi_let[1]),
+                  autor: values.autor,
+                  predmet: values.predmet,
+                  vedouci: values.vedouci,
+                  tagy: values.tagy
+                }
+                sessionStorage.clear()
+                sessionStorage.setItem('filter_params', JSON.stringify(reformatedValues))
+                window.location.reload()
+                router.push("/vyhledane-prace")
               }}
               validationSchema={validationSchema}
             >
@@ -120,7 +111,6 @@ const SearchModal = () => {
           </ModalBody>
         </ModalContent>
       </Modal>
-    </>
   )
 }
 

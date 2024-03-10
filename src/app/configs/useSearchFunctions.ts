@@ -17,12 +17,35 @@ export const useSearchFunctions = () => {
         .then(r => setOldestYear(Number(r.data)))
         .catch(e => alert(e))
     }
+
     getOldestYear()
   }, []);
 
-  const todayYear = new Date().getFullYear()
+  function slugify(str: string | undefined): string {
 
-  //TODO: fix stutter on oldestYear
+    if (typeof str === "undefined") {
+      return ""
+    }
+
+    str = str.replace(/^\s+|\s+$/g, '');
+    str = str.toLowerCase();
+
+    const charMap: { [key: string]: string } = {
+      'á': 'a', 'č': 'c', 'ď': 'd', 'é': 'e', 'ě': 'e', 'í': 'i', 'ň': 'n', 'ó': 'o',
+      'ř': 'r', 'š': 's', 'ť': 't', 'ú': 'u', 'ů': 'u', 'ý': 'y', 'ž': 'z'
+    };
+
+    str = str.replace(/[^\u0000-\u007E]/g, function (a) {
+      return charMap[a] || a;
+    });
+
+    str = str.replace(/[^a-z0-9 -]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+    return str;
+  }
+
+  const todayYear = new Date().getFullYear()
 
   const initialFormValues = {
     obor_stroj: false,
@@ -129,7 +152,7 @@ export const useSearchFunctions = () => {
     try {
       const response = await axios.get(`${server_address}/load-page/${input}`);
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
       throw new Error(`Chyba při načítání dat ze stránky ${input}: ${error.message}`);
     }
   }
@@ -139,7 +162,7 @@ export const useSearchFunctions = () => {
       .then(r => {
         //console.log(r)
         //setAPIData(r.data)
-        sessionStorage.setItem('apiData', JSON.stringify(r.data));
+        //sessionStorage.setItem('apiData', JSON.stringify(r.data));
       })
       .catch(e => toast({
         title: e,
@@ -183,6 +206,8 @@ export const useSearchFunctions = () => {
   return {
     initialFormValues,
     validationSchema,
+    router,
+    slugify,
     onKeyDown,
     sendSearch,
     sendFilter,
