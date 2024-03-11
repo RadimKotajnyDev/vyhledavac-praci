@@ -91,15 +91,15 @@ const SearchModal = (props: any) => {
                 obor: obor_array,
                 pocatecni_rok: Number(values.rozmezi_let[0]),
                 koncovy_rok: Number(values.rozmezi_let[1]),
-                autor: values.autor,
+                jmeno_prijmeni: values.jmeno_prijmeni,
                 predmet: values.predmet,
                 vedouci: values.vedouci,
                 tagy: values.tagy
               }
               sessionStorage.clear()
               sessionStorage.setItem('filter_params', JSON.stringify(reformatedValues))
-              window.location.reload()
               router.push("/vyhledane-prace")
+              window.location.reload()
             }}
             validationSchema={validationSchema}
           >

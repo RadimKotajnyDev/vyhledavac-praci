@@ -52,7 +52,7 @@ export const useSearchFunctions = () => {
     obor_it: false,
     obor_elektro: false,
     rozmezi_let: [oldestYear, todayYear],
-    autor: "",
+    jmeno_prijmeni: "",
     vedouci: "",
     predmet: "",
     tagy: []

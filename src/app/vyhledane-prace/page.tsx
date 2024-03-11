@@ -37,7 +37,7 @@ type PraceType = {
   jmeno_prijmeni?: string,
   vedouci?: string,
   Message?: string;
-  concat?(newData: any): APIData | undefined;
+  concat(newData: any): APIData | undefined;
 }
 
 type APIData = {
@@ -75,7 +75,7 @@ const VyhledanePrace = () => {
 
   const {slugify} = useSearchFunctions()
 
-  const [apiData, setAPIData] = useState<APIData>()
+  const [apiData, setAPIData] = useState<APIData | PraceType>()
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [pageNumber, setPageNumber] = useState<number>(1)
   const [maxPageNumber, setMaxPageNumber] = useState<number>(0)
@@ -84,6 +84,7 @@ const VyhledanePrace = () => {
   const [sortDirDown, setSortDirDown] = useState<boolean>(true)
 
   const [isButtonHidden, hideButton] = useState<boolean>(false)
+
 
   useEffect(() => {
     async function loadData() {
@@ -132,16 +133,6 @@ const VyhledanePrace = () => {
               }
             } else {
               setAPIData(r.data.prace)
-              /*
-              toast({
-                title: "Vyhledání proběhlo úspěšně.",
-                status: "success",
-                position: 'bottom-right',
-                duration: 2000,
-                isClosable: true,
-              })
-
-               */
             }
             setIsLoading(false)
           })
@@ -165,8 +156,8 @@ const VyhledanePrace = () => {
     }
 
     loadData()
-  }, [pageNumber, sortBy, sortDirDown]);
-  
+  }, [pageNumber, sortBy, sortDirDown, loadMore]);
+
 
   if (isLoading) {
     return (
@@ -177,7 +168,7 @@ const VyhledanePrace = () => {
       </Box>
     )
   } else {
-    if (Array.isArray(apiData) && apiData.length > 0) {
+    if (apiData && Array.isArray(apiData) && apiData.length > 0) {
       return (
         <Flex color="white" w="full" minH="80vh"
               flexDir="column"
@@ -206,7 +197,8 @@ const VyhledanePrace = () => {
                       }}>
                         <Flex placeItems="center">
                           <Text>{item}</Text>
-                          {sortBy === TableHeads.apiNames[index] ? <Icon as={sortDirDown ? IoMdArrowDropdown : IoMdArrowDropup} boxSize={5}></Icon> : <></>}
+                          {sortBy === TableHeads.apiNames[index] ?
+                            <Icon as={sortDirDown ? IoMdArrowDropdown : IoMdArrowDropup} boxSize={5}></Icon> : <></>}
                         </Flex>
                       </Th>
                     ))}
@@ -233,7 +225,7 @@ const VyhledanePrace = () => {
               </Table>
               <Center>
                 {/* FIXME: next line has a bug*/}
-                <Button mt={5} display={isButtonHidden ? "none" : "block" || apiData.length < 15 ? "none" : "block"}
+                <Button mt={5} display={isButtonHidden ? "none" : "block"}
                         onClick={() => {
                           setLoadMore(true)
                           setPageNumber(prevState => prevState + 1)

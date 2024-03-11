@@ -24,7 +24,7 @@ const Autor = () => {
            p={5} border="1px" _dark={{borderColor: "gray.600"}}
            _light={{borderColor: "gray.200"}}>
         <Text fontSize="xl" mb={3}>Autor</Text>
-        <Field as={Select} name="autor" placeholder='Vyberte možnost'>
+        <Field as={Select} name="jmeno_prijmeni" placeholder='Vyberte možnost'>
           {authors && authors.map((autor: string, index: number) => (
             <option key={index} value={autor}>{autor}</option>
           ))}
