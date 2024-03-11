@@ -18,28 +18,13 @@ interface RozmeziLetInterface {
   values: FormikValues;
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
   errors: FormikErrors<any>;
+  oldestYear: number,
+  isLoading: boolean
 }
 
 const RozmeziLet = (props: RozmeziLetInterface) => {
 
-  const [oldestYear, setOldestYear] = useState<number>(2000)
-  const [isLoading, setIsLoading] = useState<boolean>(true)
-
-  useEffect(() => {
-    async function getOldestYear() {
-      axios.get(`${server_address}/get-oldest-year`)
-        .then(r => {
-          setOldestYear(Number(r.data))
-          setIsLoading(false)
-        })
-        .catch(e => alert(e))
-    }
-
-    getOldestYear()
-  }, []);
-
-
-  const {values, setFieldValue, errors} = props
+  const {values, setFieldValue, errors, oldestYear, isLoading} = props
 
   const todayYear = new Date().getFullYear()
 

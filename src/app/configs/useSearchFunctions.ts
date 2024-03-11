@@ -118,7 +118,6 @@ export const useSearchFunctions = () => {
         router.push("/vyhledane-prace")
       })
   }
-
   /*
   function getPraceFromPage(input: number) {
     axios.get(`${server_address}/load-page/${input}`)

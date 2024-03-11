@@ -17,7 +17,7 @@ import {HiOutlineCog} from 'react-icons/hi';
 import {BsSearch} from 'react-icons/bs';
 import {SlUser} from "react-icons/sl";
 import {useRouter} from "next/navigation";
-import SearchModal from "@/app/components/SearchModal";
+import SearchModal from "@/app/components/SearchModal/SearchModal";
 
 const Navbar = () => {
   const {colorMode, toggleColorMode} = useColorMode();

@@ -1,5 +1,17 @@
 'use client'
-import {Box, Button, Divider, Flex, Grid, GridItem, Heading, Spinner, Text, useToast} from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Divider,
+  Flex,
+  Grid,
+  GridItem,
+  Heading,
+  Spinner,
+  Text,
+  useColorModeValue,
+  useToast
+} from "@chakra-ui/react";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 import {Image} from "@chakra-ui/react";
@@ -21,6 +33,9 @@ type APIData = {
 
 export default function Page({params}: { params: { id: number, slug: string } }) {
 
+  const bgColor = useColorModeValue("rgba(255, 255, 255, 0.1)", "rgba(45, 55, 72, 0.25)");
+
+
   const toast = useToast()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState<boolean>(true)
@@ -34,11 +49,12 @@ export default function Page({params}: { params: { id: number, slug: string } })
           setIsLoading(false)
         })
         .catch((e) => toast({
-        title: e,
-        status: "error",
-        isClosable: true,
-      }))
+          title: e,
+          status: "error",
+          isClosable: true,
+        }))
     }
+
     const storedData = sessionStorage.getItem('apiData');
     if (storedData) {
       const storedDataParse = JSON.parse(storedData) as APIData[];
@@ -46,12 +62,10 @@ export default function Page({params}: { params: { id: number, slug: string } })
       if (currentData) {
         setData(currentData);
         setIsLoading(false)
-      }
-      else {
+      } else {
         getDataById()
       }
-    }
-    else {
+    } else {
       getDataById()
     }
   }, [params.id])
@@ -85,7 +99,7 @@ export default function Page({params}: { params: { id: number, slug: string } })
          minH="80vh" justifyContent="space-around"
          justifyItems="center" placeItems="center"
          display="flex">
-      <Box bg="rgba(255, 255, 255, 0.1)"
+      <Box bgColor={bgColor}
            boxShadow="0 8px 32px 0 rgba( 31, 38, 135, 0.37 )"
            backdropFilter="blur( 4px )"
            borderRadius="xl"

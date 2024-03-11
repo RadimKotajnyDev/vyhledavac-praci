@@ -24,7 +24,7 @@ import Tagy from "@/app/components/SearchModal/ModalComponents/ModalGridComponen
 import Predmet from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/Predmet";
 import {useSearchFunctions} from "@/app/configs/useSearchFunctions";
 import Autor from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/Autor";
-import SearchModal from "@/app/components/SearchModal";
+import SearchModal from "@/app/components/SearchModal/SearchModal";
 
 
 const HomePageButtons = () => {

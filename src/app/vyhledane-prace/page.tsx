@@ -166,11 +166,7 @@ const VyhledanePrace = () => {
 
     loadData()
   }, [pageNumber, sortBy, sortDirDown]);
-
-  useEffect(() => {
-    console.log(sortBy)
-  }, [sortBy]);
-
+  
 
   if (isLoading) {
     return (
