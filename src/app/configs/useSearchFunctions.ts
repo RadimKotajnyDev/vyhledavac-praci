@@ -10,6 +10,22 @@ export const useSearchFunctions = () => {
   const toast = useToast()
 
   const [oldestYear, setOldestYear] = useState<number>(2000)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+
+
+  useEffect(() => {
+    async function getOldestYear() {
+      axios.get(`${server_address}/get-oldest-year`)
+        .then(r => {
+          setOldestYear(Number(r.data))
+          setIsLoading(false)
+        })
+        .catch(e => alert(e))
+    }
+
+    getOldestYear()
+  }, []);
+
 
   useEffect(() => {
     async function getOldestYear() {
@@ -211,6 +227,8 @@ export const useSearchFunctions = () => {
     sendSearch,
     sendFilter,
     getAllPrace,
-    getPraceFromPage
+    getPraceFromPage,
+    oldestYear,
+    isLoading
   }
 }

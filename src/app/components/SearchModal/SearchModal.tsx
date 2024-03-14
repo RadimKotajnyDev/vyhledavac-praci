@@ -20,38 +20,21 @@ import Tagy from "@/app/components/SearchModal/ModalComponents/ModalGridComponen
 import Predmet from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/Predmet";
 import Autor from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/Autor";
 import {useSearchFunctions} from "@/app/configs/useSearchFunctions";
-import {useEffect, useState} from "react";
-import axios from "axios";
-import {server_address} from "@/app/configs/apiConfig";
 
 const SearchModal = (props: any) => {
-
-  const [oldestYear, setOldestYear] = useState<number>(2000)
-  const [isLoading, setIsLoading] = useState<boolean>(true)
-
-
-  useEffect(() => {
-    async function getOldestYear() {
-      axios.get(`${server_address}/get-oldest-year`)
-        .then(r => {
-          setOldestYear(Number(r.data))
-          setIsLoading(false)
-        })
-        .catch(e => alert(e))
-    }
-
-    getOldestYear()
-  }, []);
-
   const {
-    isOpen, onOpen, onClose
+    isOpen,
+    //onOpen,
+    onClose
   } = props
 
   const {
-    onKeyDown,
-    router,
     initialFormValues,
     validationSchema,
+    router,
+    onKeyDown,
+    oldestYear,
+    isLoading
   } = useSearchFunctions()
   return (
     <Modal
