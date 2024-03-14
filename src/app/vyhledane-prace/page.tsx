@@ -16,147 +16,34 @@ import {
   Text,
   Th,
   Thead,
-  Tr,
-  useColorModeValue,
-  useToast
+  Tr
 } from "@chakra-ui/react"
-
-import {useEffect, useState} from "react";
-import {useRouter} from "next/navigation";
 import {IoIosArrowBack, IoIosArrowForward, IoMdArrowDropdown, IoMdArrowDropup} from "react-icons/io";
-import {useSearchFunctions} from "@/app/configs/useSearchFunctions";
-import axios from "axios";
-import {server_address} from "@/app/configs/apiConfig";
-
-type PraceType = {
-  id?: number,
-  skolni_rok?: string,
-  tema?: string,
-  obor?: string,
-  predmet?: string,
-  jmeno_prijmeni?: string,
-  vedouci?: string,
-  Message?: string;
-  concat(newData: any): APIData | undefined;
-}
-
-type APIData = {
-  Message?: string;
-  pocet_stran: number,
-  prace: PraceType[]
-  concat(prace: PraceType[]): APIData | undefined;
-};
-
-const TableHeads = {
-  apiNames: [
-    "skolni_rok",
-    "tema",
-    "obor",
-    "predmet",
-    "jmeno_prijmeni",
-    "vedouci"
-  ],
-  czechNames: [
-    "Školní rok",
-    "Název práce (téma)",
-    "Obor",
-    "Předmět",
-    "Autor",
-    "Vedoucí"
-  ]
-}
+import {useVyhledanePrace} from "@/app/configs/useVyhledanePrace";
+import {PraceType} from "@/app/configs/ApiDataTypes";
 
 
 const VyhledanePrace = () => {
-  const router = useRouter()
-  const toast = useToast()
-  //const bgColor = useColorModeValue("rgba(255, 255, 255, 0.1)", "rgba(0, 0, 0, 0.1)");
-  const bgColor = useColorModeValue("rgba(255, 255, 255, 0.1)", "rgba(45, 55, 72, 0.25)");
 
-  const {slugify} = useSearchFunctions()
-
-  const [apiData, setAPIData] = useState<APIData | PraceType>()
-  const [isLoading, setIsLoading] = useState<boolean>(true)
-  const [pageNumber, setPageNumber] = useState<number>(1)
-  const [maxPageNumber, setMaxPageNumber] = useState<number>(0)
-  const [loadMore, setLoadMore] = useState<boolean>(false)
-  const [sortBy, setSortBy] = useState<string>("tema")
-  const [sortDirDown, setSortDirDown] = useState<boolean>(true)
-
-  const [isButtonHidden, hideButton] = useState<boolean>(false)
-
-
-  useEffect(() => {
-    async function loadData() {
-      const searchString = sessionStorage.getItem("search_string")
-      const filter_params = sessionStorage.getItem("filter_params")
-      if (searchString) {
-        alert("search ještě nefunguje. :)")
-        /*
-        axios.post(`${server_address}/search`, null, {params: {vyraz: JSON.parse(searchString)}})
-          .then(r => {
-            console.log(r)
-            setAPIData(r.data)
-            setIsLoading(false)
-            toast({
-              title: "Vyhledání proběhlo úspěšně.",
-              status: "success",
-              duration: 2000,
-              isClosable: true,
-            })
-          })
-          .catch(e => toast({
-            title: e,
-            status: "error",
-            isClosable: true,
-          }))
-         */
-      } else if (filter_params) {
-        axios.post(`${server_address}/filtr-strana/${pageNumber}`,
-          JSON.parse(filter_params),
-          {params: {sortBy: sortBy, directionDown: sortDirDown}})
-          .then(r => {
-            console.log(r)
-            setMaxPageNumber(r.data.pocet_stran)
-            if (pageNumber > 1 && loadMore) {
-              if (r.data.prace.length > 0 && loadMore) {
-                setAPIData(prevState => prevState?.concat(r.data.prace))
-              } else {
-                hideButton(true)
-                toast({
-                  title: "Načteno maximálně prací",
-                  status: "info",
-                  position: 'bottom-right',
-                  isClosable: true,
-                  duration: 1500
-                })
-              }
-            } else {
-              setAPIData(r.data.prace)
-            }
-            setIsLoading(false)
-          })
-          .catch((e) => {
-            toast({
-              title: e.message,
-              status: "error",
-              isClosable: true,
-            })
-          })
-      }
-      if (!filter_params && !searchString) {
-        router.push("/")
-        toast({
-          title: "Něco se nepovedlo. \nZkuste vyhledat práci znovu.",
-          status: "error",
-          duration: 2500,
-          isClosable: true,
-        })
-      }
-    }
-
-    loadData()
-  }, [pageNumber, sortBy, sortDirDown, loadMore]);
+  const {
+    slugify,
+    TableHeads,
+    setSortBy,
+    setSortDirDown,
+    isButtonHidden,
+    bgColor,
+    router,
+    pageNumber,
+    sortBy,
+    sortDirDown,
+    loadMore,
+    isLoading,
+    apiData,
+    setLoadMore,
+    setPageNumber,
+    hideButton,
+    maxPageNumber
+  } = useVyhledanePrace()
 
 
   if (isLoading) {
@@ -225,7 +112,7 @@ const VyhledanePrace = () => {
               </Table>
               <Center>
                 {/* FIXME: next line has a bug*/}
-                <Button mt={5} display={isButtonHidden ? "none" : "block"}
+                <Button mt={5} display={isButtonHidden ? "none" : "block" || true ? "none" : "none"}
                         onClick={() => {
                           setLoadMore(true)
                           setPageNumber(prevState => prevState + 1)
