@@ -117,7 +117,7 @@ export default function Page({params}: { params: { id: number, slug: string } })
               <Image
                 m={1}
                 borderRadius="xl"
-                src='https://media.istockphoto.com/id/185244309/photo/work-in-progress.jpg?s=612x612&w=0&k=20&c=ECQ9StWhFTfFjWg_yt8ITEyAuZpRLVV8akD20jagc-Y='
+                src="https://images.unsplash.com/photo-1593062096033-9a26b09da705?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt='Random image from stock photo'
                 objectFit="cover"
               />
