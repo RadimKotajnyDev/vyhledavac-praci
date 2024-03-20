@@ -17,3 +17,14 @@ export type APIData = {
   prace: PraceType[]
   concat(prace: PraceType[]): APIData | undefined;
 };
+
+export type SearchModalValuesType = {
+    obor_stroj: any;
+    obor_it: any;
+    obor_elektro: any;
+    rozmezi_let: any;
+    jmeno_prijmeni: any;
+    vedouci: any;
+    predmet: any;
+    tagy: any;
+  }

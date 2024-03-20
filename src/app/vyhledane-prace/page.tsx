@@ -119,7 +119,7 @@ const VyhledanePrace = () => {
                         }}>načíst další</Button>
               </Center>
             </TableContainer>
-            <Stack direction="row" alignItems="center">
+            <Stack direction="row" alignItems="center" hidden={maxPageNumber == 1}>
               <IconButton isDisabled={pageNumber == 1 || loadMore} onClick={() => {
                 if (pageNumber > 1) {
                   if (loadMore) {

@@ -4,6 +4,7 @@ import axios from "axios";
 import * as Yup from "yup"
 import {server_address} from "@/app/configs/apiConfig";
 import {useEffect, useState} from "react";
+import {SearchModalValuesType} from "@/app/configs/ApiDataTypes";
 
 export const useSearchFunctions = () => {
   const router = useRouter()
@@ -233,6 +234,26 @@ export const useSearchFunctions = () => {
     })
     //console.log(handlePostValues(values))
   }
+   function saveFilter(values: SearchModalValuesType) {
+    const obor_array = []
+    values.obor_stroj ? obor_array.push("stroj") : null
+    values.obor_it ? obor_array.push("it") : null
+    values.obor_elektro ? obor_array.push("elektro") : null
+    const reformatedValues = {
+      obor: obor_array,
+      pocatecni_rok: Number(values.rozmezi_let[0]),
+      koncovy_rok: Number(values.rozmezi_let[1]),
+      jmeno_prijmeni: values.jmeno_prijmeni,
+      predmet: values.predmet,
+      vedouci: values.vedouci,
+      tagy: values.tagy
+    }
+    sessionStorage.clear()
+    sessionStorage.setItem('filter_params', JSON.stringify(reformatedValues))
+    router.push("/vyhledane-prace")
+    window.location.reload()
+  }
+
 
   return {
     initialFormValues,
@@ -242,6 +263,7 @@ export const useSearchFunctions = () => {
     onKeyDown,
     sendSearch,
     sendFilter,
+    saveFilter,
     getAllPrace,
     getPraceFromPage,
     oldestYear,
