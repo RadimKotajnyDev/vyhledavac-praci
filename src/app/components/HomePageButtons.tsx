@@ -2,7 +2,7 @@
 import {Button, Flex, useDisclosure} from "@chakra-ui/react";
 
 import {SlMagnifier} from "react-icons/sl";
-import {useSearchFunctions} from "@/app/configs/useSearchFunctions";
+import {useAPIFunctions} from "@/app/configs/useAPIFunctions";
 import SearchModal from "@/app/components/SearchModal/SearchModal";
 
 
@@ -11,7 +11,7 @@ const HomePageButtons = () => {
 
   const {
     getAllPrace
-  } = useSearchFunctions()
+  } = useAPIFunctions()
 
   const {isOpen, onOpen, onClose} = useDisclosure()
 

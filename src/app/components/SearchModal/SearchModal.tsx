@@ -19,7 +19,7 @@ import RozmeziLet from "@/app/components/SearchModal/ModalComponents/ModalGridCo
 import Tagy from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/Tagy";
 import Predmet from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/Predmet";
 import Autor from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/Autor";
-import {useSearchFunctions} from "@/app/configs/useSearchFunctions";
+import {useAPIFunctions} from "@/app/configs/useAPIFunctions";
 import {SearchModalValuesType} from "@/app/configs/ApiDataTypes";
 
 const SearchModal = (props: any) => {
@@ -40,7 +40,7 @@ const SearchModal = (props: any) => {
     authors,
     vedouciList,
     isAPILoading
-  } = useSearchFunctions()
+  } = useAPIFunctions()
 
 
 

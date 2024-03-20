@@ -1,6 +1,6 @@
 import {useRouter} from "next/navigation";
 import {useColorModeValue, useToast} from "@chakra-ui/react";
-import {useSearchFunctions} from "@/app/configs/useSearchFunctions";
+import {useAPIFunctions} from "@/app/configs/useAPIFunctions";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {server_address} from "@/app/configs/apiConfig";
@@ -34,7 +34,7 @@ export const useVyhledanePrace = () => {
   //const bgColor = useColorModeValue("rgba(255, 255, 255, 0.1)", "rgba(0, 0, 0, 0.1)");
   const bgColor = useColorModeValue("rgba(255, 255, 255, 0.1)", "rgba(45, 55, 72, 0.25)");
 
-  const {slugify} = useSearchFunctions()
+  const {slugify} = useAPIFunctions()
 
   const [apiData, setAPIData] = useState<APIData | PraceType>()
   const [isLoading, setIsLoading] = useState<boolean>(true)
@@ -77,7 +77,7 @@ export const useVyhledanePrace = () => {
           JSON.parse(filter_params),
           {params: {sortBy: sortBy, directionDown: sortDirDown}})
           .then(r => {
-            console.log(r)
+            //console.log(r)
             setMaxPageNumber(r.data.pocet_stran)
             if (pageNumber > 1 && loadMore) {
               if (r.data.prace.length > 0 && loadMore) {

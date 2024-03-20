@@ -2,22 +2,26 @@
 
 import {useState} from 'react';
 import {
-  AbsoluteCenter,
-  Box, Button, Divider,
+  Box,
+  Button,
   Flex,
   IconButton,
   Input,
   InputGroup,
   InputLeftElement,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Spacer,
-  useColorMode, useDisclosure,
+  useColorMode,
+  useDisclosure,
 } from '@chakra-ui/react';
-import {FaSun, FaMoon, FaFilter, FaSearch} from 'react-icons/fa';
-import {HiOutlineCog} from 'react-icons/hi';
-import {BsSearch} from 'react-icons/bs';
+import {FaFilter, FaMoon, FaSearch, FaSun} from 'react-icons/fa';
 import {SlUser} from "react-icons/sl";
 import {useRouter} from "next/navigation";
 import SearchModal from "@/app/components/SearchModal/SearchModal";
+import {SiBurgerking} from "react-icons/si";
 
 const Navbar = () => {
   const {colorMode, toggleColorMode} = useColorMode();
@@ -26,53 +30,72 @@ const Navbar = () => {
   const {isOpen, onOpen, onClose} = useDisclosure()
 
   return (
-    <Box pt={2} px={3}>
-      <Box bg={colorMode === 'light' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(45, 55, 72, 0.5)'} p={4} rounded="3xl">
-        <Flex alignItems="center">
-          <Button leftIcon={<FaSearch fill="white"/>} variant="ghost" color="white" onClick={() => router.push("/")}>
-            ThesisSpotlight
-          </Button>
-          <Spacer/>
-          <Flex alignItems="center">
-            <InputGroup gap={3} w="600px">
-              <InputLeftElement
-                pointerEvents="none"
-                children={<FaSearch color="white"/>}
-              />
-              <Input
-                type="text"
-                color="white"
-                placeholder="Zadejte jméno autora, název práce nebo klíčové slovo..."
-                value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
-              />
-              <Button
-                px={5}
-                onClick={onOpen}
-                variant="outline"
-                aria-label="Filter"
-                color="white"
-                leftIcon={<FaFilter fill="white"/>}
-              >Filtrovat</Button>
-            </InputGroup>
-          </Flex>
-          <Spacer/>
-          <IconButton
-            aria-label="Toggle color mode"
-            icon={colorMode === 'light' ? <FaMoon fill="white"/> : <FaSun fill="white"/>}
-            onClick={toggleColorMode}
-            variant="ghost"
+    <>
+      <Box display={{base: "block", md: "none"}}>
+        <Menu>
+          <MenuButton
+            as={IconButton}
+            aria-label='Options'
+            size="lg"
+            icon={<SiBurgerking size={40} />}
+            variant='outline'
           />
-
-          <IconButton
-            aria-label="Admin panel"
-            icon={<SlUser fill="white"/>}
-            variant="ghost"
-          />
-        </Flex>
+          <MenuList>
+            <MenuItem></MenuItem>
+            <MenuItem></MenuItem>
+            <MenuItem></MenuItem>
+            <MenuItem></MenuItem>
+          </MenuList>
+        </Menu>
       </Box>
-      <SearchModal {...{isOpen, onOpen, onClose}} />
-    </Box>
+      <Box pt={2} px={3} display={{base: "none", md: "block"}}>
+        <Box bg={colorMode === 'light' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(45, 55, 72, 0.5)'} p={4} rounded="3xl">
+          <Flex alignItems="center">
+            <Button leftIcon={<FaSearch fill="white"/>} variant="ghost" color="white" onClick={() => router.push("/")}>
+              ThesisSpotlight
+            </Button>
+            <Spacer/>
+            <Flex alignItems="center">
+              <InputGroup gap={3} w="600px">
+                <InputLeftElement
+                  pointerEvents="none"
+                  children={<FaSearch color="white"/>}
+                />
+                <Input
+                  type="text"
+                  color="white"
+                  placeholder="Zadejte jméno autora, název práce nebo klíčové slovo..."
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                />
+                <Button
+                  px={5}
+                  onClick={onOpen}
+                  variant="outline"
+                  aria-label="Filter"
+                  color="white"
+                  leftIcon={<FaFilter fill="white"/>}
+                >Filtrovat</Button>
+              </InputGroup>
+            </Flex>
+            <Spacer/>
+            <IconButton
+              aria-label="Toggle color mode"
+              icon={colorMode === 'light' ? <FaMoon fill="white"/> : <FaSun fill="white"/>}
+              onClick={toggleColorMode}
+              variant="ghost"
+            />
+
+            <IconButton
+              aria-label="Admin panel"
+              icon={<SlUser fill="white"/>}
+              variant="ghost"
+            />
+          </Flex>
+        </Box>
+        <SearchModal {...{isOpen, onOpen, onClose}} />
+      </Box>
+    </>
   );
 };
 

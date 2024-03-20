@@ -6,7 +6,7 @@ import {server_address} from "@/app/configs/apiConfig";
 import {useEffect, useState} from "react";
 import {SearchModalValuesType} from "@/app/configs/ApiDataTypes";
 
-export const useSearchFunctions = () => {
+export const useAPIFunctions = () => {
   const router = useRouter()
   const toast = useToast()
 
@@ -28,7 +28,14 @@ export const useSearchFunctions = () => {
         setVedouciList(r.data)
         setIsVedouciLoading(false)
       })
-      .catch(error => alert(error))
+      .catch((e) => {
+        toast({
+          title: e.name ?? "Error",
+          description: `${e.message} | code: ${e.code}` ?? "Error",
+          status: "error",
+          isClosable: true,
+        })
+      })
   }
 
   async function getOldestYear() {
@@ -37,7 +44,14 @@ export const useSearchFunctions = () => {
         setOldestYear(Number(r.data))
         setIsOldestYearLoading(false)
       })
-      .catch(e => alert(e))
+      .catch((e) => {
+        toast({
+          title: e.name ?? "Error",
+          description: `${e.message} | code: ${e.code}` ?? "Error",
+          status: "error",
+          isClosable: true,
+        })
+      })
   }
 
   async function getPredmety() {
@@ -46,7 +60,14 @@ export const useSearchFunctions = () => {
         setPredmety(r.data)
         setIsPredmetyLoading(false)
       })
-      .catch(error => alert(error))
+      .catch((e) => {
+        toast({
+          title: e.name ?? "Error",
+          description: `${e.message} | code: ${e.code}` ?? "Error",
+          status: "error",
+          isClosable: true,
+        })
+      })
   }
 
   async function getAuthors() {
@@ -55,7 +76,14 @@ export const useSearchFunctions = () => {
         setAuthors(r.data)
         setIsAuthorsLoading(false)
       })
-      .catch(error => alert(error))
+      .catch((e) => {
+        toast({
+          title: e.name ?? "Error",
+          description: `${e.message} | code: ${e.code}` ?? "Error",
+          status: "error",
+          isClosable: true,
+        })
+      })
   }
 
   useEffect(() => {
@@ -67,7 +95,7 @@ export const useSearchFunctions = () => {
 
   const [isAPILoading, setIsAPILoading] = useState<boolean>(true)
   useEffect(() => {
-    if(!isOldestYearLoading &&
+    if (!isOldestYearLoading &&
       !isPredmetyLoading &&
       !isAuthorsLoading &&
       !isVedouciLoading) {
@@ -234,7 +262,8 @@ export const useSearchFunctions = () => {
     })
     //console.log(handlePostValues(values))
   }
-   function saveFilter(values: SearchModalValuesType) {
+
+  function saveFilter(values: SearchModalValuesType) {
     const obor_array = []
     values.obor_stroj ? obor_array.push("stroj") : null
     values.obor_it ? obor_array.push("it") : null
