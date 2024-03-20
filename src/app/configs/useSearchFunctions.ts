@@ -10,32 +10,75 @@ export const useSearchFunctions = () => {
   const toast = useToast()
 
   const [oldestYear, setOldestYear] = useState<number>(2000)
-  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [isOldestYearLoading, setIsOldestYearLoading] = useState<boolean>(true)
 
+  const [predmety, setPredmety] = useState([])
+  const [isPredmetyLoading, setIsPredmetyLoading] = useState<boolean>(true)
+
+  const [vedouciList, setVedouciList] = useState([])
+  const [isVedouciLoading, setIsVedouciLoading] = useState<boolean>(true)
+
+  const [authors, setAuthors] = useState([])
+  const [isAuthorsLoading, setIsAuthorsLoading] = useState<boolean>(true)
+
+  async function getVedouci() {
+    await axios.get(`${server_address}/get-vedouci`)
+      .then(r => {
+        setVedouciList(r.data)
+        setIsVedouciLoading(false)
+      })
+      .catch(error => alert(error))
+  }
+
+  async function getOldestYear() {
+    axios.get(`${server_address}/get-oldest-year`)
+      .then(r => {
+        setOldestYear(Number(r.data))
+        setIsOldestYearLoading(false)
+      })
+      .catch(e => alert(e))
+  }
+
+  async function getPredmety() {
+    await axios.get(`${server_address}/get-predmety`)
+      .then(r => {
+        setPredmety(r.data)
+        setIsPredmetyLoading(false)
+      })
+      .catch(error => alert(error))
+  }
+
+  async function getAuthors() {
+    await axios.get(`${server_address}/get-autori`)
+      .then(r => {
+        setAuthors(r.data)
+        setIsAuthorsLoading(false)
+      })
+      .catch(error => alert(error))
+  }
 
   useEffect(() => {
-    async function getOldestYear() {
-      axios.get(`${server_address}/get-oldest-year`)
-        .then(r => {
-          setOldestYear(Number(r.data))
-          setIsLoading(false)
-        })
-        .catch(e => alert(e))
-    }
-
+    getAuthors()
+    getVedouci()
+    getPredmety()
     getOldestYear()
   }, []);
 
-
+  const [isAPILoading, setIsAPILoading] = useState<boolean>(true)
   useEffect(() => {
-    async function getOldestYear() {
-      axios.get(`${server_address}/get-oldest-year`)
-        .then(r => setOldestYear(Number(r.data)))
-        .catch(e => alert(e))
+    if(!isOldestYearLoading &&
+      !isPredmetyLoading &&
+      !isAuthorsLoading &&
+      !isVedouciLoading) {
+      setIsAPILoading(false)
     }
+  }, [
+    isOldestYearLoading,
+    isPredmetyLoading,
+    isAuthorsLoading,
+    isVedouciLoading
+  ]);
 
-    getOldestYear()
-  }, []);
 
   function slugify(str: string | undefined): string {
 
@@ -134,34 +177,7 @@ export const useSearchFunctions = () => {
         router.push("/vyhledane-prace")
       })
   }
-  /*
-  function getPraceFromPage(input: number) {
-    axios.get(`${server_address}/load-page/${input}`)
-      .then(r => {
-        const oldData = sessionStorage.getItem('apiData');
-        if (oldData) {
-          const parsedOldData = JSON.parse(oldData)
-          const newData = r.data
-          const updatedData = parsedOldData.concat(newData)
-          sessionStorage.setItem('apiData', JSON.stringify(updatedData));
-        }
-      })
-      .catch(e => toast({
-        title: e,
-        status: "error",
-        isClosable: true,
-      }))
-      .then(() => {
-        toast({
-          title: "Vyhledání proběhlo úspěšně.",
-          status: "success",
-          duration: 2000,
-          isClosable: true,
-        })
-        router.push("/vyhledane-prace")
-      })
-  }
-   */
+
 
   async function getPraceFromPage(input: number) {
     try {
@@ -229,6 +245,9 @@ export const useSearchFunctions = () => {
     getAllPrace,
     getPraceFromPage,
     oldestYear,
-    isLoading
+    predmety,
+    authors,
+    vedouciList,
+    isAPILoading
   }
 }

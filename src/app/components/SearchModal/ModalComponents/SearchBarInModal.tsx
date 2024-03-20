@@ -2,7 +2,7 @@ import {IconButton, Input, InputGroup} from "@chakra-ui/react";
 import {SlMagnifier} from "react-icons/sl";
 import {Field} from "formik";
 
-const SearchInModal = () => {
+const SearchBarInModal = () => {
   return (
     <InputGroup size='lg'>
       <Field name="searchString" as={Input} size="lg" colorScheme="green" roundedRight={0}
@@ -12,4 +12,4 @@ const SearchInModal = () => {
   )
 }
 
-export default SearchInModal
+export default SearchBarInModal

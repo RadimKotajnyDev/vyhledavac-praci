@@ -1,29 +1,8 @@
 'use client'
-import {
-  Button,
-  Center,
-  Flex,
-  Grid,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
-  useDisclosure
-} from "@chakra-ui/react";
-import {Form, Formik} from "formik";
+import {Button, Flex, useDisclosure} from "@chakra-ui/react";
 
 import {SlMagnifier} from "react-icons/sl";
-import VedouciPrace from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/VedouciPrace";
-import OborPrace from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/OborPrace";
-import SearchInModal from "@/app/components/SearchModal/ModalComponents/SearchInModal";
-import ModalDivider from "@/app/components/SearchModal/ModalComponents/ModalDivider";
-import RozmeziLet from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/RozmeziLet";
-import Tagy from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/Tagy";
-import Predmet from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/Predmet";
 import {useSearchFunctions} from "@/app/configs/useSearchFunctions";
-import Autor from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/Autor";
 import SearchModal from "@/app/components/SearchModal/SearchModal";
 
 
@@ -31,12 +10,6 @@ const HomePageButtons = () => {
 
 
   const {
-    onKeyDown,
-    sendSearch,
-    sendFilter,
-    router,
-    initialFormValues,
-    validationSchema,
     getAllPrace
   } = useSearchFunctions()
 

@@ -1,7 +1,7 @@
 // app/Providers.tsx
 'use client'
 
-import {Box, Text, ChakraProvider} from '@chakra-ui/react'
+import {Box, ChakraProvider} from '@chakra-ui/react'
 import {theme} from "@/app/theme";
 import Navbar from "@/app/components/Navbar";
 import {Footer} from "@/app/components/Footer";
@@ -18,7 +18,7 @@ export function Providers({children}: { children: React.ReactNode }) {
           {children}
         </Box>
       </Box>
-      {/* <Footer/> */}
+      <Footer/>
     </ChakraProvider>
   )
 }

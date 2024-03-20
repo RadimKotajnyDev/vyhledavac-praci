@@ -13,7 +13,7 @@ import {
 import {Form, Formik} from "formik";
 import VedouciPrace from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/VedouciPrace";
 import OborPrace from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/OborPrace";
-import SearchInModal from "@/app/components/SearchModal/ModalComponents/SearchInModal";
+import SearchBarInModal from "@/app/components/SearchModal/ModalComponents/SearchBarInModal";
 import ModalDivider from "@/app/components/SearchModal/ModalComponents/ModalDivider";
 import RozmeziLet from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/RozmeziLet";
 import Tagy from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/Tagy";
@@ -34,8 +34,13 @@ const SearchModal = (props: any) => {
     router,
     onKeyDown,
     oldestYear,
-    isLoading
+    predmety,
+    authors,
+    vedouciList,
+    isAPILoading
   } = useSearchFunctions()
+
+
   return (
     <Modal
       //isCentered={true}
@@ -58,7 +63,7 @@ const SearchModal = (props: any) => {
             }}
             initialValues={{searchString: ""}}>
             <Form>
-              <SearchInModal/>
+              <SearchBarInModal/>
             </Form>
           </Formik>
           <ModalDivider/>
@@ -97,14 +102,14 @@ const SearchModal = (props: any) => {
                   alignItems="space-between"
                 >
                   <OborPrace/>
-                  <RozmeziLet {...{setFieldValue, values, errors, oldestYear, isLoading}}/>
-                  <Autor/>
-                  <VedouciPrace/>
-                  <Predmet/>
+                  <RozmeziLet {...{setFieldValue, values, errors, oldestYear, isAPILoading}}/>
+                  <Autor {...{authors, isAPILoading}}/>
+                  <VedouciPrace {...{vedouciList, isAPILoading}}/>
+                  <Predmet {...{predmety, isAPILoading}}/>
                   <Tagy {...{setFieldValue, values}}/>
                 </Grid>
                 <Center w="100%" my={5}>
-                  <Button type="submit" colorScheme='green'>
+                  <Button isDisabled={isAPILoading} type="submit" colorScheme='green'>
                     Filtrovat
                   </Button>
                 </Center>

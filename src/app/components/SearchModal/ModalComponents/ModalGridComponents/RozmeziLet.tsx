@@ -1,5 +1,5 @@
 'use client'
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {
   Box,
   Flex,
@@ -7,24 +7,24 @@ import {
   RangeSlider,
   RangeSliderFilledTrack,
   RangeSliderThumb,
-  RangeSliderTrack, Skeleton,
+  RangeSliderTrack,
+  Skeleton,
   Text
 } from "@chakra-ui/react";
 import {Field, FormikErrors, FormikValues} from "formik";
-import {server_address} from "@/app/configs/apiConfig";
-import axios from "axios";
 
 interface RozmeziLetInterface {
   values: FormikValues;
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
   errors: FormikErrors<any>;
   oldestYear: number,
-  isLoading: boolean
+  isAPILoading: boolean
 }
 
 const RozmeziLet = (props: RozmeziLetInterface) => {
 
-  const {values, setFieldValue, errors, oldestYear, isLoading} = props
+  const {values, setFieldValue, errors
+    , oldestYear, isAPILoading} = props
 
   const todayYear = new Date().getFullYear()
 
@@ -44,7 +44,7 @@ const RozmeziLet = (props: RozmeziLetInterface) => {
                  placeholder={`max ${todayYear}`}/>
         </Flex>
         <Box px={3} mt={4}>
-          <Skeleton isLoaded={!isLoading}>
+          <Skeleton isLoaded={!isAPILoading}>
             <RangeSlider colorScheme="green"
                          aria-label={['min', 'max']} defaultValue={[values?.rozmezi_let[0], values?.rozmezi_let[1]]}
                          min={oldestYear} max={todayYear}

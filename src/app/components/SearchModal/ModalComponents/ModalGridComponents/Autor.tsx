@@ -1,22 +1,19 @@
 'use client'
-import {Box, Select, Text} from "@chakra-ui/react";
+import {Box, Select, Skeleton, Text} from "@chakra-ui/react";
 import {Field} from "formik";
-import {useEffect, useState} from "react";
-import axios from "axios";
+
+interface AutorInteface {
+  authors: string[],
+  isAPILoading: boolean
+}
+
+const Autor = (props: AutorInteface) => {
+
+  const {
+    authors, isAPILoading
+  } = props
 
 
-const Autor = () => {
-
-  const [authors, setAuthors] = useState([])
-  useEffect(() => {
-    async function getAuthors() {
-      await axios.get("http://127.0.0.1:8000/get-autori")
-        .then(r => setAuthors(r.data))
-        .catch(error => alert(error))
-    }
-
-    getAuthors()
-  }, [])
 
   return (
     <>
@@ -24,11 +21,13 @@ const Autor = () => {
            p={5} border="1px" _dark={{borderColor: "gray.600"}}
            _light={{borderColor: "gray.200"}}>
         <Text fontSize="xl" mb={3}>Autor</Text>
-        <Field as={Select} name="jmeno_prijmeni" placeholder='Vyberte možnost'>
+        <Skeleton isLoaded={!isAPILoading}>
+          <Field as={Select} name="jmeno_prijmeni" placeholder='Vyberte možnost'>
           {authors && authors.map((autor: string, index: number) => (
             <option key={index} value={autor}>{autor}</option>
           ))}
         </Field>
+        </Skeleton>
       </Box>
     </>
   )
