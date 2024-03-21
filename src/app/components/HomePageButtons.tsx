@@ -2,16 +2,12 @@
 import {Button, Flex, useDisclosure} from "@chakra-ui/react";
 
 import {SlMagnifier} from "react-icons/sl";
-import {useAPIFunctions} from "@/app/configs/useAPIFunctions";
 import SearchModal from "@/app/components/SearchModal/SearchModal";
+import {useRouter} from "next/navigation";
 
 
 const HomePageButtons = () => {
-
-
-  const {
-    getAllPrace
-  } = useAPIFunctions()
+  const router = useRouter()
 
   const {isOpen, onOpen, onClose} = useDisclosure()
 
@@ -36,7 +32,11 @@ const HomePageButtons = () => {
           borderRadius="full"
           px={9} py={7}
           w="fit-content" fontSize={{base: "sm", md: "lg"}}
-          onClick={() => getAllPrace()} variant="ghost">
+          onClick={() => {
+            sessionStorage.clear()
+            sessionStorage.setItem('search_string', null)
+            router.push("/vyhledane-prace")
+          }} variant="ghost">
           Zobrazit všechny práce
         </Button>
       </Flex>

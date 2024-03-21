@@ -167,6 +167,7 @@ export const useAPIFunctions = () => {
     }
   }
 
+  /*
 
   function handlePostValues(values: any) {
 
@@ -262,6 +263,7 @@ export const useAPIFunctions = () => {
     })
     //console.log(handlePostValues(values))
   }
+   */
 
   function saveFilter(values: SearchModalValuesType) {
     const obor_array = []
@@ -290,11 +292,11 @@ export const useAPIFunctions = () => {
     router,
     slugify,
     onKeyDown,
-    sendSearch,
-    sendFilter,
+    //sendSearch,
+    //sendFilter,
     saveFilter,
-    getAllPrace,
-    getPraceFromPage,
+    //getAllPrace,
+    //getPraceFromPage,
     oldestYear,
     predmety,
     authors,

@@ -52,7 +52,37 @@ export const useVyhledanePrace = () => {
       const searchString = sessionStorage.getItem("search_string")
       const filter_params = sessionStorage.getItem("filter_params")
       if (searchString) {
-        alert("search ještě nefunguje. :)")
+        axios.post(`${server_address}/search-page/${pageNumber}`,
+          null,
+          {params: {searchString: JSON.parse(searchString) ?? null, sortBy: sortBy, directionDown: sortDirDown}})
+          .then(r => {
+            //console.log(r)
+            setMaxPageNumber(r.data.pocet_stran)
+            if (pageNumber > 1 && loadMore) {
+              if (r.data.prace.length > 0 && loadMore) {
+                setAPIData(prevState => prevState?.concat(r.data.prace))
+              } else {
+                hideButton(true)
+                toast({
+                  title: "Načteno maximálně prací",
+                  status: "info",
+                  position: 'bottom-right',
+                  isClosable: true,
+                  duration: 1500
+                })
+              }
+            } else {
+              setAPIData(r.data.prace)
+            }
+            setIsLoading(false)
+          })
+          .catch((e) => {
+            toast({
+              title: e.message,
+              status: "error",
+              isClosable: true,
+            })
+          })
         /*
         axios.post(`${server_address}/search`, null, {params: {vyraz: JSON.parse(searchString)}})
           .then(r => {
@@ -73,7 +103,7 @@ export const useVyhledanePrace = () => {
           }))
          */
       } else if (filter_params) {
-        axios.post(`${server_address}/filtr-strana/${pageNumber}`,
+        axios.post(`${server_address}/filter-page/${pageNumber}`,
           JSON.parse(filter_params),
           {params: {sortBy: sortBy, directionDown: sortDirDown}})
           .then(r => {

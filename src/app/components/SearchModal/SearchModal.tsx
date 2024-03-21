@@ -43,7 +43,6 @@ const SearchModal = (props: any) => {
   } = useAPIFunctions()
 
 
-
   return (
     <Modal
       //isCentered={true}
@@ -59,9 +58,8 @@ const SearchModal = (props: any) => {
         <ModalBody gap={10}>
           <Formik
             onSubmit={(values) => {
-              //sendSearch(values.searchString)
               sessionStorage.clear()
-              sessionStorage.setItem('search_string', JSON.stringify(values))
+              sessionStorage.setItem('search_string', JSON.stringify(values.searchString))
               router.push("/vyhledane-prace")
             }}
             initialValues={{searchString: ""}}>

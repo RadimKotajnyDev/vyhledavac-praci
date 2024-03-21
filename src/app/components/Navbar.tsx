@@ -22,29 +22,47 @@ import {SlUser} from "react-icons/sl";
 import {useRouter} from "next/navigation";
 import SearchModal from "@/app/components/SearchModal/SearchModal";
 import {SiBurgerking} from "react-icons/si";
+import {Form, Formik} from "formik";
+import SearchBarInModal from "@/app/components/SearchModal/ModalComponents/SearchBarInModal";
+import {IoMdMenu} from "react-icons/io";
 
 const Navbar = () => {
   const {colorMode, toggleColorMode} = useColorMode();
   const router = useRouter()
-  const [searchValue, setSearchValue] = useState('');
   const {isOpen, onOpen, onClose} = useDisclosure()
 
   return (
     <>
-      <Box display={{base: "block", md: "none"}}>
+      <Box display={{base: "block", md: "none"}} pl={5} pt={5}>
         <Menu>
           <MenuButton
             as={IconButton}
             aria-label='Options'
             size="lg"
-            icon={<SiBurgerking size={40} />}
+            icon={<IoMdMenu size={40}/>}
             variant='outline'
           />
           <MenuList>
-            <MenuItem></MenuItem>
-            <MenuItem></MenuItem>
-            <MenuItem></MenuItem>
-            <MenuItem></MenuItem>
+              <Button
+                onClick={onOpen}
+                variant="ghost"
+                w="full"
+                aria-label="Filter"
+                rightIcon={<FaSearch/>}
+              >Hledat</Button>
+              <Button
+                w="full"
+              aria-label="Admin panel"
+              rightIcon={<SlUser />}
+              variant="ghost"
+              >Admin</Button>
+              <Button
+                w="full"
+              aria-label="Toggle color mode"
+              rightIcon={colorMode === 'light' ? <FaMoon /> : <FaSun fill="white"/>}
+              onClick={toggleColorMode}
+              variant="ghost"
+              >{colorMode === "light" ? "tmavý" : "světlý"} režim</Button>
           </MenuList>
         </Menu>
       </Box>
@@ -55,28 +73,29 @@ const Navbar = () => {
               ThesisSpotlight
             </Button>
             <Spacer/>
-            <Flex alignItems="center">
-              <InputGroup gap={3} w="600px">
-                <InputLeftElement
-                  pointerEvents="none"
-                  children={<FaSearch color="white"/>}
-                />
-                <Input
-                  type="text"
-                  color="white"
-                  placeholder="Zadejte jméno autora, název práce nebo klíčové slovo..."
-                  value={searchValue}
-                  onChange={(e) => setSearchValue(e.target.value)}
-                />
-                <Button
-                  px={5}
-                  onClick={onOpen}
-                  variant="outline"
-                  aria-label="Filter"
-                  color="white"
-                  leftIcon={<FaFilter fill="white"/>}
-                >Filtrovat</Button>
-              </InputGroup>
+            <Flex alignItems="center" placeItems="center" justifyContent="center" gap={3} w="600px">
+              <Box w="full">
+                <Formik
+                  onSubmit={(values) => {
+                    sessionStorage.clear()
+                    sessionStorage.setItem('search_string', JSON.stringify(values.searchString))
+                    router.push("/vyhledane-prace")
+                  }}
+                  initialValues={{searchString: ""}}>
+                  <Form>
+                    <SearchBarInModal/>
+                  </Form>
+                </Formik>
+              </Box>
+              <Button
+                px={5}
+                size="lg"
+                onClick={onOpen}
+                variant="outline"
+                aria-label="Filter"
+                color="white"
+                leftIcon={<FaFilter fill="white"/>}
+              >Filtrovat</Button>
             </Flex>
             <Spacer/>
             <IconButton

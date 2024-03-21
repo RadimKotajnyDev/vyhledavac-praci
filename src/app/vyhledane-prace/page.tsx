@@ -111,7 +111,6 @@ const VyhledanePrace = () => {
                 </Tbody>
               </Table>
               <Center>
-                {/* FIXME: next line has a bug*/}
                 <Button mt={5} display={isButtonHidden ? "none" : "block" || true ? "none" : "none"}
                         onClick={() => {
                           setLoadMore(true)
@@ -119,7 +118,7 @@ const VyhledanePrace = () => {
                         }}>načíst další</Button>
               </Center>
             </TableContainer>
-            <Stack direction="row" alignItems="center" hidden={maxPageNumber == 1}>
+            <Stack direction="row" alignItems="center" hidden={maxPageNumber == 1} zIndex={5}>
               <IconButton isDisabled={pageNumber == 1 || loadMore} onClick={() => {
                 if (pageNumber > 1) {
                   if (loadMore) {
@@ -146,13 +145,6 @@ const VyhledanePrace = () => {
               }}
                           aria-label="next-page" icon={<IoIosArrowForward/>}/>
             </Stack>
-            {/*
-            // preparing the side panel
-             <IconButton rounded="full"
-                        aria-label="search modal button"
-                        boxSize="5rem"
-                        colorScheme="" icon={<SlMagnifier size={40}/>} />
-            */}
           </DarkMode>
         </Flex>
       )
