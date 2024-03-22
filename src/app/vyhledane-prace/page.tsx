@@ -59,19 +59,22 @@ const VyhledanePrace = () => {
       return (
         <Flex color="white" w="full" minH="80vh"
               flexDir="column"
-              justifyContent="space-around"
-              justifyItems="center" placeItems="center"
+              px={{base: 0, md: 3}}
+              //justifyContent="space-around"
+              justifyItems="center"
+              placeItems="center"
         >
           <DarkMode>
             <TableContainer //bg="rgba(255, 255, 255, 0.1)"
               bgColor={bgColor}
+              w="full"
               maxH="80vh" overflowY="auto"
               //boxShadow="0 8px 32px 0 rgba( 31, 38, 135, 0.37 )"
               //backdropFilter="blur( 4px )"
               borderRadius="xl"
               p={8}
               m={4}>
-              <Table variant="unstyled">
+              <Table variant={{base: "striped", md: "unstyled"}} colorScheme="blackAlpha">
                 <Thead>
                   <Tr>
                     {TableHeads.czechNames.map((item, index) => (
@@ -118,7 +121,8 @@ const VyhledanePrace = () => {
                         }}>načíst další</Button>
               </Center>
             </TableContainer>
-            <Stack direction="row" alignItems="center" hidden={maxPageNumber == 1} zIndex={5}>
+            <Stack direction="row" alignItems="center" position="absolute" bottom={6}
+                   hidden={maxPageNumber == 1} zIndex={5}>
               <IconButton isDisabled={pageNumber == 1 || loadMore} onClick={() => {
                 if (pageNumber > 1) {
                   if (loadMore) {

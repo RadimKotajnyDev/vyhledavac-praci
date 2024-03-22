@@ -23,7 +23,7 @@ export const Footer = () => {
          w="full"
          justifyContent="center"
          alignItems="center"
-         h={10}
+         //h={300}
          //p={1}
     >
       <Text opacity="50%" fontSize="xs">&copy; {getTodayYear()} Radim Kotajny & Filip Kroupa</Text>
