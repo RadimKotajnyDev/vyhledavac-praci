@@ -34,6 +34,7 @@ const HomePageButtons = () => {
           w="fit-content" fontSize={{base: "sm", md: "lg"}}
           onClick={() => {
             sessionStorage.clear()
+            // @ts-ignore
             sessionStorage.setItem('search_string', null)
             router.push("/vyhledane-prace")
           }} variant="ghost">

@@ -1,17 +1,12 @@
 'use client'
 
-import {useState} from 'react';
 import {
   Box,
   Button,
   Flex,
   IconButton,
-  Input,
-  InputGroup,
-  InputLeftElement,
   Menu,
   MenuButton,
-  MenuItem,
   MenuList,
   Spacer,
   useColorMode,
@@ -21,7 +16,6 @@ import {FaFilter, FaMoon, FaSearch, FaSun} from 'react-icons/fa';
 import {SlUser} from "react-icons/sl";
 import {useRouter} from "next/navigation";
 import SearchModal from "@/app/components/SearchModal/SearchModal";
-import {SiBurgerking} from "react-icons/si";
 import {Form, Formik} from "formik";
 import SearchBarInModal from "@/app/components/SearchModal/ModalComponents/SearchBarInModal";
 import {IoMdMenu} from "react-icons/io";
@@ -80,6 +74,7 @@ const Navbar = () => {
                     sessionStorage.clear()
                     sessionStorage.setItem('search_string', JSON.stringify(values.searchString))
                     router.push("/vyhledane-prace")
+                    window.location.reload()
                   }}
                   initialValues={{searchString: ""}}>
                   <Form>
