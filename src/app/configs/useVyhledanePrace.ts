@@ -5,29 +5,9 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {server_address} from "@/app/configs/apiConfig";
 import {APIData, PraceType} from "@/app/configs/ApiDataTypes";
+import {TableHeads} from "@/app/configs/defaultconfig";
 
 export const useVyhledanePrace = () => {
-
-
-  const TableHeads = {
-    apiNames: [
-      "skolni_rok",
-      "tema",
-      "obor",
-      "predmet",
-      "jmeno_prijmeni",
-      "vedouci"
-    ],
-    czechNames: [
-      "Školní rok",
-      "Název práce (téma)",
-      "Obor",
-      "Předmět",
-      "Autor",
-      "Vedoucí"
-    ]
-  }
-
 
   const router = useRouter()
   const toast = useToast()
@@ -83,25 +63,6 @@ export const useVyhledanePrace = () => {
               isClosable: true,
             })
           })
-        /*
-        axios.post(`${server_address}/search`, null, {params: {vyraz: JSON.parse(searchString)}})
-          .then(r => {
-            console.log(r)
-            setAPIData(r.data)
-            setIsLoading(false)
-            toast({
-              title: "Vyhledání proběhlo úspěšně.",
-              status: "success",
-              duration: 2000,
-              isClosable: true,
-            })
-          })
-          .catch(e => toast({
-            title: e,
-            status: "error",
-            isClosable: true,
-          }))
-         */
       } else if (filter_params) {
         axios.post(`${server_address}/filter-page/${pageNumber}`,
           JSON.parse(filter_params),
@@ -149,7 +110,18 @@ export const useVyhledanePrace = () => {
     loadData()
   }, [pageNumber, sortBy, sortDirDown, loadMore]);
 
+  const [tryAgain, setTryAgain] = useState<boolean>(false)
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+     setTryAgain(true)
+    }, 1500);
+
+    return () => clearTimeout(timeoutId);
+  }, []);
+
+
   return {
+    tryAgain,
     slugify,
     TableHeads,
     setSortBy,

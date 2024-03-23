@@ -1,7 +1,6 @@
-import { Box, Image } from "@chakra-ui/react";
-import Spline from "@splinetool/react-spline";
-import { useEffect, useState } from "react";
-
+import {Box, Image, Spinner} from "@chakra-ui/react";
+import React, { useEffect, useState, Suspense } from "react";
+const Spline = React.lazy(() => import('@splinetool/react-spline'));
 export const ThreeDobject = () => {
   const [isPotatoPC, setPotatoPC] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -27,12 +26,14 @@ export const ThreeDobject = () => {
           onLoad={() => setIsLoading(false)}
         />
       ) : (
-        <Spline
+        <Suspense fallback={<Spinner />}>
+          <Spline
           onLoad={() => {
             setIsLoading(false);
           }}
           scene="https://prod.spline.design/bbH-SUXSTkvFd2Gq/scene.splinecode"
         />
+        </Suspense>
       )}
     </Box>
   );
