@@ -12,7 +12,7 @@ import {
   useColorMode,
   useDisclosure,
 } from '@chakra-ui/react';
-import {FaFilter, FaMoon, FaSearch, FaSun} from 'react-icons/fa';
+import {FaFilter, FaHome, FaMoon, FaSearch, FaSun} from 'react-icons/fa';
 import {SlUser} from "react-icons/sl";
 import {useRouter} from "next/navigation";
 import SearchModal from "@/app/components/SearchModal/SearchModal";
@@ -37,26 +37,37 @@ const Navbar = () => {
             variant='outline'
           />
           <MenuList>
-              <Button
-                onClick={onOpen}
-                variant="ghost"
-                w="full"
-                aria-label="Filter"
-                rightIcon={<FaSearch/>}
-              >Hledat</Button>
-              <Button
-                w="full"
-              aria-label="Admin panel"
-              rightIcon={<SlUser />}
+            <Button
+              py={10}
+              onClick={() => router.push("/")}
               variant="ghost"
-              >Admin</Button>
-              <Button
-                w="full"
+              w="full"
+              aria-label="Filter"
+              rightIcon={<FaHome/>}
+            >Domů</Button>
+            <Button
+              py={10}
+              onClick={onOpen}
+              variant="ghost"
+              w="full"
+              aria-label="Filter"
+              rightIcon={<FaSearch/>}
+            >Hledat</Button>
+            <Button
+              py={10}
+              w="full"
+              aria-label="Admin panel"
+              rightIcon={<SlUser/>}
+              variant="ghost"
+            >Admin</Button>
+            <Button
+              py={10}
+              w="full"
               aria-label="Toggle color mode"
-              rightIcon={colorMode === 'light' ? <FaMoon /> : <FaSun fill="white"/>}
+              rightIcon={colorMode === 'light' ? <FaMoon/> : <FaSun fill="white"/>}
               onClick={toggleColorMode}
               variant="ghost"
-              >{colorMode === "light" ? "tmavý" : "světlý"} režim</Button>
+            >{colorMode === "light" ? "Tmavý" : "Světlý"} režim</Button>
           </MenuList>
         </Menu>
       </Box>
