@@ -14,9 +14,10 @@ import {
 } from "@chakra-ui/react";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
-import {Image} from "@chakra-ui/react";
 import axios from "axios";
 import {server_address} from "@/app/configs/apiConfig";
+import ImageSlider from "@/app/components/ImageSlider/ImageSlider";
+import {SlideData} from "@/app/components/ImageSlider/SlideData";
 
 type APIData = {
   id: number,
@@ -96,8 +97,10 @@ export default function Page({params}: { params: { id: number, slug: string } })
     )
   } else return (
     <Box color="white" w="full"
-         minH="80vh" justifyContent="space-around"
+         minH="80vh"
+         justifyContent="space-around"
          justifyItems="center" placeItems="center"
+         overflowY="scroll"
          display="flex">
       <Box bgColor={bgColor}
            boxShadow="0 8px 32px 0 rgba( 31, 38, 135, 0.37 )"
@@ -110,26 +113,21 @@ export default function Page({params}: { params: { id: number, slug: string } })
           h="full"
           justifyContent="center"
           alignItems="center"
+          placeItems="center"
           gap={5}
           gridTemplateColumns={{base: "repeat(1, 1fr)", xl: "repeat(2, 1fr)"}}>
-          <GridItem boxSize='400px'>
-            <Box boxSize='500px'>
-              <Image
-                m={1}
-                borderRadius="xl"
-                src="https://images.unsplash.com/photo-1593062096033-9a26b09da705?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt='Random image from stock photo'
-                objectFit="cover"
-              />
+          <GridItem boxSize="full">
+            <Box boxSize="full" p={4} color="white">
+              <ImageSlider slides={SlideData}/>
             </Box>
           </GridItem>
-          <GridItem boxSize="lg" justifySelf="center" h="full">
+          <GridItem boxSize="full" justifySelf="center" h="full">
             <Box>
-              <Heading fontSize="3xl">{data.tema ?? "Chybí název"}</Heading>
+              <Heading fontSize="3xl" mb={5}>{data.tema ?? "Chybí název"}</Heading>
               <Divider/>
             </Box>
 
-            <Flex flexDir="row" justifyContent="space-between" w="full" my={1}>
+            <Flex flexDir="row" justifyContent="space-between" w="full" my={3}>
               <Text fontWeight="200">Autor: {data.jmeno_prijmeni}</Text>
               <Text fontWeight="200">Vedoucí: {data.vedouci}</Text>
             </Flex>

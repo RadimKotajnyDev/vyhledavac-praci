@@ -11,9 +11,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang='cs' className={fonts.rubik.variable}>
-    <body>
+    <body style={{overflow: "auto"}}>
     <Providers>
-      <Box height="100vh" bgGradient='linear(to-r, #360033, #0b8793)'>
+      <Box
+        overflow="auto"
+        height="100vh"
+        bgGradient='linear(to-r, #360033, #0b8793)'
+        //bg="rgb(54, 89, 129)"
+      >
         <Navbar/>
         <Box as="main">{children}</Box>
         <Footer/>

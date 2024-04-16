@@ -75,7 +75,7 @@ const Navbar = () => {
         <Box bg={colorMode === 'light' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(45, 55, 72, 0.5)'} p={4} rounded="3xl">
           <Flex alignItems="center">
             <Button leftIcon={<FaSearch fill="white"/>} variant="ghost" color="white" onClick={() => router.push("/")}>
-              ThesisSpotlight
+              ThesisSpotlight&nbsp;<Box as="span" fontWeight="350">(Beta verze)</Box>
             </Button>
             <Spacer/>
             <Flex alignItems="center" placeItems="center" justifyContent="center" gap={3} w="600px">
