@@ -3,7 +3,9 @@ import {
   Center,
   DarkMode,
   Flex,
-  Icon, IconButton, Stack,
+  Grid, GridItem,
+  Icon,
+  IconButton, Stack,
   Table,
   TableContainer,
   Tbody,
@@ -13,15 +15,15 @@ import {
   Thead,
   Tr
 } from "@chakra-ui/react";
-import {IoIosArrowBack, IoIosArrowForward, IoMdArrowDropdown, IoMdArrowDropup} from "react-icons/io";
+import {IoIosArrowBack, IoIosArrowForward, IoIosArrowUp, IoMdArrowDropdown, IoMdArrowDropup} from "react-icons/io";
 import {APIData, PraceType} from "@/app/configs/ApiDataTypes";
 import {NextRouter} from "next/router";
-
+import {useRef} from "react";
 
 //fixme: too lazy to fix this shit
 interface ThesesTableInterface {
   slugify: (str: string | undefined) => string;
-  TableHeads: {apiNames: string[], czechNames: string[]},
+  TableHeads: { apiNames: string[], czechNames: string[] },
   setSortBy: (value: string | ((prevVar: string) => boolean)) => void;
   setSortDirDown: (value: boolean | ((prevVar: boolean) => boolean)) => void;
   isButtonHidden: boolean,
@@ -59,8 +61,16 @@ const ThesesTable = (props: any) => {
     maxPageNumber
   } = props
 
+  const TableTop = useRef()
+
+  function handleBackClick() {
+    if (TableTop && TableTop.current) {
+      TableTop.current.scrollIntoView({behavior: 'smooth'})
+    }
+  }
+
   return (
-    <Flex color="white" w="full" minH="80vh"
+    <Flex color="white" w="full" //minH="80vh"
           flexDir="column"
           px={{base: 0, md: 3}}
       //justifyContent="space-around"
@@ -71,13 +81,15 @@ const ThesesTable = (props: any) => {
         <TableContainer //bg="rgba(255, 255, 255, 0.1)"
           bgColor={bgColor}
           w="full"
-          maxH="80vh" overflowY="auto"
+          maxH="80vh"
+          overflowY="auto"
           //boxShadow="0 8px 32px 0 rgba( 31, 38, 135, 0.37 )"
           //backdropFilter="blur( 4px )"
           borderRadius="xl"
           p={8}
           m={4}>
           <Table
+            ref={TableTop}
             size={{base: "sm", md: "lg"}}
             variant={{base: "striped", md: "unstyled"}} colorScheme="blackAlpha">
             <Thead>
@@ -126,34 +138,49 @@ const ThesesTable = (props: any) => {
                     }}>načíst další</Button>
           </Center>
         </TableContainer>
-        <Stack direction="row" alignItems="center" position="absolute" bottom={6}
-               hidden={maxPageNumber == 1} zIndex={5}>
-          <IconButton isDisabled={pageNumber == 1 || loadMore} onClick={() => {
-            if (pageNumber > 1) {
-              if (loadMore) {
-                setLoadMore(false)
-                setPageNumber(1)
-              } else {
-                hideButton(true)
-                setPageNumber((prevState: number) => prevState - 1)
-              }
-            }
-          }}
-                      aria-label="previous-page" icon={<IoIosArrowBack/>}/>
-          <Text>{loadMore ? "⚡" : `${pageNumber} / ${maxPageNumber}`}</Text>
-          <IconButton isDisabled={pageNumber == maxPageNumber || loadMore} onClick={() => {
-            if (pageNumber) {
-              if (loadMore) {
-                setLoadMore(false)
-                setPageNumber(1)
-              } else {
-                hideButton(true)
-                setPageNumber((prevState: number) => prevState + 1)
-              }
-            }
-          }}
-                      aria-label="next-page" icon={<IoIosArrowForward/>}/>
-        </Stack>
+        <Grid
+          templateColumns="repeat(3, 1fr)"
+          position="absolute" bottom={6}
+          justifyContent="space-between"
+          w="full"
+          hidden={maxPageNumber == 1} zIndex={5}>
+          <GridItem></GridItem>
+          <GridItem>
+            <Stack
+              direction="row" alignItems="center">
+              <IconButton isDisabled={pageNumber == 1 || loadMore} onClick={() => {
+                if (pageNumber > 1) {
+                  if (loadMore) {
+                    setLoadMore(false)
+                    setPageNumber(1)
+                  } else {
+                    hideButton(true)
+                    setPageNumber((prevState: number) => prevState - 1)
+                  }
+                }
+              }}
+                          aria-label="previous-page" icon={<IoIosArrowBack/>}/>
+              <Text>{loadMore ? "⚡" : `${pageNumber} / ${maxPageNumber}`}</Text>
+              <IconButton isDisabled={pageNumber == maxPageNumber || loadMore} onClick={() => {
+                if (pageNumber) {
+                  if (loadMore) {
+                    setLoadMore(false)
+                    setPageNumber(1)
+                  } else {
+                    hideButton(true)
+                    setPageNumber((prevState: number) => prevState + 1)
+                  }
+                }
+              }}
+                          aria-label="next-page" icon={<IoIosArrowForward/>}/>
+            </Stack>
+          </GridItem>
+          <GridItem>
+            <IconButton aria-label="back-on-top"
+                        icon={<IoIosArrowUp/>} onClick={handleBackClick}/>
+          </GridItem>
+
+        </Grid>
       </DarkMode>
     </Flex>
   )
