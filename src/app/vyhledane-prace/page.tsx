@@ -7,6 +7,10 @@ import ThesesTable from "@/app/components/ThesesTable";
 const VyhledanePrace = () => {
 
   const {
+    NextPage,
+    PreviousPage,
+    TableTop,
+    handleBackClick,
     tryAgain,
     slugify,
     TableHeads,
@@ -39,6 +43,10 @@ const VyhledanePrace = () => {
     if (apiData && Array.isArray(apiData) && apiData.length > 0) {
       return (
         <ThesesTable {...{
+          NextPage,
+          PreviousPage,
+          TableTop,
+          handleBackClick,
           slugify,
           TableHeads,
           setSortBy,

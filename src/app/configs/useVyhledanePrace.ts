@@ -1,7 +1,7 @@
 import {useRouter} from "next/navigation";
 import {useColorModeValue, useToast} from "@chakra-ui/react";
 import {useAPIFunctions} from "@/app/configs/useAPIFunctions";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import axios from "axios";
 import {server_address} from "@/app/configs/apiConfig";
 import {APIData, PraceType} from "@/app/configs/ApiDataTypes";
@@ -119,8 +119,47 @@ export const useVyhledanePrace = () => {
     return () => clearTimeout(timeoutId);
   }, []);
 
+  function NextPage() {
+    if (pageNumber > 1) {
+      if (loadMore) {
+        setLoadMore(false)
+        setPageNumber(1)
+      } else {
+        hideButton(true)
+        setPageNumber((prevState: number) => prevState - 1)
+      }
+    }
+  }
+
+  function PreviousPage() {
+    if (pageNumber) {
+      if (loadMore) {
+        setLoadMore(false)
+        setPageNumber(1)
+      } else {
+        hideButton(true)
+        setPageNumber((prevState: number) => prevState + 1)
+      }
+    }
+  }
+
+  const TableTop = useRef<HTMLTableElement>(null)
+
+  function handleBackClick() {
+    if (TableTop && TableTop.current) {
+      const element = TableTop.current as HTMLElement | null; // or RefObject<HTMLElement> | null
+      if (element) {
+        element.scrollIntoView({behavior: 'smooth'});
+      }
+    }
+  }
+
 
   return {
+    NextPage,
+    PreviousPage,
+    TableTop,
+    handleBackClick,
     tryAgain,
     slugify,
     TableHeads,

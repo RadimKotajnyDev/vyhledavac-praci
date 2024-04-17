@@ -43,6 +43,10 @@ interface ThesesTableInterface {
 const ThesesTable = (props: any) => {
 
   const {
+    NextPage,
+    PreviousPage,
+    TableTop,
+    handleBackClick,
     slugify,
     TableHeads,
     setSortBy,
@@ -61,13 +65,6 @@ const ThesesTable = (props: any) => {
     maxPageNumber
   } = props
 
-  const TableTop = useRef()
-
-  function handleBackClick() {
-    if (TableTop && TableTop.current) {
-      TableTop.current.scrollIntoView({behavior: 'smooth'})
-    }
-  }
 
   return (
     <Flex color="white" w="full" //minH="80vh"
@@ -89,8 +86,9 @@ const ThesesTable = (props: any) => {
           p={8}
           m={4}>
           <Table
-            ref={TableTop}
+            // @ts-ignore
             size={{base: "sm", md: "lg"}}
+            ref={TableTop}
             variant={{base: "striped", md: "unstyled"}} colorScheme="blackAlpha">
             <Thead>
               <Tr>
@@ -130,13 +128,15 @@ const ThesesTable = (props: any) => {
               ))}
             </Tbody>
           </Table>
+          {/*
           <Center>
-            <Button mt={5} display={isButtonHidden ? "none" : "block" || true ? "none" : "none"}
+              <Button mt={5} display={isButtonHidden ? "none" : "block" || true ? "none" : "none"}
                     onClick={() => {
                       setLoadMore(true)
                       setPageNumber((prevState: number) => prevState + 1)
                     }}>načíst další</Button>
           </Center>
+          */}
         </TableContainer>
         <Grid
           templateColumns="repeat(3, 1fr)"
@@ -145,37 +145,17 @@ const ThesesTable = (props: any) => {
           w="full"
           hidden={maxPageNumber == 1} zIndex={5}>
           <GridItem></GridItem>
-          <GridItem>
+          <GridItem justifySelf="center">
             <Stack
               direction="row" alignItems="center">
-              <IconButton isDisabled={pageNumber == 1 || loadMore} onClick={() => {
-                if (pageNumber > 1) {
-                  if (loadMore) {
-                    setLoadMore(false)
-                    setPageNumber(1)
-                  } else {
-                    hideButton(true)
-                    setPageNumber((prevState: number) => prevState - 1)
-                  }
-                }
-              }}
+              <IconButton isDisabled={pageNumber == 1 || loadMore} onClick={NextPage}
                           aria-label="previous-page" icon={<IoIosArrowBack/>}/>
               <Text>{loadMore ? "⚡" : `${pageNumber} / ${maxPageNumber}`}</Text>
-              <IconButton isDisabled={pageNumber == maxPageNumber || loadMore} onClick={() => {
-                if (pageNumber) {
-                  if (loadMore) {
-                    setLoadMore(false)
-                    setPageNumber(1)
-                  } else {
-                    hideButton(true)
-                    setPageNumber((prevState: number) => prevState + 1)
-                  }
-                }
-              }}
+              <IconButton isDisabled={pageNumber == maxPageNumber || loadMore} onClick={PreviousPage}
                           aria-label="next-page" icon={<IoIosArrowForward/>}/>
             </Stack>
           </GridItem>
-          <GridItem>
+          <GridItem justifySelf="end" pr={5}>
             <IconButton aria-label="back-on-top"
                         icon={<IoIosArrowUp/>} onClick={handleBackClick}/>
           </GridItem>
