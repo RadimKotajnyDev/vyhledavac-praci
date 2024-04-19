@@ -12,7 +12,7 @@ export const useVyhledanePrace = () => {
   const router = useRouter()
   const toast = useToast()
   //const bgColor = useColorModeValue("rgba(255, 255, 255, 0.1)", "rgba(0, 0, 0, 0.1)");
-  const bgColor = useColorModeValue("rgba(255, 255, 255, 0.1)", "rgba(45, 55, 72, 0.25)");
+  const bgColor = useColorModeValue("rgba(255, 255, 255, 0.1)", "rgba(45, 55, 72, 0.5)");
 
   const {slugify} = useAPIFunctions()
 

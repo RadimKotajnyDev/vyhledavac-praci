@@ -1,11 +1,11 @@
 import {
-  Button,
-  Center,
   DarkMode,
   Flex,
-  Grid, GridItem,
+  Grid,
+  GridItem,
   Icon,
-  IconButton, Stack,
+  IconButton,
+  Stack,
   Table,
   TableContainer,
   Tbody,
@@ -15,10 +15,17 @@ import {
   Thead,
   Tr
 } from "@chakra-ui/react";
-import {IoIosArrowBack, IoIosArrowForward, IoIosArrowUp, IoMdArrowDropdown, IoMdArrowDropup} from "react-icons/io";
+import {
+  IoIosArrowBack,
+  IoIosArrowForward,
+  IoIosArrowUp,
+  IoIosBug,
+  IoMdArrowDropdown,
+  IoMdArrowDropup
+} from "react-icons/io";
 import {APIData, PraceType} from "@/app/configs/ApiDataTypes";
 import {NextRouter} from "next/router";
-import {useRef} from "react";
+import Link from "next/link";
 
 //fixme: too lazy to fix this shit
 interface ThesesTableInterface {
@@ -144,7 +151,12 @@ const ThesesTable = (props: any) => {
           justifyContent="space-between"
           w="full"
           hidden={maxPageNumber == 1} zIndex={5}>
-          <GridItem></GridItem>
+          <GridItem justifySelf="start" pl={5}>
+            <Link href="https://forms.gle/7gJK7P3PSxgAknCg7" passHref target="_blank">
+              <IconButton aria-label="report-a-bug-button" colorScheme="red"
+                        icon={<IoIosBug />} onClick={() => console.log("reported.")}/>
+            </Link>
+          </GridItem>
           <GridItem justifySelf="center">
             <Stack
               direction="row" alignItems="center">
@@ -156,7 +168,7 @@ const ThesesTable = (props: any) => {
             </Stack>
           </GridItem>
           <GridItem justifySelf="end" pr={5}>
-            <IconButton aria-label="back-on-top"
+            <IconButton aria-label="back-on-top" colorScheme="green"
                         icon={<IoIosArrowUp/>} onClick={handleBackClick}/>
           </GridItem>
 
