@@ -6,7 +6,7 @@ import {
   Flex,
   Grid,
   GridItem,
-  Heading,
+  Heading, IconButton,
   Spinner,
   Text,
   useColorModeValue,
@@ -18,6 +18,8 @@ import axios from "axios";
 import {server_address} from "@/app/configs/apiConfig";
 import ImageSlider from "@/app/components/ImageSlider/ImageSlider";
 import {SlideData} from "@/app/components/ImageSlider/SlideData";
+import Link from "next/link";
+import {IoIosBug} from "react-icons/io";
 
 type APIData = {
   id: number,
@@ -152,6 +154,12 @@ export default function Page({params}: { params: { id: number, slug: string } })
             </Flex>
           </GridItem>
         </Grid>
+      </Box>
+      <Box pos="fixed" bottom={5} left={5}>
+        <Link href="https://forms.gle/7gJK7P3PSxgAknCg7" passHref target="_blank">
+          <IconButton aria-label="report-a-bug-button" colorScheme="red"
+                      icon={<IoIosBug/>} onClick={() => console.log("reported.")}/>
+        </Link>
       </Box>
     </Box>
   );

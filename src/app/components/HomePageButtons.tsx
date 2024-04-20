@@ -1,9 +1,11 @@
 'use client'
-import {Button, Flex, useDisclosure} from "@chakra-ui/react";
+import {Box, Button, Flex, IconButton, Text, useDisclosure} from "@chakra-ui/react";
 
 import {SlMagnifier} from "react-icons/sl";
 import SearchModal from "@/app/components/SearchModal/SearchModal";
 import {useRouter} from "next/navigation";
+import Link from "next/link";
+import {IoIosBug} from "react-icons/io";
 
 
 const HomePageButtons = () => {
@@ -42,6 +44,12 @@ const HomePageButtons = () => {
         </Button>
       </Flex>
       <SearchModal {...{isOpen, onOpen, onClose}}/>
+      <Box pos="absolute" bottom={5} left={5}>
+        <Link href="https://forms.gle/7gJK7P3PSxgAknCg7" passHref target="_blank">
+        <IconButton aria-label="report-a-bug-button" colorScheme="red"
+                    icon={<IoIosBug/>} onClick={() => console.log("reported.")}/>
+      </Link>
+      </Box>
     </>
   )
 }

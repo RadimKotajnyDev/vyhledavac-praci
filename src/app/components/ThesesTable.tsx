@@ -150,7 +150,8 @@ const ThesesTable = (props: any) => {
           position="absolute" bottom={6}
           justifyContent="space-between"
           w="full"
-          hidden={maxPageNumber == 1} zIndex={5}>
+          //hidden={maxPageNumber == 1}
+          zIndex={5}>
           <GridItem justifySelf="start" pl={5}>
             <Link href="https://forms.gle/7gJK7P3PSxgAknCg7" passHref target="_blank">
               <IconButton aria-label="report-a-bug-button" colorScheme="red"

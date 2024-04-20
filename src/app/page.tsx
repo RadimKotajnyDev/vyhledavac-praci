@@ -3,8 +3,10 @@ import {Box, Flex,} from '@chakra-ui/react'
 import HomePageButtons from "@/app/components/HomePageButtons";
 import PageText from "@/app/components/PageText";
 import {ThreeDobject} from "@/app/components/ThreeDobject";
+import {useVyhledanePrace} from "@/app/configs/useVyhledanePrace";
 
 export default function Home() {
+
   return (
     <>
       <Box color="white" w="full"

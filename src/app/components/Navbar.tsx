@@ -71,7 +71,8 @@ const Navbar = () => {
           </MenuList>
         </Menu>
       </Box>
-      <Box pt={2} px={3} display={{base: "none", md: "block"}}>
+      <Box
+           pt={2} px={3} display={{base: "none", md: "block"}}>
         <Box bg={colorMode === 'light' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(45, 55, 72, 0.5)'} p={4} rounded="3xl">
           <Flex alignItems="center">
             <Button leftIcon={<FaSearch fill="white"/>} variant="ghost" color="white" onClick={() => router.push("/")}>
@@ -110,7 +111,6 @@ const Navbar = () => {
               onClick={toggleColorMode}
               variant="ghost"
             />
-
             <IconButton
               aria-label="Admin panel"
               icon={<SlUser fill="white"/>}

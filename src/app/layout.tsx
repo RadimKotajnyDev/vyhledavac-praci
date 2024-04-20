@@ -3,6 +3,11 @@ import {Providers} from './providers/Providers';
 import {Box} from "@chakra-ui/react";
 import Navbar from "@/app/components/Navbar";
 import {Footer} from "@/app/components/Footer";
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'ThesisSpotlight (Beta)',
+}
 
 export default function RootLayout({
                                      children,
@@ -11,6 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang='cs' className={fonts.rubik.variable}>
+
     <body style={{overflow: "auto"}}>
     <Providers>
       <Box
