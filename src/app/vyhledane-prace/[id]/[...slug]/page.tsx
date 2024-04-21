@@ -43,9 +43,10 @@ export default function Page({params}: { params: { id: number, slug: string } })
   const router = useRouter()
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [data, setData] = useState<APIData | null>();
+  const [imagesURL, setImagesURL] = useState([])
 
   useEffect(() => {
-    function getDataById() {
+    async function getDataById() {
       axios.get<APIData>(`${server_address}/search_task_by_id/${params.id}`)
         .then(r => {
           setData(r.data)
@@ -56,6 +57,15 @@ export default function Page({params}: { params: { id: number, slug: string } })
           status: "error",
           isClosable: true,
         }))
+      axios.get(`${server_address}/get-images-from-id/${params.id}`).then(
+        r => {
+          setImagesURL(r.data)
+        }
+      ).catch((e) => toast({
+        title: e,
+        status: "error",
+        isClosable: true,
+      }))
     }
 
     const storedData = sessionStorage.getItem('apiData');
@@ -117,15 +127,16 @@ export default function Page({params}: { params: { id: number, slug: string } })
           alignItems="center"
           placeItems="center"
           gap={5}
-          gridTemplateColumns={{base: "repeat(1, 1fr)", xl: "repeat(2, 1fr)"}}>
+          gridTemplateColumns={imagesURL.length > 0 ? {base: "repeat(1, 1fr)", xl: "repeat(2, 1fr)"} : "1fr"}
+        >
           <GridItem boxSize="full">
-            <Box boxSize="full" p={4} color="white">
-              <ImageSlider slides={SlideData}/>
+            <Box boxSize="full" p={4} color="white" display={imagesURL.length > 0 ? "grid" : "none"}>
+              <ImageSlider slides={imagesURL ?? []}/>
             </Box>
           </GridItem>
           <GridItem boxSize="full" justifySelf="center" h="full">
             <Box>
-              <Heading fontSize="3xl" mb={5}>{data.tema ?? "Chybí název"}</Heading>
+              <Heading maxW="750px" fontSize="3xl" mb={5}>{data.tema ?? "Chybí název"}</Heading>
               <Divider/>
             </Box>
 
