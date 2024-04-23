@@ -1,7 +1,9 @@
+'use server'
 import {redirect} from 'next/navigation'
 
 import {createClient} from '@/utils/supabase/server'
 import {SignOutButton} from "@/app/admin/components/SignOutButton";
+import AdminPanel from "@/app/admin/components/AdminPanel";
 
 export default async function AdminPage() {
   const supabase = createClient()
@@ -10,14 +12,19 @@ export default async function AdminPage() {
   if (error || !data?.user) {
     redirect('/login')
   }
+
+  /* TODO: restrict access only for admin */
   if(data.user.role != "supabase_admin") {
     redirect("/permission-denied")
   }
 
+
   return (
-    <p>Hello
-      {data.user.email}
+    <div>
+      <p>Hello {data.user.email}</p>
       <p>You are {data.user.role}.</p>
       <SignOutButton />
-    </p>)
+      <AdminPanel />
+    </div>
+  )
 }

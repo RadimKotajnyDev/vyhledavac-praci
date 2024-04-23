@@ -5,8 +5,8 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 const ImageSlider = ({ slides }: {slides: string[]}) => {
   return (
     <Carousel infiniteLoop>
-      {slides.map((slide: string) => {
-        return <Image src={slide} height="auto" width="800px" />;
+      {slides.map((slide: string, index: number) => {
+        return <Image key={index} src={slide} height="auto" width="800px" />;
       })}
     </Carousel>
   );
