@@ -112,6 +112,7 @@ const Navbar = () => {
               variant="ghost"
             />
             <IconButton
+              onClick={() => router.push("/admin")}
               aria-label="Admin panel"
               icon={<SlUser fill="white"/>}
               variant="ghost"

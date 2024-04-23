@@ -96,6 +96,8 @@ export const useVyhledanePrace = () => {
             })
           })
       }
+      /*
+      // This code below bugs the page
       if (!filter_params && !searchString) {
         router.push("/")
         toast({
@@ -105,6 +107,7 @@ export const useVyhledanePrace = () => {
           isClosable: true,
         })
       }
+       */
     }
 
     loadData()
