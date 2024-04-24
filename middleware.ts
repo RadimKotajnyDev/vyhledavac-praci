@@ -5,6 +5,7 @@ export async function middleware(request: NextRequest) {
   return await updateSession(request)
 }
 
+//TODO: fix favicon not showing
 export const config = {
   matcher: [
     /*

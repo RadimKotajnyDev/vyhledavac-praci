@@ -4,7 +4,7 @@ import {Box, Flex} from "@chakra-ui/react";
 
 const AdminPanel = () => {
   return (
-    <Flex>
+    <Flex w="full" h="100vh">
       <CreateThesis />
     </Flex>
   )

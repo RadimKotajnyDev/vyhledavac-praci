@@ -96,7 +96,7 @@ const AuthPage: React.FC = () => {
               </TabPanel>
               <TabPanel>
                 <Heading>Registrace</Heading>
-                <Text my={2} fontWeight="light" color="gray.300" fontSize="sm">Pokud jste student, <br/> je pro vás registrace <u>zatím</u> zbytečná.</Text>
+                <Text my={2} fontWeight="light" color="gray.300" fontSize="sm" maxW="15rem">Pokud jste student, je pro vás registrace <u>zatím</u> zbytečná.</Text>
                 <SignupForm/>
               </TabPanel>
             </TabPanels>

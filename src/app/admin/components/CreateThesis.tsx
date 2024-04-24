@@ -1,46 +1,57 @@
 'use client'
 
 import {
+  Box,
   Button,
   Center,
-  FormControl,
+  Grid, Input,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalHeader,
-  ModalOverlay,
+  ModalOverlay, Select, Skeleton, Text,
   useDisclosure
 } from '@chakra-ui/react'
-import {Formik} from "formik";
+import {Field, Form, Formik} from "formik";
+import Autor from "@/app/admin/components/CreateThesisComponents/Autor";
+import Obor from "@/app/admin/components/CreateThesisComponents/Obor";
+import Predmet from "@/app/admin/components/CreateThesisComponents/Predmet";
 
 const CreateThesis = () => {
   const {isOpen, onOpen, onClose} = useDisclosure()
   return (
     <>
-      <Button onClick={onOpen}>Open Modal</Button>
+      <Button onClick={onOpen}>Vytvořit práci</Button>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} size="3xl">
         <ModalOverlay/>
         <ModalContent>
           <ModalHeader>Vytvoření práce</ModalHeader>
           <ModalCloseButton/>
           <ModalBody>
-           <Formik initialValues={{value: ""}}>
-              <FormControl>
-
-              </FormControl>
-           </Formik>
+            <Formik initialValues={{value: ""}} onSubmit={(values) => console.log(values)}>
+              <Form>
+                <Grid
+                  templateColumns={{base: "1fr", md: "repeat(2, 1fr)"}}
+                  templateRows={{base: "repeat(2, 1fr)", md: "1fr"}}
+                  gap="5"
+                  w="full"
+                  justifyContent="space-between"
+                  alignItems="space-between"
+                >
+                  <Autor />
+                  <Obor />
+                  <Predmet />
+                </Grid>
+                <Center w="100%" my={5}>
+                  <Button isDisabled={false} type="submit" colorScheme='green'>
+                    Vytvořit práci
+                  </Button>
+                </Center>
+              </Form>
+            </Formik>
           </ModalBody>
-
-          <ModalFooter>
-            <Center w="full">
-              <Button colorScheme='green'>
-                Vytvořit práci
-              </Button>
-            </Center>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </>

@@ -14,9 +14,10 @@ export default async function AdminPage() {
   }
 
   /* TODO: restrict access only for admin */
-  if(data.user.role != "supabase_admin") {
+  /*if(data.user.role != "supabase_admin") {
     redirect("/permission-denied")
   }
+   */
 
 
   return (
