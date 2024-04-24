@@ -4,19 +4,23 @@ import {
   Box,
   Button,
   Center,
-  Grid, Input,
+  Grid, GridItem, Input,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
   ModalHeader,
-  ModalOverlay, Select, Skeleton, Text,
+  ModalOverlay, Select, Skeleton, Text, Textarea,
   useDisclosure
 } from '@chakra-ui/react'
 import {Field, Form, Formik} from "formik";
 import Autor from "@/app/admin/components/CreateThesisComponents/Autor";
 import Obor from "@/app/admin/components/CreateThesisComponents/Obor";
 import Predmet from "@/app/admin/components/CreateThesisComponents/Predmet";
+import Vedouci from "@/app/admin/components/CreateThesisComponents/Vedouci";
+import SkolniRok from "@/app/admin/components/CreateThesisComponents/SkolniRok";
+import ObsahPrace from "@/app/admin/components/CreateThesisComponents/Obsah";
+import PraktickaCast from "@/app/admin/components/CreateThesisComponents/PraktickaCast";
 
 const CreateThesis = () => {
   const {isOpen, onOpen, onClose} = useDisclosure()
@@ -24,7 +28,7 @@ const CreateThesis = () => {
     <>
       <Button onClick={onOpen}>Vytvořit práci</Button>
 
-      <Modal isOpen={isOpen} onClose={onClose} size="3xl">
+      <Modal isOpen={isOpen} onClose={onClose} size="6xl">
         <ModalOverlay/>
         <ModalContent>
           <ModalHeader>Vytvoření práce</ModalHeader>
@@ -40,9 +44,15 @@ const CreateThesis = () => {
                   justifyContent="space-between"
                   alignItems="space-between"
                 >
-                  <Autor />
-                  <Obor />
-                  <Predmet />
+                  <Autor/>
+                  <Obor/>
+                  <Predmet/>
+                  <Vedouci/>
+                  <SkolniRok/>
+                  {/* Možná dodělat tagy? neexistuje zatím sloupec tabulky */}
+                  <GridItem />
+                  <ObsahPrace/>
+                  <PraktickaCast />
                 </Grid>
                 <Center w="100%" my={5}>
                   <Button isDisabled={false} type="submit" colorScheme='green'>
