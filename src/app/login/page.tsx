@@ -84,7 +84,7 @@ const AuthPage: React.FC = () => {
     <>
       <Flex w="full" justifyContent="center" mt={{base: "10", xl: "20"}} textColor="white">
         <Box w="fit-content" p={4} bgColor={bgColor} borderRadius="xl">
-          <Tabs colorScheme="green">
+          <Tabs colorScheme="green" isFitted>
             <TabList>
               <Tab>Přihlášení</Tab>
               <Tab>Registrace</Tab>
