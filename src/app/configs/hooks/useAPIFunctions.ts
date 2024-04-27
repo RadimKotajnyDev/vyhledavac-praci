@@ -4,7 +4,7 @@ import axios from "axios";
 import * as Yup from "yup"
 import {server_address} from "@/app/configs/apiConfig";
 import {useEffect, useState} from "react";
-import {SearchModalValuesType} from "@/app/configs/ApiDataTypes";
+import {SearchModalValuesType} from "@/app/configs/types/ApiDataTypes";
 
 export const useAPIFunctions = () => {
   const router = useRouter()
@@ -167,7 +167,7 @@ export const useAPIFunctions = () => {
     }
   }
 
-  function saveFilter(values: SearchModalValuesType) {
+  function saveFilter(values: SearchModalValuesType, pathName: string) {
     const obor_array = []
     values.obor_stroj ? obor_array.push("stroj") : null
     values.obor_it ? obor_array.push("it") : null
@@ -181,10 +181,12 @@ export const useAPIFunctions = () => {
       vedouci: values.vedouci,
       tagy: values.tagy
     }
-    sessionStorage.clear()
+    sessionStorage.removeItem('filter_params')
+    sessionStorage.removeItem('search_params')
     sessionStorage.setItem('filter_params', JSON.stringify(reformatedValues))
-    router.push("/vyhledane-prace")
-    window.location.reload()
+    if(pathName == "/vyhledane-prace") {
+      window.location.reload()
+    } else router.push("/vyhledane-prace")
   }
 
 

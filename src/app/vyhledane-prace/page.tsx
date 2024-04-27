@@ -1,8 +1,7 @@
 'use client'
 import {Box, Button, Spinner, Text} from "@chakra-ui/react"
-import {useVyhledanePrace} from "@/app/configs/useVyhledanePrace";
+import {useVyhledanePrace} from "@/app/configs/hooks/useVyhledanePrace";
 import ThesesTable from "@/app/components/ThesesTable";
-
 
 const VyhledanePrace = () => {
 

@@ -19,8 +19,9 @@ import RozmeziLet from "@/app/components/SearchModal/ModalComponents/ModalGridCo
 import Tagy from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/Tagy";
 import Predmet from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/Predmet";
 import Autor from "@/app/components/SearchModal/ModalComponents/ModalGridComponents/Autor";
-import {useAPIFunctions} from "@/app/configs/useAPIFunctions";
-import {SearchModalValuesType} from "@/app/configs/ApiDataTypes";
+import {useAPIFunctions} from "@/app/configs/hooks/useAPIFunctions";
+import {SearchModalValuesType} from "@/app/configs/types/ApiDataTypes";
+import {usePathname} from "next/navigation";
 
 const SearchModal = (props: any) => {
   const {
@@ -42,6 +43,7 @@ const SearchModal = (props: any) => {
     isAPILoading
   } = useAPIFunctions()
 
+  const pathName = usePathname()
 
   return (
     <Modal
@@ -58,9 +60,13 @@ const SearchModal = (props: any) => {
         <ModalBody gap={10}>
           <Formik
             onSubmit={(values) => {
-              sessionStorage.clear()
+              //sessionStorage.clear()
+              sessionStorage.removeItem('filter_params')
+              sessionStorage.removeItem('search_params')
               sessionStorage.setItem('search_string', JSON.stringify(values.searchString))
-              router.push("/vyhledane-prace")
+              if (pathName == "/vyhledane-prace") {
+                window.location.reload()
+              } else router.push("/vyhledane-prace")
             }}
             initialValues={{searchString: ""}}>
             <Form>
@@ -72,7 +78,7 @@ const SearchModal = (props: any) => {
             initialValues={initialFormValues}
             onSubmit={(values: SearchModalValuesType) => {
               //sendFilter(values)
-              saveFilter(values)
+              saveFilter(values, pathName)
             }}
             validationSchema={validationSchema}
           >

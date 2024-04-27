@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/react';
 import {login, signup} from './actions';
 import React from "react";
-import {useVyhledanePrace} from "@/app/configs/useVyhledanePrace";
+import {useVyhledanePrace} from "@/app/configs/hooks/useVyhledanePrace";
 
 const LoginForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

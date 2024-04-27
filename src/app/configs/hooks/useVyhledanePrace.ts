@@ -1,11 +1,11 @@
 import {useRouter} from "next/navigation";
 import {useColorModeValue, useToast} from "@chakra-ui/react";
-import {useAPIFunctions} from "@/app/configs/useAPIFunctions";
+import {useAPIFunctions} from "@/app/configs/hooks/useAPIFunctions";
 import {useEffect, useRef, useState} from "react";
 import axios from "axios";
 import {server_address} from "@/app/configs/apiConfig";
-import {APIData, PraceType} from "@/app/configs/ApiDataTypes";
-import {TableHeads} from "@/app/configs/defaultconfig";
+import {APIData, PraceType} from "@/app/configs/types/ApiDataTypes";
+import {TableHeads} from "@/app/configs/default-values/defaultconfig";
 
 export const useVyhledanePrace = () => {
 

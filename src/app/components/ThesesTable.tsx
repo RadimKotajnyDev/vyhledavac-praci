@@ -23,7 +23,7 @@ import {
   IoMdArrowDropdown,
   IoMdArrowDropup
 } from "react-icons/io";
-import {APIData, PraceType} from "@/app/configs/ApiDataTypes";
+import {APIData, PraceType} from "@/app/configs/types/ApiDataTypes";
 import {NextRouter} from "next/router";
 import Link from "next/link";
 
