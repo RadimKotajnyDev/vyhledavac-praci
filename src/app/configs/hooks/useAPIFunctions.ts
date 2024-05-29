@@ -167,6 +167,16 @@ export const useAPIFunctions = () => {
     }
   }
 
+  function saveSearch(values: {searchString: string}, pathName: string) {
+    //sessionStorage.clear()
+    sessionStorage.removeItem('filter_params')
+    sessionStorage.removeItem('search_string')
+    sessionStorage.setItem('search_string', JSON.stringify(values.searchString))
+    if (pathName == "/vyhledane-prace") {
+      window.location.reload()
+    } else router.push("/vyhledane-prace")
+  }
+
   function saveFilter(values: SearchModalValuesType, pathName: string) {
     const obor_array = []
     values.obor_stroj ? obor_array.push("stroj") : null
@@ -182,9 +192,10 @@ export const useAPIFunctions = () => {
       tagy: values.tagy
     }
     sessionStorage.removeItem('filter_params')
-    sessionStorage.removeItem('search_params')
+    sessionStorage.removeItem('search_string')
+    console.log(sessionStorage.getItem("filter_params"))
     sessionStorage.setItem('filter_params', JSON.stringify(reformatedValues))
-    if(pathName == "/vyhledane-prace") {
+    if (pathName == "/vyhledane-prace") {
       window.location.reload()
     } else router.push("/vyhledane-prace")
   }
@@ -198,6 +209,7 @@ export const useAPIFunctions = () => {
     onKeyDown,
     //sendSearch,
     //sendFilter,
+    saveSearch,
     saveFilter,
     //getAllPrace,
     //getPraceFromPage,

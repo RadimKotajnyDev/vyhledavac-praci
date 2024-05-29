@@ -6,10 +6,12 @@ import SearchModal from "@/app/components/SearchModal/SearchModal";
 import {useRouter} from "next/navigation";
 import Link from "next/link";
 import {IoIosBug} from "react-icons/io";
+import {useAPIFunctions} from "@/app/configs/hooks/useAPIFunctions";
 
 
 const HomePageButtons = () => {
   const router = useRouter()
+  const {saveSearch} = useAPIFunctions()
 
   const {isOpen, onOpen, onClose} = useDisclosure()
 
@@ -35,10 +37,7 @@ const HomePageButtons = () => {
           px={9} py={7}
           w="fit-content" fontSize={{base: "sm", md: "lg"}}
           onClick={() => {
-            sessionStorage.clear()
-            // @ts-ignore
-            sessionStorage.setItem('search_string', null)
-            router.push("/vyhledane-prace")
+            saveSearch({searchString: ""}, "")
           }} variant="ghost">
           Zobrazit všechny práce
         </Button>
@@ -46,9 +45,9 @@ const HomePageButtons = () => {
       <SearchModal {...{isOpen, onOpen, onClose}}/>
       <Box pos="absolute" bottom={5} left={5}>
         <Link href="https://forms.gle/7gJK7P3PSxgAknCg7" passHref target="_blank">
-        <IconButton aria-label="report-a-bug-button" colorScheme="red"
-                    icon={<IoIosBug/>} onClick={() => console.log("reported.")}/>
-      </Link>
+          <IconButton aria-label="report-a-bug-button" colorScheme="red"
+                      icon={<IoIosBug/>} onClick={() => console.log("reported.")}/>
+        </Link>
       </Box>
     </>
   )

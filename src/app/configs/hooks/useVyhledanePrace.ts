@@ -26,11 +26,10 @@ export const useVyhledanePrace = () => {
 
   const [isButtonHidden, hideButton] = useState<boolean>(false)
 
-
   useEffect(() => {
+    const searchString = sessionStorage.getItem("search_string")
+    const filter_params = sessionStorage.getItem("filter_params")
     async function loadData() {
-      const searchString = sessionStorage.getItem("search_string")
-      const filter_params = sessionStorage.getItem("filter_params")
       if (searchString) {
         axios.post(`${server_address}/search-page/${pageNumber}`,
           null,
@@ -68,7 +67,7 @@ export const useVyhledanePrace = () => {
           JSON.parse(filter_params),
           {params: {sortBy: sortBy, directionDown: sortDirDown}})
           .then(r => {
-            //console.log(r)
+            console.log(r)
             setMaxPageNumber(r.data.pocet_stran)
             if (pageNumber > 1 && loadMore) {
               if (r.data.prace.length > 0 && loadMore) {
@@ -116,7 +115,7 @@ export const useVyhledanePrace = () => {
   const [tryAgain, setTryAgain] = useState<boolean>(false)
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-     setTryAgain(true)
+      setTryAgain(true)
     }, 1500);
 
     return () => clearTimeout(timeoutId);

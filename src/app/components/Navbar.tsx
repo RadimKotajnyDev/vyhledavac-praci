@@ -14,16 +14,22 @@ import {
 } from '@chakra-ui/react';
 import {FaFilter, FaHome, FaMoon, FaSearch, FaSun} from 'react-icons/fa';
 import {SlUser} from "react-icons/sl";
-import {useRouter} from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
 import SearchModal from "@/app/components/SearchModal/SearchModal";
 import {Form, Formik} from "formik";
 import SearchBarInModal from "@/app/components/SearchModal/ModalComponents/SearchBarInModal";
 import {IoMdMenu} from "react-icons/io";
+import {useAPIFunctions} from "@/app/configs/hooks/useAPIFunctions";
 
 const Navbar = () => {
   const {colorMode, toggleColorMode} = useColorMode();
   const router = useRouter()
+  const pathName = usePathname()
   const {isOpen, onOpen, onClose} = useDisclosure()
+
+  const {
+    saveSearch
+  } = useAPIFunctions()
 
   return (
     <>
@@ -72,7 +78,7 @@ const Navbar = () => {
         </Menu>
       </Box>
       <Box
-           pt={2} px={3} display={{base: "none", md: "block"}}>
+        pt={2} px={3} display={{base: "none", md: "block"}}>
         <Box bg={colorMode === 'light' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(45, 55, 72, 0.5)'} p={4} rounded="3xl">
           <Flex alignItems="center">
             <Button leftIcon={<FaSearch fill="white"/>} variant="ghost" color="white" onClick={() => router.push("/")}>
@@ -83,10 +89,8 @@ const Navbar = () => {
               <Box w="full">
                 <Formik
                   onSubmit={(values) => {
-                    sessionStorage.clear()
-                    sessionStorage.setItem('search_string', JSON.stringify(values.searchString))
-                    router.push("/vyhledane-prace")
-                    window.location.reload()
+                    console.log("Nav search submitted.")
+                    saveSearch(values, pathName)
                   }}
                   initialValues={{searchString: ""}}>
                   <Form>

@@ -34,6 +34,7 @@ const SearchModal = (props: any) => {
     initialFormValues,
     validationSchema,
     router,
+    saveSearch,
     saveFilter,
     onKeyDown,
     oldestYear,
@@ -60,13 +61,8 @@ const SearchModal = (props: any) => {
         <ModalBody gap={10}>
           <Formik
             onSubmit={(values) => {
-              //sessionStorage.clear()
-              sessionStorage.removeItem('filter_params')
-              sessionStorage.removeItem('search_params')
-              sessionStorage.setItem('search_string', JSON.stringify(values.searchString))
-              if (pathName == "/vyhledane-prace") {
-                window.location.reload()
-              } else router.push("/vyhledane-prace")
+              console.log("Search submitted.")
+              saveSearch(values, pathName)
             }}
             initialValues={{searchString: ""}}>
             <Form>
@@ -78,6 +74,7 @@ const SearchModal = (props: any) => {
             initialValues={initialFormValues}
             onSubmit={(values: SearchModalValuesType) => {
               //sendFilter(values)
+              console.log("Filter submitted.")
               saveFilter(values, pathName)
             }}
             validationSchema={validationSchema}
