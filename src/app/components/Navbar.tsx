@@ -85,7 +85,7 @@ const Navbar = () => {
               ThesisSpotlight&nbsp;<Box as="span" fontWeight="350">(Beta verze)</Box>
             </Button>
             <Spacer/>
-            <Flex alignItems="center" placeItems="center" justifyContent="center" gap={3} w="600px">
+            <Flex alignItems="center" placeItems="center" justifyContent="center" gap={3} w={{base: "500px", lg: "800px"}}>
               <Box w="full">
                 <Formik
                   onSubmit={(values) => {
