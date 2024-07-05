@@ -6,26 +6,33 @@ import {SignOutButton} from "@/app/admin/components/SignOutButton";
 import AdminPanel from "@/app/admin/components/AdminPanel";
 
 export default async function AdminPage() {
-  const supabase = createClient()
+    const supabase = createClient()
 
-  const {data, error} = await supabase.auth.getUser()
-  if (error || !data?.user) {
-    redirect('/login')
-  }
+    const {data, error} = await supabase.auth.getUser()
+    if (error || !data?.user) {
+        console.log(error)
+        redirect('/login')
+    }
 
-  /* TODO: restrict access only for admin */
-  if(data.user.role != "supabase_admin") {
-    redirect("/permission-denied")
-  }
+    const {data: profileData, error: profileError} = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', data.user.id)
+        .single()
 
+    if (profileError) {
+        console.error('Error fetching profile:', profileError.message)
+        redirect('/permission-denied')
+    }
 
-
-  return (
-    <div>
-      <p>Hello {data.user.email}</p>
-      <p>You are {data.user.role}.</p>
-      <SignOutButton />
-      <AdminPanel />
-    </div>
-  )
+    if (profileData?.role === "admin") {
+        return (
+            <div>
+                <p>Hello {data.user.email}</p>
+                <p>You are {profileData.role}.</p>
+                <SignOutButton/>
+                <AdminPanel/>
+            </div>
+        )
+    }
 }

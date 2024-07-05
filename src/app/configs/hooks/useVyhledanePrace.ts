@@ -26,6 +26,7 @@ export const useVyhledanePrace = () => {
 
   const [isButtonHidden, hideButton] = useState<boolean>(false)
 
+  //TODO: clean code (It bugged last time, when I cleaned this mess below)
   useEffect(() => {
     const searchString = sessionStorage.getItem("search_string")
     const filter_params = sessionStorage.getItem("filter_params")
