@@ -5,6 +5,7 @@ import {createClient} from '@/utils/supabase/server'
 import {SignOutButton} from "@/app/admin/components/SignOutButton";
 import AdminPanel from "@/app/admin/components/AdminPanel";
 
+
 export default async function AdminPage() {
     const supabase = createClient()
 

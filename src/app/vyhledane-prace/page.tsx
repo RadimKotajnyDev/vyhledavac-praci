@@ -3,7 +3,11 @@ import {Box, Button, Spinner, Text} from "@chakra-ui/react"
 import {useVyhledanePrace} from "@/app/configs/hooks/useVyhledanePrace";
 import ThesesTable from "@/app/components/ThesesTable";
 
-const VyhledanePrace = () => {
+type Props = {
+  isAdmin?: true | undefined
+}
+
+const VyhledanePrace = ({isAdmin}: Props) => {
 
   const {
     NextPage,
@@ -42,6 +46,7 @@ const VyhledanePrace = () => {
     if (apiData && Array.isArray(apiData) && apiData.length > 0) {
       return (
         <ThesesTable {...{
+          isAdmin,
           NextPage,
           PreviousPage,
           TableTop,

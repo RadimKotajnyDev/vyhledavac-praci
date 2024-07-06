@@ -26,9 +26,11 @@ import {
 import {APIData, PraceType} from "@/app/configs/types/ApiDataTypes";
 import {NextRouter} from "next/router";
 import Link from "next/link";
+import {RemoveTaskConfirmation} from "@/app/admin/components/RemoveTaskConfirmation";
 
 //fixme: too lazy to fix this shit
 interface ThesesTableInterface {
+  isAdmin: true | undefined,
   slugify: (str: string | undefined) => string;
   TableHeads: { apiNames: string[], czechNames: string[] },
   setSortBy: (value: string | ((prevVar: string) => boolean)) => void;
@@ -50,6 +52,7 @@ interface ThesesTableInterface {
 const ThesesTable = (props: any) => {
 
   const {
+    isAdmin,
     NextPage,
     PreviousPage,
     TableTop,
@@ -71,7 +74,6 @@ const ThesesTable = (props: any) => {
     hideButton,
     maxPageNumber
   } = props
-
 
   return (
     <Flex color="white" w="full" //minH="80vh"
@@ -114,6 +116,7 @@ const ThesesTable = (props: any) => {
                     </Flex>
                   </Th>
                 ))}
+                {isAdmin? <Th></Th> : ""}
               </Tr>
             </Thead>
             <Tbody>
@@ -124,13 +127,16 @@ const ThesesTable = (props: any) => {
                     _hover={{
                       backgroundColor: "rgba(255, 255, 255, 0.1)"
                     }}
-                    onClick={() => router.push(`/vyhledane-prace/${data.id}/${slugify(data.tema)}`)}>
-                  <Td>{data.skolni_rok}</Td>
-                  <Td style={{whiteSpace: 'normal'}}>{data.tema}</Td>
-                  <Td style={{textTransform: "uppercase"}}>{data.obor}</Td>
-                  <Td style={{textTransform: "uppercase"}}>{data.predmet}</Td>
-                  <Td>{data.jmeno_prijmeni}</Td>
-                  <Td>{data.vedouci}</Td>
+                >
+                  <Td onClick={() => router.push(`/vyhledane-prace/${data.id}/${slugify(data.tema)}`)}>{data.skolni_rok}</Td>
+                  <Td onClick={() => router.push(`/vyhledane-prace/${data.id}/${slugify(data.tema)}`)} style={{whiteSpace: 'normal'}}>{data.tema}</Td>
+                  <Td onClick={() => router.push(`/vyhledane-prace/${data.id}/${slugify(data.tema)}`)} style={{textTransform: "uppercase"}}>{data.obor}</Td>
+                  <Td onClick={() => router.push(`/vyhledane-prace/${data.id}/${slugify(data.tema)}`)} style={{textTransform: "uppercase"}}>{data.predmet}</Td>
+                  <Td onClick={() => router.push(`/vyhledane-prace/${data.id}/${slugify(data.tema)}`)}>{data.jmeno_prijmeni}</Td>
+                  <Td onClick={() => router.push(`/vyhledane-prace/${data.id}/${slugify(data.tema)}`)}>{data.vedouci}</Td>
+                  {isAdmin? <Td>
+                    <RemoveTaskConfirmation data={data} />
+                  </Td> : null}
                 </Tr>
               ))}
             </Tbody>
